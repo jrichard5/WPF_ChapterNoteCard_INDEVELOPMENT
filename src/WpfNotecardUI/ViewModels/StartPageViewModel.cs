@@ -14,7 +14,7 @@ namespace WpfNotecardUI.ViewModels
     {
         ~StartPageViewModel()
         {
-            Console.WriteLine("hi")
+            Console.WriteLine("hi");
         }
 
         private readonly NavigationStore _navigationStore;
