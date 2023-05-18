@@ -20,16 +20,5 @@ namespace WpfNotecardUI.ViewModels
         }
 
         public ICommand GoToRandomCommand { get; }
-
-
-        public int lowercasesness { get; set; }
-        public string myProperty { get; set; }
-        public int uppercasesness { get; set; }
-        public string myProperty2 { get; set; }
-        public string myProperty3 { get; set; }
-        public string myProperty4 { get; set; }
-        public string myProperty5 { get; set; }
-        public int lintingsuckls { get; set; }
-        public string myProperty6 { get; set; }
     }
 }
