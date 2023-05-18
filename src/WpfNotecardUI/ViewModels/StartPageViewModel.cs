@@ -6,19 +6,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using WpfNotecardUI.Commands;
 using WpfNotecardUI.Stores;
 
 namespace WpfNotecardUI.ViewModels
 {
     public class StartPageViewModel : ObservableObject
     {
-        public StartPageViewModel(NavigationStore navigationStore, Func<RandomNoteCardViewModel> createRNVM)
+        ~StartPageViewModel()
         {
+            Console.WriteLine("hi")
+        }
 
-            GoToRandomCommand = new NavigateCommand(navigationStore, createRNVM);
+        private readonly NavigationStore _navigationStore;
+        public StartPageViewModel(NavigationStore navigationStore)
+        {
+            _navigationStore = navigationStore;
+            GoToRandomCommand = new RelayCommand(SwitchToRandom);
         }
 
         public ICommand GoToRandomCommand { get; }
+
+        public void SwitchToRandom()
+        {
+            _navigationStore.CurrentViewModel = new RandomNoteCardViewModel(_navigationStore);
+        }
     }
 }

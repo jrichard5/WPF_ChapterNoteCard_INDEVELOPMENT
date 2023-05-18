@@ -1,11 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using WpfNotecardUI.Commands;
 using WpfNotecardUI.Stores;
 
 namespace WpfNotecardUI.ViewModels
@@ -16,10 +16,15 @@ namespace WpfNotecardUI.ViewModels
 
         public ICommand GoToStartViewModel { get; }
 
-        public RandomNoteCardViewModel(NavigationStore navigationStore, Func<StartPageViewModel> createStartVM)
+        public void SwitchToStart()
+        {
+            _navigationStore.CurrentViewModel = new StartPageViewModel(_navigationStore);
+        }
+
+        public RandomNoteCardViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
-            GoToStartViewModel = new NavigateCommand(navigationStore, createStartVM);
+            GoToStartViewModel = new RelayCommand(SwitchToStart);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace WpfNotecardUI
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _navigationStore.CurrentViewModel = CreateStartViewModel();
+            _navigationStore.CurrentViewModel = new StartPageViewModel(_navigationStore);
 
             MainWindow = new MainWindow()
             {
@@ -35,16 +35,6 @@ namespace WpfNotecardUI
             MainWindow.Show();
 
             base.OnStartup(e);
-        }
-
-        private StartPageViewModel CreateStartViewModel()
-        {
-            return new StartPageViewModel(_navigationStore, CreateRandomNotecardViewModel);
-        }
-
-        private RandomNoteCardViewModel CreateRandomNotecardViewModel()
-        {
-            return new RandomNoteCardViewModel(_navigationStore, CreateStartViewModel);
         }
     }
 }
