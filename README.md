@@ -54,3 +54,28 @@ Steps I think I need to note down for navigation
     * give navigation store to mainviewmodel
     * in App, pass in navi store to mainviewmodel
 4. Make Grid.Resource data templte on mainwindow
+
+
+### Steps taken to get double click
+Options
+1. Use code behind?
+2. Use Attached Command Behaviors?
+3. ~~Interaction triggers? (interactivity library)~~
+4. Style EventSetter Event and give handler?
+5. Dependency Properties? https://www.youtube.com/watch?v=Cx6YE86XzYE
+  * in the main window, bind command to code-behind dependency property.
+6. ~~<Grid.InputBindings><MouseBinding MouseAction="LeftDoubleClick"   Command="{Binding Something}"></MouseBinding> </Grid.InputBindings>~~
+7. See if I can update number in code-behind and use that to trigger a command
+8. Items Control.  Iterates over view models.  use input binding in the view model (this is number 6, but instead of having it bound to multiple models, it is bound to multiple view models)
+9.  Event Trigger to call command when specific event.  https://stackoverflow.com/questions/64996809/is-there-any-way-easier-to-bind-to-a-click-event-in-a-view-model
+
+
+I've decided to be lazy and use code behind to call the viewmodel from datacontext.  I've heard this may break the MVVM model.  Attached Behavior seems to be the close second though https://stackoverflow.com/questions/4497825/wpf-mvvm-how-to-handle-double-click-on-treeviewitems-in-the-viewmodel 
+
+
+### Random Notes
+Give XAML element a x:Name to use in code behind
+
+With Command classes (not relay command which is what I'm doing)
+  1. Logic in CanExecute to determine if true or false
+  2. Command has view model.  Subscribe to Property Changed. calls method
