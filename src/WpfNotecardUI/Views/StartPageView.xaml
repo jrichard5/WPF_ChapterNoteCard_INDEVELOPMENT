@@ -40,7 +40,8 @@
         </Button>
         <Button Grid.Column="3" Grid.Row="4"
                 Content="Settings" Margin="20"
-                Grid.ColumnSpan="2" >
+                Grid.ColumnSpan="2" 
+                Command="{Binding GoToSettings}">
         </Button>
     </Grid>
 </UserControl>

@@ -1,10 +1,12 @@
 # ChapterNoteCard
 
-## I really need to do the Migrate method in startup to setup database if it is not already there
+### Everyone says use MVVM , so going to do that.
+
+### I really need to do the Migrate method in startup to setup database if it is not already there
 This is using a database from my web scrapper app, but that doesn't have the migration either.
 
 First step - Get Navigation
-Everyone says use MVVM , so going to do that.
+
 
 
 ## Resources
@@ -29,7 +31,7 @@ Find better ways to make extensible
 Made a learning aid for this navigation part (see jpeg in folder Learning aids)
 
 
-### steps I wanted to document (Learning aid would be better for review)
+## steps I wanted to document (Learning aid would be better for review)
 Steps I think I need to note down for navigation
 1. Make views with buttons that will be used for navigation (they do nothing atm).
 2. Make a ViewModelBase 
