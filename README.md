@@ -76,6 +76,13 @@ I've decided to be lazy and use code behind to call the viewmodel from dataconte
 ### Random Notes
 Give XAML element a x:Name to use in code behind
 
+When trying to Bind Double Mouse Click to a mousehandler delegate, I get 
+
++		InnerException	
+{"Unable to cast object of type 'System.Reflection.RuntimeEventInfo' to type 'System.Reflection.MethodInfo'."}	
+System.Exception {System.InvalidCastException}
+
+
 With Command classes (not relay command which is what I'm doing)
   1. Logic in CanExecute to determine if true or false
   2. Command has view model.  Subscribe to Property Changed. calls method
