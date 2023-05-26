@@ -5,6 +5,7 @@ using DataLayer.IRepos;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +35,16 @@ namespace WpfNotecardUI.ViewModels
                 OnPropertyChanged(nameof(IsLoading));
             }
         }
+        private string _hiddenText;
+        public string HiddenText
+        {
+            get { return _hiddenText; }
+            set
+            {
+                _hiddenText = value;
+                OnPropertyChanged(nameof(HiddenText));
+            }
+        }
 
         public CategoryListViewModel(NavigationStore naviStore, IServiceProvider serviceProvider)
         {
@@ -41,6 +52,7 @@ namespace WpfNotecardUI.ViewModels
             _serviceProvider = serviceProvider;
             GoToStartComand = new RelayCommand(SwitchToStart);
             LoadCategories();
+            this.PropertyChanged += LookForHiddenTextChange;
         }
 
         public static CategoryListViewModel CreateCategoryListView(NavigationStore naviStore, IServiceProvider serviceProvider)
@@ -48,6 +60,15 @@ namespace WpfNotecardUI.ViewModels
             CategoryListViewModel model = new CategoryListViewModel(naviStore, serviceProvider);
             model.LoadCategories();
             return model;
+        }
+
+
+        public void LookForHiddenTextChange(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(HiddenText))
+            {
+                Console.WriteLine("hi");
+            }
         }
 
         //public ICommand Something { get; }

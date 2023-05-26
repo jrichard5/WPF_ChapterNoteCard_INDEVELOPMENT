@@ -25,6 +25,11 @@
                 Command="{Binding GoToStartComand}">
             
         </Button>
+        <TextBox x:Name="hiddenText"
+                 Grid.Row="1" Grid.Column="2"
+                 Text="{Binding HiddenText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            
+        </TextBox>
         <ListView Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
                   ItemsSource="{Binding DbCategories}" 
                   Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Center"
