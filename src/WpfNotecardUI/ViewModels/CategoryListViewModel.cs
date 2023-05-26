@@ -40,6 +40,7 @@ namespace WpfNotecardUI.ViewModels
             _navigationStore = naviStore;
             _serviceProvider = serviceProvider;
             GoToStartComand = new RelayCommand(SwitchToStart);
+            Something = new RelayCommand(SwitchToChapterView);
             LoadCategories();
         }
 
@@ -50,7 +51,7 @@ namespace WpfNotecardUI.ViewModels
             return model;
         }
 
-        //public ICommand Something { get; }
+        public ICommand Something { get; }
 
         public ICommand GoToStartComand { get; }
         public void SwitchToStart()
@@ -58,7 +59,7 @@ namespace WpfNotecardUI.ViewModels
             _navigationStore.CurrentViewModel = new StartPageViewModel(_navigationStore, _serviceProvider);
         }
 
-        public void SwitchToChapterView(Category category)
+        public void SwitchToChapterView()
         {
             Console.WriteLine("hi");
 

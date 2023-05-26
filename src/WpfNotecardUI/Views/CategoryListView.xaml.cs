@@ -32,7 +32,7 @@ namespace WpfNotecardUI.Views
             var item = (sender as ListView)?.SelectedItem;
             if (item != null) 
             {
-                (this.DataContext as CategoryListViewModel).SwitchToChapterView((Category)item);
+               // (this.DataContext as CategoryListViewModel).SwitchToChapterView((Category)item);
             }
 
             
