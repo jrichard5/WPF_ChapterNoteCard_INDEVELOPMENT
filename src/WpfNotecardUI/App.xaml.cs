@@ -18,26 +18,32 @@ namespace WpfNotecardUI
     /// </summary>
     public partial class App : Application
     {
-
-        private readonly NavigationStore _navigationStore;
         private readonly IServiceProvider _serviceProvider;
 
         public App()
         {
             IServiceCollection services = new ServiceCollection();
             services.AddDiForDbContext();
+            services.AddSingleton<NavigationStore>();
 
-            _navigationStore = new NavigationStore();
+
             _serviceProvider = services.BuildServiceProvider();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _navigationStore.CurrentViewModel = new StartPageViewModel(_navigationStore, _serviceProvider);
+
+            NavigationStore store = _serviceProvider.GetService<NavigationStore>();
+            if(store == null)
+            {
+                throw new Exception();
+            }
+
+            store.CurrentViewModel = new StartPageViewModel(store, _serviceProvider);
 
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(_navigationStore)
+                DataContext = new MainViewModel(store)
             };
             MainWindow.Show();
 
