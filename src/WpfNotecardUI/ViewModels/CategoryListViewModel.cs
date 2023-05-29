@@ -5,6 +5,7 @@ using DataLayer.IRepos;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using WpfNotecardUI.Models;
 using WpfNotecardUI.Stores;
+using WpfNotecardUI.ViewModels.ListItemViewModel;
 
 namespace WpfNotecardUI.ViewModels
 {
@@ -21,7 +23,7 @@ namespace WpfNotecardUI.ViewModels
         private readonly NavigationStore _navigationStore;
         private readonly IServiceProvider _serviceProvider;
         private bool _isLoading;
-        public List<Category>? DbCategories { get; set; }
+        public ObservableCollection<CategoryListItem>? DbCategories { get; set; }
         public bool IsLoading
         {
             get
@@ -67,7 +69,7 @@ namespace WpfNotecardUI.ViewModels
         private async void LoadCategories()
         {
             IsLoading = true;
-            DbCategories = new List<Category>();
+            DbCategories = new ObservableCollection<CategoryListItem>();
             using (var scope = _serviceProvider.CreateScope())
             {
                 //Guessing it is a scopped serviceProvider >.>
@@ -75,8 +77,10 @@ namespace WpfNotecardUI.ViewModels
                 var categoryRepo = scopedServiceProvider.GetRequiredService<ICategoryRepo>();
                 //var fromDb = categoryRepo.GetAll().ContinueWith(task => DbCategories.AddRange(task.Result));
                 var fromDb = await categoryRepo.GetAll();
-                await Task.Delay(2000);
-                DbCategories.AddRange(fromDb);
+                foreach (var category in fromDb)
+                {
+                    DbCategories.Add(new CategoryListItem(category, _navigationStore, _serviceProvider));
+                }
                 OnPropertyChanged(nameof(DbCategories));
             }
             IsLoading = false;
