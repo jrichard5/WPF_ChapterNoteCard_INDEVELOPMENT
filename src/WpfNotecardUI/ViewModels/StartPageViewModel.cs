@@ -32,7 +32,7 @@ namespace WpfNotecardUI.ViewModels
         public ICommand GoToSettings { get; }
         public void SwitchToSettings()
         {
-            _navigationStore.CurrentViewModel = new KanjiListViewModel(_navigationStore, _serviceProvider, new CategoryChildrenStore());
+            _navigationStore.CurrentViewModel = new SettingsViewModel();
         }
         public ICommand GoToRandomCommand { get; }
 

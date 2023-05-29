@@ -21,7 +21,7 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="1" Text="Hello, I'm Category"></TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="Hello, I'm Kanji"></TextBlock>
         <Button Grid.Column="1" Grid.Row="1" 
                 Content="ToMainPage" Margin="10 0"
                 Command="{Binding GoToStartCommand}">
@@ -30,9 +30,9 @@
                 Content="Previous" Margin="10 0"
                 Command="{Binding GoToPreviousCommand}">
         </Button>
-        <ListView Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"
+        <ListView Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"
                   ItemsSource="{Binding CurrentList}" 
-                  Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Center">
+                  Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Stretch">
             <ListView.Style>
                 <Style TargetType="ListView">
                     <Style.Triggers>
@@ -44,22 +44,58 @@
             </ListView.Style>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid ShowGridLines="True">
+                    <Grid>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"  />
                             <ColumnDefinition Width="*" SharedSizeGroup="A"/>
-                            <ColumnDefinition Width="*" SharedSizeGroup="B"/>
-                            <ColumnDefinition Width="*" SharedSizeGroup="C"/>
-                            <ColumnDefinition Width="*" SharedSizeGroup="D"/>
-                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
-                            <TextBlock Text="{Binding TopicName}"></TextBlock>
-                            <TextBlock Text=")  "></TextBlock>
+                        <StackPanel Orientation="Horizontal" Grid.Column="0">
+                            <TextBlock Text="{Binding TopicName}" FontSize="32"></TextBlock>
+                            <TextBlock Text="{Binding TopicDefinition}" Padding="20 10 0 0" TextWrapping="Wrap"/>
                         </StackPanel>
-                        <TextBlock Grid.Column="2" Grid.Row="0"  Text="{Binding ChapterNoteCard.Category.CategoryName}"></TextBlock>
+                        <StackPanel Orientation="Vertical" Grid.Column="1">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Kun: "/>
+                                <TextBlock Text="{Binding KunReadings}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="On: "/>
+                                <TextBlock Text="{Binding OnReadings}"/>
+                            </StackPanel>
+                        </StackPanel>
+
+
+                        <Grid Grid.Column="3" HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Right">
+                                <TextBlock Text="Grade Level: "></TextBlock>
+                                <TextBlock Text="{Binding GradeLevel}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Grid.Column="2">
+                                <TextBlock Text="Newspaper Rank: "></TextBlock>
+                                <TextBlock Text="{Binding NewspaperRank}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right">
+                                <TextBlock Text="JLPT Level: "></TextBlock>
+                                <TextBlock Text="{Binding JLPTLevel}" />
+                            </StackPanel>
+                        </Grid>
+                        
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

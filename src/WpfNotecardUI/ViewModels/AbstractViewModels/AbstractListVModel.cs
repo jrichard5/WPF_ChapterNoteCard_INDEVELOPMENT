@@ -13,8 +13,7 @@ namespace WpfNotecardUI.ViewModels.AbstractViewModels
     public abstract class AbstractListVModel<T> : ObservableObject
     {
         private readonly NavigationStore _navigationStore;
-        private readonly CategoryChildrenStore _categoryChildrenStore;
-        private readonly IServiceProvider _serviceProvider;
+        protected readonly IServiceProvider _serviceProvider;
         public List<T>? CurrentList { get; set; }
         private bool _isLoading;
         public bool IsLoading
@@ -32,10 +31,9 @@ namespace WpfNotecardUI.ViewModels.AbstractViewModels
         public ICommand GoToStartCommand { get; }
         public ICommand GoToPreviousCommand { get; }
 
-        public AbstractListVModel(NavigationStore navigationStore, IServiceProvider serviceProvider, CategoryChildrenStore categoryChildrenStore)
+        public AbstractListVModel(NavigationStore navigationStore, IServiceProvider serviceProvider)
         {
             _navigationStore = navigationStore;
-            _categoryChildrenStore = categoryChildrenStore;
             _serviceProvider = serviceProvider;
             GoToStartCommand = new RelayCommand(GoToStartHandler);
             GoToPreviousCommand = new RelayCommand(GoToPreviousHandler);

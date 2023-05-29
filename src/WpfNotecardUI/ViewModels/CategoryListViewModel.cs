@@ -5,6 +5,7 @@ using DataLayer.IRepos;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using WpfNotecardUI.Models;
 using WpfNotecardUI.Stores;
+using WpfNotecardUI.ViewModels.ListVModels;
 
 namespace WpfNotecardUI.ViewModels
 {
@@ -60,7 +62,15 @@ namespace WpfNotecardUI.ViewModels
 
         public void SwitchToChapterView(Category category)
         {
-            Console.WriteLine("hi");
+            if (category.CategoryName == "Japanese Vocab")
+            {
+                _navigationStore.CurrentViewModel = new KanjiListViewModel(_navigationStore, _serviceProvider);
+            }
+            else
+            {
+                Debug.WriteLine("hi from clvm stcv");
+            }
+            
 
         }
 
@@ -75,7 +85,6 @@ namespace WpfNotecardUI.ViewModels
                 var categoryRepo = scopedServiceProvider.GetRequiredService<ICategoryRepo>();
                 //var fromDb = categoryRepo.GetAll().ContinueWith(task => DbCategories.AddRange(task.Result));
                 var fromDb = await categoryRepo.GetAll();
-                await Task.Delay(2000);
                 DbCategories.AddRange(fromDb);
                 OnPropertyChanged(nameof(DbCategories));
             }

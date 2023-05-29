@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EditorConfigFiles Remove="C:\Users\Etop\gitStuff\ChapterNoteCardApp\ChapterNoteCard\src\WpfNotecardUI\.editorconfig" />
   </ItemGroup>
 

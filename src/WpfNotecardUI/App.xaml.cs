@@ -25,6 +25,7 @@ namespace WpfNotecardUI
             IServiceCollection services = new ServiceCollection();
             services.AddDiForDbContext();
             services.AddSingleton<NavigationStore>();
+            services.AddSingleton<CategoryChildrenStore>();
 
 
             _serviceProvider = services.BuildServiceProvider();
