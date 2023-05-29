@@ -58,17 +58,21 @@ Steps I think I need to note down for navigation
 
 ### Steps taken to get double click
 Options
-1. Use code behind?
-2. Use Attached Command Behaviors?
+1. ~~Use code behind?~~
+2. ~~Use Attached Command Behaviors?~~
 3. ~~Interaction triggers? (interactivity library)~~
-4. Style EventSetter Event and give handler?
-5. Dependency Properties? https://www.youtube.com/watch?v=Cx6YE86XzYE
-  * in the main window, bind command to code-behind dependency property.
+4. ~~Style EventSetter Event and give handler?~~
+5. ~~Dependency Properties? https://www.youtube.com/watch?v=Cx6YE86XzYE~~
+  * ~~in the main window, bind command to code-behind dependency property.~~
 6. ~~<Grid.InputBindings><MouseBinding MouseAction="LeftDoubleClick"   Command="{Binding Something}"></MouseBinding> </Grid.InputBindings>~~
+
+### Got These to work for double click
 7.  See if I can update number in code-behind and use that to trigger a command
   * (branch: DifferentWaysToClickAList002)
 8. Items Control.  Iterates over view models.  use input binding in the view model (this is number 6, but instead of having it bound to multiple models, it is bound to multiple view models)
-  * This will be 
+  * Branch:  This will be 004DoubleClickWithItemControl
+  * had trouble clicking blank space to trigger command.  https://stackoverflow.com/questions/402736/wpf-how-to-write-a-trigger-for-mouse-over-of-grid
+  * Con: I have to pass navigation Store and Service Provider to every Item Control Object
 9.  Event Trigger to call command when specific event.  https://stackoverflow.com/questions/64996809/is-there-any-way-easier-to-bind-to-a-click-event-in-a-view-model
   * Branch:  DifferentWaysToClickAList003
   * xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
@@ -91,3 +95,11 @@ With Command classes (not relay command which is what I'm doing)
   1. Logic in CanExecute to determine if true or false
   2. Command has view model.  Subscribe to Property Changed. calls method
 
+
+This is because the first column, with nothing in it, is not hit-testable; whereas, the button within the second column is hit-testable and so the event is triggered
+
+If you want the Grid's IsMouseOver property to detect when the mouse is anywhere over the Grid itself all you have to do is set the Background property of the Grid to something that is not Null
+
+
+So if i just use triggers it works,  but if i have a background for border it doesn't work (permanently on the background attribute)
+ * Ok the grid is inside the border.  I made the grid background trasparent.  So, can change background of parent, but have child be transparent to be "hit-testable"
