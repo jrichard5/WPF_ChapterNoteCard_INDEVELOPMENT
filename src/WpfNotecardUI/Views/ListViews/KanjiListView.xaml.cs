@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfNotecardUI.Models;
+using WpfNotecardUI.ViewModels.ListVModels;
 
 namespace WpfNotecardUI.Views.ListViews
 {
@@ -23,6 +25,15 @@ namespace WpfNotecardUI.Views.ListViews
         public KanjiListView()
         {
             InitializeComponent();
+        }
+
+        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var item = (sender as ListView)?.SelectedItem;
+            if (item != null)
+            {
+                (this.DataContext as KanjiListViewModel).SwitchToJapaneseWordView((KanjiListItemModel)item);
+            }
         }
     }
 }

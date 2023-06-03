@@ -22,6 +22,18 @@ namespace DataLayer.Repositories
             }
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<List<JapaneseWordNoteCard>> GetAllFromOneCategory(string topicName)
+        {
+            var wordswithChapter = await _dbContext.JapaneseWordNoteCards.Where(jnc => jnc.SentenceNoteCard.Chapters.Any(c => c.TopicName == topicName))
+                .Include(j => j.SentenceNoteCard)
+                .Include(j => j.SentenceNoteCard.ChapterSentences)
+                .ThenInclude(cs => cs.ExtraJishoInfo)
+                .AsSplitQuery()
+                .ToListAsync();
+
+            return wordswithChapter;
+        }
     }
 }
 

@@ -12,7 +12,7 @@ namespace WpfNotecardUI.ViewModels.AbstractViewModels
 {
     public abstract class AbstractListVModel<T> : ObservableObject
     {
-        private readonly NavigationStore _navigationStore;
+        protected readonly NavigationStore _navigationStore;
         protected readonly IServiceProvider _serviceProvider;
         public List<T>? CurrentList { get; set; }
         private bool _isLoading;
@@ -41,7 +41,7 @@ namespace WpfNotecardUI.ViewModels.AbstractViewModels
 
         public void GoToStartHandler()
         {
-
+            _navigationStore.CurrentViewModel = new StartPageViewModel(_navigationStore, _serviceProvider);
         }
         public void GoToPreviousHandler()
         {

@@ -37,31 +37,35 @@ namespace WpfNotecardUI.ViewModels.ListVModels
                 OnPropertyChanged(nameof(CurrentList));
             }
             IsLoading = false;
+        }
 
-
-            //CurrentList = new List<KanjiNoteCard>()
-            //{
-            //    new KanjiNoteCard() {
-            //        TopicName = "hi",
-            //        ChapterNoteCard = new ChapterNoteCard()
-            //        {
-            //            TopicName = "hi",
-            //            Category = new Category()
-            //            {
-            //                CategoryName = "Category284795627",
-            //                Id = 1
-            //            },
-            //            CategoryId = 1,
-            //            ChapterSentences = new List<ChapterNoteCardSentenceNoteCard>(),
-            //            GradeLevel = 1,
-            //            LastTimeAccess = DateTime.Now,
-            //            Sentences = new List<SentenceNoteCard>()
-            //        },
-            //        JLPTLevel = 1,
-            //        KanjiReadings = new List<KanjiReading>(),
-            //        NewspaperRank = 1,
-            //    }
-            //};
+        public void SwitchToJapaneseWordView(KanjiListItemModel item)
+        {
+            _navigationStore.CurrentViewModel = new JapaneseWordListViewModel(item, _navigationStore, _serviceProvider);
         }
     }
 }
+
+//CurrentList = new List<KanjiNoteCard>()
+//{
+//    new KanjiNoteCard() {
+//        TopicName = "hi",
+//        ChapterNoteCard = new ChapterNoteCard()
+//        {
+//            TopicName = "hi",
+//            Category = new Category()
+//            {
+//                CategoryName = "Category284795627",
+//                Id = 1
+//            },
+//            CategoryId = 1,
+//            ChapterSentences = new List<ChapterNoteCardSentenceNoteCard>(),
+//            GradeLevel = 1,
+//            LastTimeAccess = DateTime.Now,
+//            Sentences = new List<SentenceNoteCard>()
+//        },
+//        JLPTLevel = 1,
+//        KanjiReadings = new List<KanjiReading>(),
+//        NewspaperRank = 1,
+//    }
+//};

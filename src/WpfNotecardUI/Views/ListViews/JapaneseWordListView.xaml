@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="WpfNotecardUI.Views.ListViews.KanjiListView"
+﻿<UserControl x:Class="WpfNotecardUI.Views.ListViews.JapaneseWordListView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -33,8 +33,9 @@
         </Button>
         <ListView Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"
                   ItemsSource="{Binding CurrentList}" 
-                  Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Stretch"
-                  MouseDoubleClick="ListView_MouseDoubleClick">
+                  Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Stretch" 
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  ScrollViewer.CanContentScroll="False">
             <ListView.Style>
                 <Style TargetType="ListView">
                     <Style.Triggers>
@@ -46,9 +47,9 @@
             </ListView.Style>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <comp:KanjiListComponent/>
+                    <comp:JapaneseWordListComponent/>
                 </DataTemplate>
             </ListView.ItemTemplate>
-        </ListView>
+        </ListView>    
     </Grid>
 </UserControl>
