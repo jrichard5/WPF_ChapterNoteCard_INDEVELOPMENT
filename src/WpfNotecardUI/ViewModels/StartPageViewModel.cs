@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WpfNotecardUI.Stores;
+using WpfNotecardUI.ViewModels.ListVModels;
 
 namespace WpfNotecardUI.ViewModels
 {
@@ -24,9 +25,15 @@ namespace WpfNotecardUI.ViewModels
             _navigationStore = navigationStore;
             GoToRandomCommand = new RelayCommand(SwitchToRandom);
             GoToBrowseAllCommand = new RelayCommand(SwitchToBrowse);
+            GoToSettings = new RelayCommand(SwitchToSettings);
             _serviceProvider = serviceProvider;
         }
 
+        public ICommand GoToSettings { get; }
+        public void SwitchToSettings()
+        {
+            _navigationStore.CurrentViewModel = new SettingsViewModel();
+        }
         public ICommand GoToRandomCommand { get; }
 
         public void SwitchToRandom()

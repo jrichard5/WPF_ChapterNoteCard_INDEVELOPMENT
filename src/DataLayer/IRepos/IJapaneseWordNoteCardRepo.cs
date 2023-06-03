@@ -6,5 +6,7 @@ namespace DataLayer.IRepos
     public interface IJapaneseWordNoteCardRepo : IGenericRepo<JapaneseWordNoteCard>
     {
         Task AddAsync(List<JapaneseWordNoteCard> cards);
+
+        Task<List<JapaneseWordNoteCard>> GetAllFromOneCategory(string topicName);
     }
 }

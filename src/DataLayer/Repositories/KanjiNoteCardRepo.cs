@@ -23,5 +23,14 @@ namespace DataLayer.Repositories
             {
             }
         }
+
+        public async Task<List<KanjiNoteCard>> GetAllWithAllInfo()
+        {
+            return await _dbContext.ExtraKanjiInfos
+                .Include(kanji => kanji.ChapterNoteCard)
+                .Include(kanji => kanji.KanjiReadings)
+                .AsSplitQuery()
+                .ToListAsync();
+        }
     }
 }

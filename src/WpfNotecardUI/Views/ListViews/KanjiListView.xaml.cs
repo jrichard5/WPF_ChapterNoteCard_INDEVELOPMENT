@@ -1,5 +1,4 @@
-﻿using DataLayer.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,16 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WpfNotecardUI.ViewModels;
+using WpfNotecardUI.Models;
+using WpfNotecardUI.ViewModels.ListVModels;
 
-namespace WpfNotecardUI.Views
+namespace WpfNotecardUI.Views.ListViews
 {
     /// <summary>
-    /// Interaction logic for CategoryListView.xaml
+    /// Interaction logic for KanjiListView.xaml
     /// </summary>
-    public partial class CategoryListView : UserControl
+    public partial class KanjiListView : UserControl
     {
-        public CategoryListView()
+        public KanjiListView()
         {
             InitializeComponent();
         }
@@ -30,12 +30,10 @@ namespace WpfNotecardUI.Views
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var item = (sender as ListView)?.SelectedItem;
-            if (item != null) 
+            if (item != null)
             {
-                (this.DataContext as CategoryListViewModel).SwitchToChapterView((Category)item);
+                (this.DataContext as KanjiListViewModel).SwitchToJapaneseWordView((KanjiListItemModel)item);
             }
-
-            
         }
     }
 }

@@ -3,8 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfNotecardUI" xmlns:views="clr-namespace:WpfNotecardUI.Views"
+        xmlns:local="clr-namespace:WpfNotecardUI" 
+        xmlns:views="clr-namespace:WpfNotecardUI.Views"
+        xmlns:listViews="clr-namespace:WpfNotecardUI.Views.ListViews"
         xmlns:vms="clr-namespace:WpfNotecardUI.ViewModels"
+        xmlns:lvms="clr-namespace:WpfNotecardUI.ViewModels.ListVModels"
         mc:Ignorable="d" FontSize="20"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -20,6 +23,12 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:SettingsViewModel}" >
                 <views:SettingsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type lvms:KanjiListViewModel}" >
+                <listViews:KanjiListView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type lvms:JapaneseWordListViewModel}">
+                <listViews:JapaneseWordListView/>
             </DataTemplate>
         </Grid.Resources>
         <ContentControl Content="{Binding CurrentViewModel}"></ContentControl>
