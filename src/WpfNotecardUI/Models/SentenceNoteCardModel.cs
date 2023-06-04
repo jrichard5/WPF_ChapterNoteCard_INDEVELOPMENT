@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WpfNotecardUI.Models
 {
-    class SentenceNoteCardModel
+    public class SentenceNoteCardModel
     {
         public string ItemQuestion { get; set; }
         public string ItemAnswer { get; set; }

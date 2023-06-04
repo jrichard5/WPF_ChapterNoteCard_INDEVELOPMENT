@@ -15,6 +15,11 @@ namespace DataLayer.Repositories
             //_chapters = context.Chapters;
         }
 
+        public async Task<List<ChapterNoteCard>> GetAllChaptersWithinACategory(int categoryId)
+        {
+            return await _dbContext.Chapters.Where(chap => chap.CategoryId == categoryId).ToListAsync();
+        }
+
         public async Task<ChapterNoteCard> GetChapterNoteCardByTopicName(string topicName)
         {
             return await _dbContext.Chapters.FirstAsync(chapter => chapter.TopicName == topicName);

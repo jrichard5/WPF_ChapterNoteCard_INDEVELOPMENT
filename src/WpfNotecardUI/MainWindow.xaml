@@ -30,6 +30,12 @@
             <DataTemplate DataType="{x:Type lvms:JapaneseWordListViewModel}">
                 <listViews:JapaneseWordListView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type lvms:GenericChapterListViewModel}">
+                <listViews:GenericChapterListView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type lvms:GenericSentenceListViewModel}">
+                <listViews:GenericSentenceListView />
+            </DataTemplate>
         </Grid.Resources>
         <ContentControl Content="{Binding CurrentViewModel}"></ContentControl>
     </Grid>

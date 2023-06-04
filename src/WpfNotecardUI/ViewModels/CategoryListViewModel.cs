@@ -68,7 +68,7 @@ namespace WpfNotecardUI.ViewModels
             }
             else
             {
-                Debug.WriteLine("hi from clvm stcv");
+                _navigationStore.CurrentViewModel = new GenericChapterListViewModel(category.Id, _navigationStore, _serviceProvider);
             }
             
 

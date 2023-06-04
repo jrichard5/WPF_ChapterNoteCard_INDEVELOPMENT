@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="WpfNotecardUI.Views.ListViews.GenericChapterListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfNotecardUI.Views.ListViews"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="Hello, I'm Generic Chapters"></TextBlock>
+        <Button Grid.Column="1" Grid.Row="1" 
+                Content="ToMainPage" Margin="10 0"
+                Command="{Binding GoToStartCommand}">
+        </Button>
+        <Button Grid.Column="2" Grid.Row="1" 
+                Content="Previous" Margin="10 0"
+                Command="{Binding GoToPreviousCommand}">
+        </Button>
+        <DataGrid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"
+                  ItemsSource="{Binding CurrentList}" 
+                  Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Stretch"
+                  MouseDoubleClick="DataGrid_MouseDoubleClick">
+            <DataGrid.Style>
+                <Style TargetType="DataGrid">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" ></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Style>
+
+            <!--<ListView.ItemTemplate>
+                <DataTemplate>
+                    
+                </DataTemplate>
+            </ListView.ItemTemplate>-->
+        </DataGrid>
+    </Grid>
+</UserControl>
