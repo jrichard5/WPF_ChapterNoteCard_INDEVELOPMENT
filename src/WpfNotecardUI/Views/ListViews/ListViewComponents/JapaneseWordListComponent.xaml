@@ -62,7 +62,11 @@
                 <TextBlock Text="Common" VerticalAlignment="Center"></TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <CheckBox IsChecked="{Binding IsUserWantsToFocusOn}" VerticalAlignment="Center" IsEnabled="False"/>
+                <CheckBox IsChecked="{Binding IsUserWantsToFocusOn}" VerticalAlignment="Center" 
+                          Command="{Binding DataContext.SaveData, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                          CommandParameter="{Binding}"/>
+                          <!--Command="{Binding DataContext.SaveData, RelativeSource={RelativeSource AncestorType=ListView}}"-->
+                          
                 <TextBlock Text="Focus"/>
                 
             </StackPanel>

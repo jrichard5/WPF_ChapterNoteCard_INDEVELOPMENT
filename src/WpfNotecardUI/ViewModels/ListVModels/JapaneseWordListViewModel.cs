@@ -1,4 +1,5 @@
-﻿using DataLayer.Entities;
+﻿using CommunityToolkit.Mvvm.Input;
+using DataLayer.Entities;
 using DataLayer.IRepos;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -7,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using WpfNotecardUI.Models;
 using WpfNotecardUI.Stores;
 using WpfNotecardUI.ViewModels.AbstractViewModels;
@@ -26,6 +28,14 @@ namespace WpfNotecardUI.ViewModels.ListVModels
         {
             _item = item;
             GetDataForList();
+            SaveData = new RelayCommand<JapaneseWordListItemModel>(SaveDataFunction);
+        }
+
+        public ICommand SaveData { get; }
+
+        public void SaveDataFunction(JapaneseWordListItemModel? hi)
+        {
+            Debug.WriteLine("hi");
         }
 
         public override async void GetDataForList()

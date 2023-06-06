@@ -103,3 +103,9 @@ If you want the Grid's IsMouseOver property to detect when the mouse is anywhere
 
 So if i just use triggers it works,  but if i have a background for border it doesn't work (permanently on the background attribute)
  * Ok the grid is inside the border.  I made the grid background trasparent.  So, can change background of parent, but have child be transparent to be "hit-testable"
+
+Binding a list item  (model in mvvm) to a command on the view model.
+ * https://stackoverflow.com/questions/51845335/how-to-bind-command-when-button-inside-of-listbox-item
+  * Button Command="{Binding DataContext.CommandName, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"
+
+ Google'd "wpf how to pass entire object as a  command parameter" : Answer CommandParameter = {Binding} (from https://stackoverflow.com/questions/3857213/can-you-bind-a-whole-object-to-a-commandparameter-in-xaml)
