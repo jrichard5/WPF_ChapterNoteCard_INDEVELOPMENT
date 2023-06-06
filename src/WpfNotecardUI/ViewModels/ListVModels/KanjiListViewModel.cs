@@ -41,6 +41,7 @@ namespace WpfNotecardUI.ViewModels.ListVModels
 
         public void SwitchToJapaneseWordView(KanjiListItemModel item)
         {
+            _serviceProvider.GetService<CategoryChildrenStore>().ChildrenStack.Push(_navigationStore.CurrentViewModel);
             _navigationStore.CurrentViewModel = new JapaneseWordListViewModel(item, _navigationStore, _serviceProvider);
         }
     }

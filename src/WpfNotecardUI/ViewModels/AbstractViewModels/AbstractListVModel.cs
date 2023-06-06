@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,11 +42,12 @@ namespace WpfNotecardUI.ViewModels.AbstractViewModels
 
         public void GoToStartHandler()
         {
+            _serviceProvider.GetService<CategoryChildrenStore>().ChildrenStack.Clear();
             _navigationStore.CurrentViewModel = new StartPageViewModel(_navigationStore, _serviceProvider);
         }
         public void GoToPreviousHandler()
         {
-
+            _navigationStore.CurrentViewModel = _serviceProvider.GetService<CategoryChildrenStore>().ChildrenStack.Pop(); ;
         }
 
         public abstract void GetDataForList();

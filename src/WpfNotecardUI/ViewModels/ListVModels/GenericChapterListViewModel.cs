@@ -24,6 +24,7 @@ namespace WpfNotecardUI.ViewModels.ListVModels
 
         public void SwitchToGenericSentenceView(ChapterItemModel item)
         {
+            _serviceProvider.GetService<CategoryChildrenStore>().ChildrenStack.Push(_navigationStore.CurrentViewModel);
             _navigationStore.CurrentViewModel = new GenericSentenceListViewModel(item.TopicName, _navigationStore, _serviceProvider);
         }
 

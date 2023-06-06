@@ -3,6 +3,7 @@ using DataLayer.IRepos;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,11 @@ namespace WpfNotecardUI.ViewModels.ListVModels
 {
     class JapaneseWordListViewModel : AbstractListVModel<JapaneseWordListItemModel>
     {
+        ~JapaneseWordListViewModel()
+        {
+            Debug.WriteLine("disposed of japanesewordModel");
+        }
+
         private readonly KanjiListItemModel _item;
         public JapaneseWordListViewModel(KanjiListItemModel item, NavigationStore navigationStore, IServiceProvider serviceProvider)
             : base(navigationStore, serviceProvider)

@@ -11,6 +11,9 @@ namespace WpfNotecardUI.Stores
     {
         public Stack<ObservableObject> ChildrenStack { get; set; }
 
-
+        public CategoryChildrenStore()
+        {
+            ChildrenStack = new Stack<ObservableObject>();
+        }
     }
 }
