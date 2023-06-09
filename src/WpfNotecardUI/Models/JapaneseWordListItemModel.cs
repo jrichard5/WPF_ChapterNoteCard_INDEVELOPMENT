@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace WpfNotecardUI.Models
 {
-    class JapaneseWordListItemModel : SentenceNoteCardModel
+    public class JapaneseWordListItemModel : SentenceNoteCardModel
     {
         public bool IsCommonWord { get; set; }
         public int? JLPTLevel { get; set; }
         public int? PageNumber { get; set; }
         public int? Order { get; set; }
+        public int ExtraJishoPrimaryId { get; set; }
 
         public JapaneseWordListItemModel(JapaneseWordNoteCard jnoteCard) : base(jnoteCard.SentenceNoteCard)
         {
@@ -23,6 +24,7 @@ namespace WpfNotecardUI.Models
             {
                 PageNumber = bridgeTable.ExtraJishoInfo?.PageNumber;
                 Order = bridgeTable.ExtraJishoInfo?.Order;
+                ExtraJishoPrimaryId = bridgeTable.ExtraJishoInfo.Id;
             }
 
         }

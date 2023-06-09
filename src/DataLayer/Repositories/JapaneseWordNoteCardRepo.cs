@@ -34,6 +34,17 @@ namespace DataLayer.Repositories
 
             return wordswithChapter;
         }
+        public async Task BulkUpdate(List<JapaneseWordNoteCard> entities)
+        {
+            foreach (var entity in entities)
+            {
+                //_dbContext.Sentences.Attach(entity.SentenceNoteCard);
+                //_dbContext.ChapterSentences.Attach(entity.SentenceNoteCard.ChapterSentences.First());
+                //_dbContext.ExtraJishoInfos.Attach(entity.SentenceNoteCard.ChapterSentences.First().ExtraJishoInfo);
+                 this._dbContext.JapaneseWordNoteCards.Update(entity);
+            }
+            await this._dbContext.SaveChangesAsync();
+        }
     }
 }
 

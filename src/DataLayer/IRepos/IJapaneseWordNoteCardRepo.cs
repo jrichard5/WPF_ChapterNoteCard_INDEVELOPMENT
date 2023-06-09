@@ -8,5 +8,7 @@ namespace DataLayer.IRepos
         Task AddAsync(List<JapaneseWordNoteCard> cards);
 
         Task<List<JapaneseWordNoteCard>> GetAllFromOneCategory(string topicName);
+
+        Task BulkUpdate(List<JapaneseWordNoteCard> cards);
     }
 }
