@@ -40,12 +40,12 @@ namespace WpfNotecardUI.ViewModels.AbstractViewModels
             GoToPreviousCommand = new RelayCommand(GoToPreviousHandler);
         }
 
-        public void GoToStartHandler()
+        public virtual void GoToStartHandler()
         {
             _serviceProvider.GetService<CategoryChildrenStore>().ChildrenStack.Clear();
             _navigationStore.CurrentViewModel = new StartPageViewModel(_navigationStore, _serviceProvider);
         }
-        public void GoToPreviousHandler()
+        public virtual void GoToPreviousHandler()
         {
             _navigationStore.CurrentViewModel = _serviceProvider.GetService<CategoryChildrenStore>().ChildrenStack.Pop(); ;
         }

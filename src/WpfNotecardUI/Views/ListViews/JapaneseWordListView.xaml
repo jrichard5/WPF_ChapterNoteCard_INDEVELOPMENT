@@ -31,6 +31,11 @@
                 Content="Previous" Margin="10 0"
                 Command="{Binding GoToPreviousCommand}">
         </Button>
+        <Button Grid.Column="2"
+                Content="Save"
+                Command="{Binding SaveData}">
+            
+        </Button>
         <ListView Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"
                   ItemsSource="{Binding CurrentList}" 
                   Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Stretch" 
