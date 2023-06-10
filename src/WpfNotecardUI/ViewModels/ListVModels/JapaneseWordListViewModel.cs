@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,8 +23,10 @@ namespace WpfNotecardUI.ViewModels.ListVModels
     class JapaneseWordListViewModel : AbstractListVModel<JapaneseWordListItemModel>
     {
         private readonly KanjiListItemModel _item;
+        public KanjiListItemModel Item { get { return _item; } }
         public RelayCommand<JapaneseWordListItemModel> SaveData { get; }
         public ICommand ListItemChanged { get; }
+        public ICommand AddWordCommand { get; }
 
         //used to figure out which list items have changed because Primary Id is the TopicName.
         public List<string> ItemQuestionsThatHaveChanged {get; set;}
@@ -36,8 +39,18 @@ namespace WpfNotecardUI.ViewModels.ListVModels
             GetDataForList();
             SaveData = new RelayCommand<JapaneseWordListItemModel>(SaveDataFunction, CanSaveData);
             ListItemChanged = new RelayCommand<string>(AddToHaveChangedList);
+            AddWordCommand = new RelayCommand(AddWordFunction);
         }
 
+        private void AddWordFunction()
+        {
+            StartPageViewModel wvm = new StartPageViewModel(_navigationStore, _serviceProvider);
+            Window win = new Window()
+            {
+                DataContext = wvm
+            };
+            win.ShowDialog();
+        }
         public void AddToHaveChangedList(string? topicName)
         {
             if (topicName == null)
