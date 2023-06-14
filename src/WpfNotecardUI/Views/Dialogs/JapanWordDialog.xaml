@@ -77,7 +77,7 @@
         <TextBox Grid.Column="3" Grid.Row="3" Text="{Binding Hint, Mode=TwoWay}" VerticalAlignment="Center"></TextBox>
 
         <Label Grid.Column="2" Grid.Row="4" Content="Memorization Level (numbers)" HorizontalContentAlignment="Right"></Label>
-        <TextBox Grid.Column="3" Grid.Row="4" Text="{Binding MemorizationLevel, Mode=TwoWay}" VerticalAlignment="Center"></TextBox>
+        <TextBox Grid.Column="3" Grid.Row="4" Text="{Binding MemorizationLevel, Mode=TwoWay}" PreviewTextInput="TextBox_PreviewTextInput"  VerticalAlignment="Center"></TextBox>
 
         
 
@@ -85,7 +85,7 @@
         <TextBox Grid.Column="3" Grid.Row="5" Text="{Binding LastTimeAccessed, Mode=TwoWay}" IsEnabled="False" VerticalAlignment="Center"></TextBox>
 
         <Label Grid.Column="2" Grid.Row="6" Content="JLPT Level (1 to 5)(nullable)" HorizontalContentAlignment="Right"></Label>
-        <TextBox Grid.Column="3" Grid.Row="6" Text="{Binding JlptLevel, Mode=TwoWay}" VerticalAlignment="Center"></TextBox>
+        <TextBox Grid.Column="3" Grid.Row="6" Text="{Binding JlptLevel, Mode=TwoWay}"  PreviewTextInput="TextBox_PreviewTextInput" VerticalAlignment="Center"></TextBox>
 
         <Label Grid.Column="2" Grid.Row="7" Content="Page Number (int)" HorizontalContentAlignment="Right"></Label>
         <TextBox Grid.Column="3" Grid.Row="7" Text="{Binding PageNumber, Mode=TwoWay}" VerticalAlignment="Center"></TextBox>

@@ -23,5 +23,10 @@ namespace WpfNotecardUI.Views.Dialogs
         {
             InitializeComponent();
         }
+
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !int.TryParse(e.Text, out _);
+        }
     }
 }

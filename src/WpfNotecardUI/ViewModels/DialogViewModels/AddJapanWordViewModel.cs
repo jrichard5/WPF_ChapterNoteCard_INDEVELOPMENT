@@ -36,9 +36,40 @@ namespace WpfNotecardUI.ViewModels.DialogViewModels
         }
         public string ItemAnswer { get; set; } = string.Empty;
         public string Hint { get; set; } = string.Empty;
-        public int MemorizationLevel { get; set; } = 0;
+        private int _memorizationLevel = 0;
+        public int MemorizationLevel 
+        { 
+            get {  return _memorizationLevel; }
+            set
+            {
+                _memorizationLevel = value;
+                ClearErrors(nameof(MemorizationLevel));
+                if (_memorizationLevel <= 0)
+                {
+                    AddError(nameof(MemorizationLevel), $"Must be above 0");
+                }
+                if (_memorizationLevel > 100000)
+                {
+                    AddError(nameof(MemorizationLevel), $"Must be less than 100000");
+                }
+            } 
+        }
         public DateTime LastTimeAccessed { get; set; } = DateTime.Now;
-        public int JlptLevel { get; set; } = 0;
+        private int _jlptLevel = 1;
+
+        public int JlptLevel 
+        {
+            get { return _jlptLevel; }
+            set 
+            { 
+                _jlptLevel = value; 
+                ClearErrors(nameof(JlptLevel));
+                if (_jlptLevel < 0 || _jlptLevel > 6)
+                {
+                    AddError(nameof(JlptLevel), $"Number must be between 1 and 5");
+                }
+            }
+        }
         public bool IsFocusOn { get; set; } = false;
         public bool IsCommonWord { get; set; } = false;
         public int PageNumber { get; set; } = 0;
