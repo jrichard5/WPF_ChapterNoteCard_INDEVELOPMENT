@@ -15,10 +15,33 @@ Another good guide for people staring out with Wpf.
 * https://stackoverflow.com/questions/7262137/what-is-datacontext-for
 * https://rachel53461.wordpress.com/2012/07/14/what-is-this-datacontext-you-speak-of/
 
+
+
+## Problems that break MVVM?
+* My Chapter views code-behind uses 
+  * var item = (sender as ListView)?.SelectedItem;
+            if (item != null){
+                (this.DataContext as KanjiListViewModel).SwitchToJapaneseWordView((KanjiListItemModel)item);}
+* To add new items, I use a dialog
+  * AddJapanWordViewModel vm = new AddJapanWordViewModel();
+            JapanWordDialog dialog = new JapanWordDialog
+            {DataContext = vm};
+            dialog.ShowDialog();
+* Note how both know about a view model inside the code-behind.
+
+
 ## Problems
 * Loading data in constructor.  Function was async, but UI was still freezing.  
   * https://www.youtube.com/watch?v=0SCKUine6tY&list=PLA8ZIAm2I03jSfo18F7Y65XusYzDusYu5&index=4 Create a factory method.  Ok it did work.  It does freeze the first time, but the second time it does instantly change.  I really hope I didn't keep changing it for no reason this whole time.........
   * He did say "probably because loading symbols".  Which map identifiers in source code to identifiers in compile app for debugging
+
+#### HUGE PROBLEM
+* I'm passing the service provider around, doesn't sound like I'm suppose to do that.  https://stackoverflow.com/questions/2539895/dependency-injection-how-to-pass-the-injection-container-around
+  * Service Locator pattern? is what im doing? its bad.
+  * https://www.youtube.com/watch?v=3EzHn9ir5M8
+    * He just gets the required service for MainViewModel?  Does the service provider recursively add in dependencies all the way down to other view models? I'll test this in a simplier app later.
+
+  * Learned about TPT (table per type config) to use inheritance with ef core. Kinda of want to try that in a later project
 
 
 ## TODOs:
@@ -86,9 +109,7 @@ Give XAML element a x:Name to use in code behind
 
 When trying to Bind Double Mouse Click to a mousehandler delegate, I get 
 
-+		InnerException	
-{"Unable to cast object of type 'System.Reflection.RuntimeEventInfo' to type 'System.Reflection.MethodInfo'."}	
-System.Exception {System.InvalidCastException}
+InnerException {"Unable to cast object of type 'System.Reflection.RuntimeEventInfo' to type 'System.Reflection.MethodInfo'."}	 System.Exception {System.InvalidCastException}
 
 
 With Command classes (not relay command which is what I'm doing)
@@ -109,3 +130,6 @@ Binding a list item  (model in mvvm) to a command on the view model.
   * Button Command="{Binding DataContext.CommandName, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"
 
  Google'd "wpf how to pass entire object as a  command parameter" : Answer CommandParameter = {Binding} (from https://stackoverflow.com/questions/3857213/can-you-bind-a-whole-object-to-a-commandparameter-in-xaml)
+
+
+Didn't know how to call canexecute to change a button.  Ended up making the ICommand a RelayCommand and using its "NotifyCanExecuteChanged()".  Not sure if that is the correct way to call CanExecute

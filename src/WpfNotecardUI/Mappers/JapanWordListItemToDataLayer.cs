@@ -19,8 +19,8 @@ namespace WpfNotecardUI.Mappers
 
             ex.PageNumber = model.PageNumber ?? 1000;
             ex.Order = model.Order ?? 10000;
-            ex.ChapterNoteCardTopicName = topicName;
-            ex.SentenceNoteCardItemQuestion = model.ItemQuestion;
+            //ex.ChapterNoteCardTopicName = topicName;
+            //ex.SentenceNoteCardItemQuestion = model.ItemQuestion;
             ex.Id = model.ExtraJishoPrimaryId;
 
             ch.ChapterNoteCardTopicName = topicName;

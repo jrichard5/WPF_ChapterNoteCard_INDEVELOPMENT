@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfNotecardUI.ViewModels.DialogViewModels;
+using WpfNotecardUI.Views.Dialogs;
 
 namespace WpfNotecardUI.Views.ListViews
 {
@@ -23,6 +25,17 @@ namespace WpfNotecardUI.Views.ListViews
         public JapaneseWordListView()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //AddJapanWordViewModel vm = new AddJapanWordViewModel(TopicName.Text) ;
+            //JapanWordDialog dialog = new JapanWordDialog
+            //{
+            //    DataContext = vm
+            //};
+            //dialog.Owner = Application.Current.MainWindow;
+            //dialog.ShowDialog();
         }
     }
 }

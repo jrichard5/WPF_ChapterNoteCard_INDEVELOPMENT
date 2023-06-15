@@ -45,6 +45,25 @@ namespace DataLayer.Repositories
             }
             await this._dbContext.SaveChangesAsync();
         }
+
+        public async Task<int> CountFromOneChapter(string topicName)
+        {
+            var count = await _dbContext.JapaneseWordNoteCards.Where(jnc => jnc.SentenceNoteCard.Chapters.Any(c => c.TopicName == topicName)).CountAsync();
+            return count;
+        }
+
+        public async Task<List<JapaneseWordNoteCard>> GetPerPageFromOneCategory(string topicName, int page, int numberPerPage)
+        {
+            var wordswithChapter = await _dbContext.JapaneseWordNoteCards.Where(jnc => jnc.SentenceNoteCard.Chapters.Any(c => c.TopicName == topicName))
+                .Include(j => j.SentenceNoteCard)
+                .Include(j => j.SentenceNoteCard.ChapterSentences)
+                .ThenInclude(cs => cs.ExtraJishoInfo)
+                .AsSplitQuery()
+                .Skip((page-1) * numberPerPage).Take(numberPerPage)
+                .ToListAsync();
+
+            return wordswithChapter;
+        }
     }
 }
 

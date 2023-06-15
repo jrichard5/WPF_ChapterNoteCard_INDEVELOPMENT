@@ -10,5 +10,9 @@ namespace DataLayer.IRepos
         Task<List<JapaneseWordNoteCard>> GetAllFromOneCategory(string topicName);
 
         Task BulkUpdate(List<JapaneseWordNoteCard> cards);
+
+        Task<int> CountFromOneChapter (string topicName);
+
+        Task<List<JapaneseWordNoteCard>> GetPerPageFromOneCategory (string topicName, int page, int numberPerPage);
     }
 }
