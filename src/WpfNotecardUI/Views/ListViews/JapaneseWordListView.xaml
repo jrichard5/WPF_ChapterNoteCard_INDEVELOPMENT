@@ -20,6 +20,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
@@ -39,8 +40,8 @@
         </Button>
         <Button Grid.Column="4" Grid.Row="1"
                 Content="Add new word"
-                Click="Button_Click">
-            
+                Command="{Binding AddWordCommand}">
+
         </Button>
         <TextBlock Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center"
                    x:Name="TopicName"
@@ -67,6 +68,33 @@
                     <comp:JapaneseWordListComponent/>
                 </DataTemplate>
             </ListView.ItemTemplate>
-        </ListView>    
+
+        </ListView>
+        <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button
+                Content="Previous" 
+                Command="{Binding PreviousPageCommand}">
+
+            </Button>
+            <TextBlock Text="{Binding PageNumber}"/>
+            <TextBlock Text="/" />
+            <TextBlock Text="{Binding LastPageNumber}">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsPageLoading}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed" ></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <Button
+                Content="Next"
+                Command="{Binding NextPageCommand}">
+
+            </Button>
+        </StackPanel>
+        
     </Grid>
 </UserControl>

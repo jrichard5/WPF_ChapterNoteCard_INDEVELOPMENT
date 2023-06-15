@@ -1,6 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DataLayer.Entities;
+using DataLayer.IRepos;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,6 +11,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using WpfNotecardUI.Models;
 
 namespace WpfNotecardUI.ViewModels.DialogViewModels
@@ -18,6 +22,7 @@ namespace WpfNotecardUI.ViewModels.DialogViewModels
         public string TopicName { get { return _topicName; } }
 
         public readonly Dictionary<string, List<string>> _propertyErrors = new Dictionary<string, List<string>>();
+        private readonly IServiceProvider _serviceProvider;
         private string _itemQuestion = string.Empty;
 
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
@@ -44,7 +49,7 @@ namespace WpfNotecardUI.ViewModels.DialogViewModels
             {
                 _memorizationLevel = value;
                 ClearErrors(nameof(MemorizationLevel));
-                if (_memorizationLevel <= 0)
+                if (_memorizationLevel < 0)
                 {
                     AddError(nameof(MemorizationLevel), $"Must be above 0");
                 }
@@ -80,15 +85,47 @@ namespace WpfNotecardUI.ViewModels.DialogViewModels
         public RelayCommand AddCommand { get; }
         
 
-        public AddJapanWordViewModel(string topicName)
+        public AddJapanWordViewModel(string topicName, IServiceProvider serviceProvider)
         {
+
             _topicName = topicName;
             AddCommand = new RelayCommand(AddWordFunction, CanAdd);
+            _serviceProvider = serviceProvider;
         }
 
-        private void AddWordFunction()
+        private async void AddWordFunction()
         {
-            throw new NotImplementedException();
+            var notecard = NewNotecard();
+            notecard.ItemQuestion = ItemQuestion;
+            notecard.JLPTLevel = JlptLevel;
+            notecard.IsCommonWord = IsCommonWord;
+            notecard.SentenceNoteCard.ItemQuestion = ItemQuestion;
+            notecard.SentenceNoteCard.MemorizationLevel = MemorizationLevel;
+            notecard.SentenceNoteCard.Hint = Hint;
+            notecard.SentenceNoteCard.ItemAnswer = ItemAnswer;
+            notecard.SentenceNoteCard.IsUserWantsToFocusOn = IsFocusOn;
+            notecard.SentenceNoteCard.LastTimeAccess = LastTimeAccessed;
+            notecard.SentenceNoteCard.ChapterSentences.First().SentenceNoteCardItemQuestion = ItemQuestion;
+            notecard.SentenceNoteCard.ChapterSentences.First().ExtraJishoInfo.PageNumber = PageNumber;
+            notecard.SentenceNoteCard.ChapterSentences.First().ExtraJishoInfo.Order = Order;
+
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var scopeServiceProvider = scope.ServiceProvider;
+                var genericRepo = scopeServiceProvider.GetRequiredService<IJapaneseWordNoteCardRepo>();
+                try
+                {
+                    await genericRepo.AddAsync(notecard);
+                }
+                catch (DbUpdateException ex)
+                {
+                    if (ex.InnerException is not null) 
+                    { 
+                        MessageBox.Show(ex.InnerException.Message);
+                    }
+                }
+            }
+            ResetForm();
         }
 
         public bool CanAdd()
@@ -97,18 +134,43 @@ namespace WpfNotecardUI.ViewModels.DialogViewModels
             return !HasErrors;
         }
 
-        private JapaneseWordNoteCard ResetNotecard()
+        private void ResetForm()
+        {
+            _itemQuestion = string.Empty;
+            OnPropertyChanged(nameof(ItemQuestion));
+            ItemAnswer = string.Empty;
+            OnPropertyChanged(nameof(ItemAnswer));
+            Hint = string.Empty;
+            OnPropertyChanged(nameof (Hint));
+            MemorizationLevel = 0;
+            OnPropertyChanged(nameof(MemorizationLevel));
+            LastTimeAccessed = DateTime.Now;
+            OnPropertyChanged(nameof(LastTimeAccessed));
+            JlptLevel = 1;
+            OnPropertyChanged(nameof(JlptLevel));
+            IsFocusOn = false;
+            OnPropertyChanged(nameof(IsFocusOn));
+            IsCommonWord = false;
+            OnPropertyChanged(nameof(IsCommonWord));
+            PageNumber = 0;
+            OnPropertyChanged(nameof(PageNumber));
+            Order = 0;
+            OnPropertyChanged(nameof(Order));
+            
+
+        }
+        private JapaneseWordNoteCard NewNotecard()
         {
             var newJapanNoteCard = new JapaneseWordNoteCard();
             newJapanNoteCard.SentenceNoteCard = new SentenceNoteCard();
             newJapanNoteCard.SentenceNoteCard.LastTimeAccess = DateTime.Now;
-            newJapanNoteCard.SentenceNoteCard.Chapters = new List<ChapterNoteCard>
-            {
-                new ChapterNoteCard
-                {
-                    TopicName = _topicName
-                }
-            };
+            //newJapanNoteCard.SentenceNoteCard.Chapters = new List<ChapterNoteCard>
+            //{
+            //    new ChapterNoteCard
+            //    {
+            //        TopicName = _topicName
+            //    }
+            //};
             newJapanNoteCard.SentenceNoteCard.ChapterSentences = new List<ChapterNoteCardSentenceNoteCard>
             {
                 new ChapterNoteCardSentenceNoteCard

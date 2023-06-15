@@ -35,6 +35,11 @@ Another good guide for people staring out with Wpf.
   * https://www.youtube.com/watch?v=0SCKUine6tY&list=PLA8ZIAm2I03jSfo18F7Y65XusYzDusYu5&index=4 Create a factory method.  Ok it did work.  It does freeze the first time, but the second time it does instantly change.  I really hope I didn't keep changing it for no reason this whole time.........
   * He did say "probably because loading symbols".  Which map identifiers in source code to identifiers in compile app for debugging
 
+#### HUGE PROBLEM
+* I'm passing the service provider around, doesn't sound like I'm suppose to do that.  https://stackoverflow.com/questions/2539895/dependency-injection-how-to-pass-the-injection-container-around
+  * Service Locator pattern? is what im doing? its bad.
+  * https://www.youtube.com/watch?v=3EzHn9ir5M8
+    * He just gets the required service for MainViewModel?  Does the service provider recursively add in dependencies all the way down to other view models? I'll test this in a simplier app later.
 
   * Learned about TPT (table per type config) to use inheritance with ef core. Kinda of want to try that in a later project
 

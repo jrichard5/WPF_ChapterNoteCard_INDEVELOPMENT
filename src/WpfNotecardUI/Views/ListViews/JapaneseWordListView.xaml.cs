@@ -29,14 +29,13 @@ namespace WpfNotecardUI.Views.ListViews
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
-            AddJapanWordViewModel vm = new AddJapanWordViewModel(TopicName.Text) ;
-            JapanWordDialog dialog = new JapanWordDialog
-            {
-                DataContext = vm
-            };
-            dialog.Owner = Application.Current.MainWindow;
-            dialog.ShowDialog();
+            //AddJapanWordViewModel vm = new AddJapanWordViewModel(TopicName.Text) ;
+            //JapanWordDialog dialog = new JapanWordDialog
+            //{
+            //    DataContext = vm
+            //};
+            //dialog.Owner = Application.Current.MainWindow;
+            //dialog.ShowDialog();
         }
     }
 }
