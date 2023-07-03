@@ -1,121 +1,79 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 using WpfNotecardUI.ValidationRules;
+using WpfNotecardUI.ViewModels.AbstractViewModels;
 
 namespace WpfNotecardUI.ViewModels.DialogViewModels
 {
-    public class AddKanjiWordViewModel : ObservableObject, INotifyDataErrorInfo
+    public class AddKanjiWordViewModel : AbstractValidationViewModel
     {
-        Dictionary<string, IList<object>> Errors = new Dictionary<string, IList<object>>();
-        Dictionary<string, IList<ValidationRule>> ValidationRules = new Dictionary<string, IList<ValidationRule>>()
-        {
-            { nameof(TopicName), new List<ValidationRule> {new OneCharacterValdiationRule()} }
-        };
-
         private string _parentName;
-        private string topicName;
+        public string ParentName { get { return _parentName; } }
+        public DateTime LastTimeAccessed { get; set; } = DateTime.Now;
+        private string topicName = string.Empty;
         public string TopicName
         {
             get { return topicName; }
             set
             {
-                bool isValueValid = IsPropertyValid(value);
-                if (isValueValid)
-                {
-                    this.topicName = value;
-                    OnPropertyChanged(nameof(TopicName));
-                }
+                IsPropertyValid(value);
+                this.topicName = value;
+                OnPropertyChanged(nameof(TopicName));
             }
         }
+        private string topicDefinition = string.Empty;
+        public string TopicDefinition
+        {
+            get { return topicDefinition; }
+            set
+            {
+                IsPropertyValid(value);
+                this.topicDefinition = value;
+                OnPropertyChanged(nameof(TopicDefinition));
+            }
+        }
+        public RelayCommand AddKanjiCommand { get; }
 
         public AddKanjiWordViewModel(string parentName, IServiceProvider serviceLocator)
         {
             _parentName = parentName;
+            AddKanjiCommand = new RelayCommand(AddKanjiFunction, CanAdd);
+            HelpNotify += NotifyCanAddChange;
+            //Register the ValidationRules
+            ValidationRules.Add(nameof(TopicName), new List<ValidationRule>{ new OneCharacterValdiationRule() });
+            ValidationRules.Add(nameof(TopicDefinition), new List<ValidationRule> { new MaxCharacterValidationRule() });
 
         }
 
-        #region Inotifydataerror
-        public bool HasErrors => this.Errors.Any();
-
-        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
-
-        public IEnumerable GetErrors(string? propertyName)
+        public void NotifyCanAddChange()
         {
-            if (propertyName == null)
-            {
-                throw new ArgumentNullException(nameof(propertyName));
-            }
-            if (this.Errors.TryGetValue(propertyName, out var errors))
-            {
-                return errors;
-            }
-            else
-            {
-                return null;
-            }
+            AddKanjiCommand.NotifyCanExecuteChanged();
         }
 
-        #endregion
-
-        #region stackoverflow to manage errors
-        //https://stackoverflow.com/questions/56606441/how-to-add-validation-to-view-model-properties-or-how-to-implement-inotifydataer for more info
-        public bool IsPropertyValid<TValue>(TValue propertyValue, [CallerMemberName] string propertyName = null) 
+        private async void AddKanjiFunction()
         {
-            ClearErrors(propertyName);
-
-            if (this.ValidationRules.TryGetValue(propertyName, out var rules))
-            {
-                IEnumerable<object> errorMessages = rules
-                    .Select(validationRule => validationRule.Validate(propertyValue, CultureInfo.CurrentCulture))
-                    .Where(result => !result.IsValid)
-                    .Select(invalidResult => invalidResult.ErrorContent);
-                AddErrorRange(propertyName, errorMessages);
-                return !errorMessages.Any();
-            }
-            return true;
+            Debug.WriteLine("hi");
         }
-
-        public bool ClearErrors(string propertyName)
+        public bool CanAdd()
         {
-            if (this.Errors.Remove(propertyName))
+            if(TopicName == string.Empty
+                || TopicDefinition == string.Empty)
             {
-                OnErrorsChanged(propertyName);
-                return true;
+                return false;
             }
-            return false;
+            return !HasErrors;
         }
-
-        private void AddErrorRange(string propertyName, IEnumerable<object> newErrors)
-        {
-            if (!newErrors.Any())
-            {
-                return;
-            }
-            if (!this.Errors.TryGetValue(propertyName, out var pErrors))
-            {
-                pErrors = new List<object>();
-                this.Errors.Add(propertyName, pErrors);
-            }
-            foreach (var error in newErrors)
-            {
-                pErrors.Add(error);
-            }
-            OnErrorsChanged(propertyName);
-        }
-
-        protected virtual void OnErrorsChanged(string propertyName)
-        {
-            this.ErrorsChanged.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-        }
-        #endregion
     }
 }
