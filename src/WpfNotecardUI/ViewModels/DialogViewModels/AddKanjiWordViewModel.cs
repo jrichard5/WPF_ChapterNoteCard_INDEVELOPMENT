@@ -24,7 +24,7 @@ using WpfNotecardUI.ViewModels.AbstractViewModels;
 
 namespace WpfNotecardUI.ViewModels.DialogViewModels
 {
-    public class AddKanjiWordViewModel : AbstractValidationViewModel
+    public class AddKanjiWordViewModel : AbstractClosableValidationViewModel
     {
         private string _parentName;
         private readonly IServiceProvider _serviceProvider;
@@ -151,7 +151,8 @@ namespace WpfNotecardUI.ViewModels.DialogViewModels
                 try
                 {
                     await kanjiRepo.AddAndSearchWords(notecard);
-                    ResetForm();
+                    //ResetForm();
+                    OnRequestClose();
                 }
                 catch (DbUpdateException ex)
                 {

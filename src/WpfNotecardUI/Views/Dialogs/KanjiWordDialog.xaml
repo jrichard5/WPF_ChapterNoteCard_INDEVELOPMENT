@@ -71,13 +71,13 @@
         
         
         <Label Grid.Column="2" Grid.Row="1" Content="Topic Name" HorizontalContentAlignment="Right"></Label>
-        <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding TopicName, Mode=TwoWay, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{DynamicResource ValidationErrorTemplate}" VerticalAlignment="Center"></TextBox>
+        <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding TopicName, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{DynamicResource ValidationErrorTemplate}" VerticalAlignment="Center"></TextBox>
 
         <Label Grid.Column="2" Grid.Row="2" Content="Topic Definition" HorizontalContentAlignment="Right"></Label>
-        <TextBox Grid.Column="3" Grid.Row="2" Text="{Binding TopicDefinition, Mode=TwoWay, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{DynamicResource ValidationErrorTemplate}" VerticalAlignment="Center"></TextBox>
+        <TextBox Grid.Column="3" Grid.Row="2" Text="{Binding TopicDefinition, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{DynamicResource ValidationErrorTemplate}" VerticalAlignment="Center"></TextBox>
 
         <Label Grid.Column="2" Grid.Row="3" Content="Grade Level" HorizontalContentAlignment="Right"></Label>
-        <TextBox Grid.Column="3" Grid.Row="3" Text="{Binding GradeLevel, Mode=TwoWay, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{DynamicResource ValidationErrorTemplate}" VerticalAlignment="Center"></TextBox>
+        <TextBox Grid.Column="3" Grid.Row="3" Text="{Binding GradeLevel, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{DynamicResource ValidationErrorTemplate}" VerticalAlignment="Center"></TextBox>
 
         <Label Grid.Column="2" Grid.Row="4" Content="Category" HorizontalContentAlignment="Right"></Label>
         <TextBox Grid.Column="3" Grid.Row="4" Text="{Binding ParentName, Mode=OneWay}"  IsEnabled="False"   VerticalAlignment="Center"></TextBox>

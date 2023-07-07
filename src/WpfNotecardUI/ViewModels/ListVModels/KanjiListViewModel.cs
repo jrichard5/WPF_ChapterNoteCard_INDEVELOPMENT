@@ -55,12 +55,13 @@ namespace WpfNotecardUI.ViewModels.ListVModels
         {
             AddKanjiWordViewModel kanjiVM = new AddKanjiWordViewModel("Japanese Vocab", _serviceProvider);
 
-            _dialogService = new DialogServices<KanjiWordDialog, AddKanjiWordViewModel>(kanjiVM);
+            _dialogService = new DialogServices<AddKanjiWordViewModel>(kanjiVM);
 
             //callback Action<string>  Action is a delegate type
             _dialogService.ShowDialog(result =>
             {
                 var teset = result;
+                GetDataForList();
             });
         }
 
