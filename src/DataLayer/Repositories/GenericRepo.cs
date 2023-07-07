@@ -28,6 +28,16 @@ namespace DataLayer.Repositories
             await this._dbContext.SaveChangesAsync();
         }
 
+        public async Task DeleteByList(IList<T> entity)
+        {
+            foreach (var item in entity)
+            {
+                _dbContext.Set<T>().Attach(item);
+                _dbContext.Set<T>().Remove(item);
+            }
+            await this._dbContext.SaveChangesAsync();
+        }
+
         public async Task<T> FindByIdAsync(int id)
         {
             var entity = await this._dbContext.Set<T>().FindAsync(id);

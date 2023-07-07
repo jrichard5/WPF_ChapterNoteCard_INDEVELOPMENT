@@ -1,0 +1,110 @@
+﻿<Window x:Class="WpfNotecardUI.Views.Dialogs.KanjiWordDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfNotecardUI.Views.Dialogs"
+        mc:Ignorable="d"
+        Title="KanjiWordDialog" Height="550" Width="500"
+        WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="0 0 0 10">
+            </Setter>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Margin" Value="0 0 0 10">
+                
+            </Setter>
+        </Style>
+        <ControlTemplate x:Key="ValidationErrorTemplate">
+            <StackPanel>
+                <Border BorderBrush="DarkRed" BorderThickness="2">
+                    <AdornedElementPlaceholder x:Name="AdornedElement" />
+                </Border>
+                <ItemsControl ItemsSource="{Binding}" HorizontalAlignment="Left">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding ErrorContent}" FontSize="10"
+                                       Foreground="DarkRed"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ControlTemplate>
+    </Window.Resources>
+    
+    
+
+    <Grid Grid.IsSharedSizeScope="true">
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" SharedSizeGroup="A" />
+            <ColumnDefinition Width="4*"  MaxWidth="500"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        
+        
+        <Label Grid.Column="2" Grid.Row="1" Content="Topic Name" HorizontalContentAlignment="Right"></Label>
+        <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding TopicName, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{DynamicResource ValidationErrorTemplate}" VerticalAlignment="Center"></TextBox>
+
+        <Label Grid.Column="2" Grid.Row="2" Content="Topic Definition" HorizontalContentAlignment="Right"></Label>
+        <TextBox Grid.Column="3" Grid.Row="2" Text="{Binding TopicDefinition, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{DynamicResource ValidationErrorTemplate}" VerticalAlignment="Center"></TextBox>
+
+        <Label Grid.Column="2" Grid.Row="3" Content="Grade Level" HorizontalContentAlignment="Right"></Label>
+        <TextBox Grid.Column="3" Grid.Row="3" Text="{Binding GradeLevel, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{DynamicResource ValidationErrorTemplate}" VerticalAlignment="Center"></TextBox>
+
+        <Label Grid.Column="2" Grid.Row="4" Content="Category" HorizontalContentAlignment="Right"></Label>
+        <TextBox Grid.Column="3" Grid.Row="4" Text="{Binding ParentName, Mode=OneWay}"  IsEnabled="False"   VerticalAlignment="Center"></TextBox>
+
+
+
+        <Label Grid.Column="2" Grid.Row="5" Content="Last Time this was accessed" HorizontalContentAlignment="Right"></Label>
+        <TextBox Grid.Column="3" Grid.Row="5" Text="{Binding LastTimeAccessed, Mode=TwoWay}" IsEnabled="False" VerticalAlignment="Center"></TextBox>
+
+        <Label Grid.Column="2" Grid.Row="6" Content="Newspaper Rank" HorizontalContentAlignment="Right"></Label>
+        <TextBox Grid.Column="3" Grid.Row="6" Text="{Binding NewsPaperRank, Mode=TwoWay, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{DynamicResource ValidationErrorTemplate}"  VerticalAlignment="Center"></TextBox>
+
+        <Label Grid.Column="2" Grid.Row="7" Content="JLPT Level (int)" HorizontalContentAlignment="Right"></Label>
+        <TextBox Grid.Column="3" Grid.Row="7" Text="{Binding JLPTLevel, Mode=TwoWay, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{DynamicResource ValidationErrorTemplate}" VerticalAlignment="Center"></TextBox>
+
+        <Label Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="8" Content="Readings can be separated by spaces or commas"></Label>
+        <Label Grid.Column="2" Grid.Row="9" Content="Kanji On Readings" HorizontalContentAlignment="Right"></Label>
+        <TextBox Grid.Column="3" Grid.Row="9" Text="{Binding OnReadings, Mode=TwoWay, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{DynamicResource ValidationErrorTemplate}" VerticalAlignment="Center"></TextBox>
+
+
+        <Label Grid.Column="2" Grid.Row="10" Content="Kanji Kun Readings" HorizontalContentAlignment="Right"></Label>
+        <TextBox Grid.Column="3" Grid.Row="10" Text="{Binding KunReadings, Mode=TwoWay, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{DynamicResource ValidationErrorTemplate}" VerticalAlignment="Center"></TextBox>
+
+        <Button Grid.Column="2" Grid.Row="13"
+                Content="Add Word"
+                Margin="12"
+                Command="{Binding AddKanjiCommand}">
+        </Button>
+    </Grid>
+</Window>

@@ -40,11 +40,19 @@ Another good guide for people staring out with Wpf.
   * Service Locator pattern? is what im doing? its bad.
   * https://www.youtube.com/watch?v=3EzHn9ir5M8
     * He just gets the required service for MainViewModel?  Does the service provider recursively add in dependencies all the way down to other view models? I'll test this in a simplier app later.
+    * Tested it in simple app, does seem recursive.  However, I do not know how to create a new view model based on a Command using DI.  Feels like DI makes dependency asap
+    * so if page 1 makes page 2 which makes page 3, and I put them all in the constructor (for injection), it would resolve all the way down to 3 even though I just want to create page 1 atm
+    * Does not support method injection out the box, so much confused.
+  * I am going to use the service locator pattern.  But if I were to redo this app, I would make a navigation service so I could use dependency Injection properly.
+    * (video showing WPF, MVVM, Navigation, and DI : https://www.youtube.com/watch?v=wFzmBZpjuAo )
 
   * Learned about TPT (table per type config) to use inheritance with ef core. Kinda of want to try that in a later project
 
 
 ## TODOs:
+* If word already exists, but not in the chapter, need to add it to the chapter.
+
+
 Find better ways to make extensible
   1. Any time I need to pass something down from app to view models, I'm making a new parameter
   2. All viewModels have a Navigate to Start page command
@@ -133,3 +141,5 @@ Binding a list item  (model in mvvm) to a command on the view model.
 
 
 Didn't know how to call canexecute to change a button.  Ended up making the ICommand a RelayCommand and using its "NotifyCanExecuteChanged()".  Not sure if that is the correct way to call CanExecute
+
+Been seeing alot of reflection topics when searching about mvvm.  https://stackoverflow.com/questions/840261/passing-arguments-to-c-sharp-generic-new-of-templated-type  2010 post using constructorInfo (is that reflection)

@@ -8,6 +8,6 @@ namespace WpfNotecardUI.Services.IServices
 {
     public interface IDialogService
     {
-        void ShowAddJapanWordDialog(object viewModel);
+        void ShowDialog(Action<string> callback);
     }
 }

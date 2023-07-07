@@ -29,6 +29,7 @@ namespace DataLayer
             services.AddScoped<ICategoryRepo, CategoryRepo>();
             services.AddScoped<IChapterNoteCardRepo, ChapterNoteCardRepo>();
             services.AddScoped<IJapaneseWordNoteCardRepo, JapaneseWordNoteCardRepo>();
+            services.AddScoped(typeof(IGenericRepo<>), typeof(GenericRepo<>));
         }
     }
 }

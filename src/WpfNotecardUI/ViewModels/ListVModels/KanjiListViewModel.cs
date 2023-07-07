@@ -1,25 +1,70 @@
-﻿using DataLayer.Entities;
+﻿using CommunityToolkit.Mvvm.Input;
+using DataLayer.Entities;
 using DataLayer.IRepos;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using WpfNotecardUI.Mappers;
 using WpfNotecardUI.Models;
+using WpfNotecardUI.Services.IServices;
+using WpfNotecardUI.Services.RealServices;
 using WpfNotecardUI.Stores;
 using WpfNotecardUI.ViewModels.AbstractViewModels;
+using WpfNotecardUI.ViewModels.DialogViewModels;
+using WpfNotecardUI.Views.Dialogs;
 
 namespace WpfNotecardUI.ViewModels.ListVModels
 {
     public class KanjiListViewModel : AbstractListVModel<KanjiListItemModel>
     {
+        IDialogService _dialogService;
+        public ICommand GoToAddKanjiDialog { get; }
 
         public KanjiListViewModel(NavigationStore navigationStore, IServiceProvider serviceProvider)
             : base(navigationStore, serviceProvider)
         {
             GetDataForList();
+            GoToAddKanjiDialog = new RelayCommand(ExecuteShowDialog);
+            //_dialogService = new DialogServices<KanjiWordDialog, AddKanjiWordViewModel>("Japanese Vocab", _serviceProvider);
         }
+
+        public override void DeleteSelectedFunction()
+        {
+            var pkList = new List<ChapterNoteCard>();
+            var ItemsSelected = CurrentList.Where(item => item.IsSelectedForDeletion == true).ToList();
+            foreach (var item in ItemsSelected)
+            {
+                //Since the kanji notecard inherits from chapter, need to delete chapter
+                pkList.Add(ModelToEntityMapper.ToChapterNoteCardPrimaryKey(item));
+            }
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var scopedServiceProvider = scope.ServiceProvider;
+                var genericRepo = scopedServiceProvider.GetRequiredService<IGenericRepo<ChapterNoteCard>>();
+                genericRepo.DeleteByList(pkList);
+            }
+                Debug.WriteLine("hi");
+        }
+
+        public void ExecuteShowDialog()
+        {
+            AddKanjiWordViewModel kanjiVM = new AddKanjiWordViewModel("Japanese Vocab", _serviceProvider);
+
+            _dialogService = new DialogServices<AddKanjiWordViewModel>(kanjiVM);
+
+            //callback Action<string>  Action is a delegate type
+            _dialogService.ShowDialog(result =>
+            {
+                var teset = result;
+                GetDataForList();
+            });
+        }
+
 
         public override async void GetDataForList()
         {

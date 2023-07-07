@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,8 +30,21 @@ namespace WpfNotecardUI.ViewModels.AbstractViewModels
                 OnPropertyChanged(nameof(IsLoading));
             }
         }
+
+        private bool isDeleteToggled = false;
+        public bool IsDeleteToggled
+        {
+            get { return isDeleteToggled; }
+            set 
+            {
+                isDeleteToggled = value;
+                OnPropertyChanged(nameof(IsDeleteToggled));
+            }
+        }
         public ICommand GoToStartCommand { get; }
         public ICommand GoToPreviousCommand { get; }
+        public ICommand ToggleDeleteCommand { get; }
+        public ICommand DeleteSelectedCommand { get; }
 
         public AbstractListVModel(NavigationStore navigationStore, IServiceProvider serviceProvider)
         {
@@ -38,6 +52,18 @@ namespace WpfNotecardUI.ViewModels.AbstractViewModels
             _serviceProvider = serviceProvider;
             GoToStartCommand = new RelayCommand(GoToStartHandler);
             GoToPreviousCommand = new RelayCommand(GoToPreviousHandler);
+            ToggleDeleteCommand = new RelayCommand(ToggleDeleteFunction);
+            DeleteSelectedCommand = new RelayCommand(DeleteSelectedFunction);
+        }
+
+        public virtual void ToggleDeleteFunction()
+        {
+            IsDeleteToggled = !IsDeleteToggled;
+        }
+
+        public virtual void DeleteSelectedFunction()
+        {
+            throw new NotImplementedException();
         }
 
         public virtual void GoToStartHandler()
