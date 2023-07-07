@@ -18,6 +18,7 @@ namespace WpfNotecardUI.Models
         public string KunReadings { get; set; }
         public string OnReadings { get; set; }
         public string OtherReadings { get; set; }
+        public bool IsSelectedForDeletion { get; set; }
         public KanjiListItemModel(KanjiNoteCard card)
         {
             TopicName = card.TopicName;

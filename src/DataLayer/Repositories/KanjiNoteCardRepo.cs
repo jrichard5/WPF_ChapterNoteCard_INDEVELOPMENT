@@ -12,6 +12,24 @@ namespace DataLayer.Repositories
         {
         }
 
+        public async Task AddAndSearchWords(KanjiNoteCard item)
+        {
+            var words = await _dbContext.JapaneseWordNoteCards.Where(jnc => jnc.ItemQuestion.Contains(item.ChapterNoteCard.TopicName))
+                .Select(jnc => jnc.ItemQuestion)
+                .ToListAsync();
+
+            List<ChapterNoteCardSentenceNoteCard> addWords = new List<ChapterNoteCardSentenceNoteCard> ();
+            foreach (var word in words)
+            {
+                addWords.Add(new ChapterNoteCardSentenceNoteCard { ChapterNoteCardTopicName = item.ChapterNoteCard.TopicName, SentenceNoteCardItemQuestion = word });
+            }
+            item.ChapterNoteCard.ChapterSentences = addWords;
+
+            var result = _dbContext.ExtraKanjiInfos.Add(item);
+            await _dbContext.SaveChangesAsync();
+
+        }
+
         public async Task AddButSkipUniqueException(KanjiNoteCard item)
         {
             try

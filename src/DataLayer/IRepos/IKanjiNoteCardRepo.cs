@@ -7,6 +7,8 @@ namespace DataLayer.IRepos
     {
         //Since only adding one kanji, going to make it so if it fails the unique constraint DbUpdateException, it will just skip it;
         public Task AddButSkipUniqueException(KanjiNoteCard item);
+
+        public Task AddAndSearchWords(KanjiNoteCard item);
         public Task<List<KanjiNoteCard>> GetAllWithAllInfo();
     }
 }

@@ -16,6 +16,10 @@ namespace WpfNotecardUI.ValidationRules
             {
                 return new ValidationResult(false, "Must be string");
             }
+            if (stringToTest == string.Empty)
+            {
+                return new ValidationResult(false, "Must be filled in");
+            }
             if (stringToTest.Length > 52) 
             {
                 return new ValidationResult(false, "Cannot be more than 52 characters");

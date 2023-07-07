@@ -12,6 +12,7 @@
             <ColumnDefinition Width="*" SharedSizeGroup="A"/>
             <ColumnDefinition Width="20" />
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -57,5 +58,17 @@
                 <TextBlock Text="{Binding JLPTLevel}" />
             </StackPanel>
         </Grid>
+        <CheckBox Grid.Column="4" VerticalAlignment="Center"
+            IsChecked="{Binding IsSelectedForDeletion}" >
+            <CheckBox.Style>
+                <Style TargetType="CheckBox">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding DataContext.IsDeleteToggled, RelativeSource={RelativeSource AncestorType=ListView}}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </CheckBox.Style>
+        </CheckBox>
     </Grid>
 </UserControl>

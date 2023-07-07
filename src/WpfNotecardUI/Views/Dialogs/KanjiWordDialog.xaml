@@ -77,7 +77,7 @@
         <TextBox Grid.Column="3" Grid.Row="2" Text="{Binding TopicDefinition, Mode=TwoWay, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{DynamicResource ValidationErrorTemplate}" VerticalAlignment="Center"></TextBox>
 
         <Label Grid.Column="2" Grid.Row="3" Content="Grade Level" HorizontalContentAlignment="Right"></Label>
-        <TextBox Grid.Column="3" Grid.Row="3" Text="{Binding Hint, Mode=TwoWay}" VerticalAlignment="Center"></TextBox>
+        <TextBox Grid.Column="3" Grid.Row="3" Text="{Binding GradeLevel, Mode=TwoWay, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{DynamicResource ValidationErrorTemplate}" VerticalAlignment="Center"></TextBox>
 
         <Label Grid.Column="2" Grid.Row="4" Content="Category" HorizontalContentAlignment="Right"></Label>
         <TextBox Grid.Column="3" Grid.Row="4" Text="{Binding ParentName, Mode=OneWay}"  IsEnabled="False"   VerticalAlignment="Center"></TextBox>
@@ -88,16 +88,18 @@
         <TextBox Grid.Column="3" Grid.Row="5" Text="{Binding LastTimeAccessed, Mode=TwoWay}" IsEnabled="False" VerticalAlignment="Center"></TextBox>
 
         <Label Grid.Column="2" Grid.Row="6" Content="Newspaper Rank" HorizontalContentAlignment="Right"></Label>
-        <TextBox Grid.Column="3" Grid.Row="6" Text="{Binding JlptLevel, Mode=TwoWay}"   VerticalAlignment="Center"></TextBox>
+        <TextBox Grid.Column="3" Grid.Row="6" Text="{Binding NewsPaperRank, Mode=TwoWay, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{DynamicResource ValidationErrorTemplate}"  VerticalAlignment="Center"></TextBox>
 
         <Label Grid.Column="2" Grid.Row="7" Content="JLPT Level (int)" HorizontalContentAlignment="Right"></Label>
-        <TextBox Grid.Column="3" Grid.Row="7" Text="{Binding PageNumber, Mode=TwoWay}" VerticalAlignment="Center"></TextBox>
-        <Label Grid.Column="2" Grid.Row="8" Content="Kanji On Readings" HorizontalContentAlignment="Right"></Label>
-        <TextBox Grid.Column="3" Grid.Row="8" Text="{Binding Order, Mode=TwoWay}" VerticalAlignment="Center"></TextBox>
+        <TextBox Grid.Column="3" Grid.Row="7" Text="{Binding JLPTLevel, Mode=TwoWay, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{DynamicResource ValidationErrorTemplate}" VerticalAlignment="Center"></TextBox>
+
+        <Label Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="8" Content="Readings can be separated by spaces or commas"></Label>
+        <Label Grid.Column="2" Grid.Row="9" Content="Kanji On Readings" HorizontalContentAlignment="Right"></Label>
+        <TextBox Grid.Column="3" Grid.Row="9" Text="{Binding OnReadings, Mode=TwoWay, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{DynamicResource ValidationErrorTemplate}" VerticalAlignment="Center"></TextBox>
 
 
-        <Label Grid.Column="2" Grid.Row="9" Content="Kanji Kun Readings" HorizontalContentAlignment="Right"></Label>
-        <TextBox Grid.Column="3" Grid.Row="9" Text="{Binding Order, Mode=OneWay}" VerticalAlignment="Center" IsEnabled="False"></TextBox>
+        <Label Grid.Column="2" Grid.Row="10" Content="Kanji Kun Readings" HorizontalContentAlignment="Right"></Label>
+        <TextBox Grid.Column="3" Grid.Row="10" Text="{Binding KunReadings, Mode=TwoWay, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{DynamicResource ValidationErrorTemplate}" VerticalAlignment="Center"></TextBox>
 
         <Button Grid.Column="2" Grid.Row="13"
                 Content="Add Word"
