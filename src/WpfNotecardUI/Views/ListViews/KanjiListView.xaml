@@ -7,7 +7,7 @@
              xmlns:comp="clr-namespace:WpfNotecardUI.Views.ListViews.ListViewComponents" xmlns:reusablecomponents="clr-namespace:WpfNotecardUI.Views.ReusableComponents"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid Grid.IsSharedSizeScope="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="auto"/>
@@ -18,6 +18,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
@@ -39,9 +40,44 @@
                 Command="{Binding AddCommand}">
             
         </Button>
-        <ListView Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5"
+
+        <Grid Width="{Binding ActualWidth, ElementName=listView}"
+              Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="4"
+              HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7" />
+                <ColumnDefinition Width="auto" SharedSizeGroup="TopicName"/>
+                <ColumnDefinition Width="*" MinWidth="200"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="auto" SharedSizeGroup="NewspaperRank"/>
+                <ColumnDefinition Width="auto" SharedSizeGroup="JLPTLevel" />
+                <ColumnDefinition Width="auto" SharedSizeGroup="GradeLevel" />
+                <ColumnDefinition Width="auto" SharedSizeGroup="Delete" />
+                <ColumnDefinition Width="7" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Kanji" Grid.Column="1"></TextBlock>
+            <TextBlock Text="Definition" Grid.Column="2" HorizontalAlignment="Center"></TextBlock>
+            <TextBlock Text="Reading" Grid.Column="3" HorizontalAlignment="Center"/>
+            <TextBlock Text="Newspaper Rank" Grid.Column="5" FontSize="12" Margin="10 0" VerticalAlignment="Bottom"/>
+            <TextBlock Text="JLPT Level" Grid.Column="6" FontSize="12"  Margin="10 0" VerticalAlignment="Bottom"/>
+            <TextBlock Text="Grade Level" Grid.Column="7" FontSize="12" Margin="10 0" VerticalAlignment="Bottom"/>
+            <TextBlock Text="Delete" Grid.Column="8" FontSize="12">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsDeleteToggled}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </Grid>
+        <ScrollViewer  Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" VerticalScrollBarVisibility="Auto">
+        <ListView Name="listView"
                   ItemsSource="{Binding CurrentList}" 
-                  Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Stretch"
+                  HorizontalContentAlignment="Stretch"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   MouseDoubleClick="ListView_MouseDoubleClick">
             <ListView.Style>
@@ -59,13 +95,19 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        </ScrollViewer>
 
-        <Button Grid.Column="1" Grid.Row="3"
+        <Button Grid.Column="1" Grid.Row="4" Margin="10 0"
+                Content="Save"
+                Command="{Binding SaveData}">
+        </Button>
+        
+        <Button Grid.Column="2" Grid.Row="4"
                 Content="Delete Toggle" Margin="10 0"
                 Command="{Binding ToggleDeleteCommand}">
         </Button>
 
-        <Button Grid.Column="2" Grid.Row="3"
+        <Button Grid.Column="4" Grid.Row="4"
                 Content="Delete Selected" Margin="10 0"
                 Command="{Binding DeleteSelectedCommand}">
             <Button.Style>
@@ -79,7 +121,7 @@
             </Button.Style>
         </Button>
 
-        <reusablecomponents:PageCountControl Grid.Column="3" Grid.Row="3"></reusablecomponents:PageCountControl>
+        <reusablecomponents:PageCountControl Grid.Column="3" Grid.Row="4"></reusablecomponents:PageCountControl>
         
     </Grid>
 </UserControl>

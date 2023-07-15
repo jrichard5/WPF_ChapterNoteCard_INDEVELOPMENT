@@ -7,70 +7,67 @@
              mc:Ignorable="d" >
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto" SharedSizeGroup="TopicName"/>
+            <ColumnDefinition Width="2*" MinWidth="200"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="auto" SharedSizeGroup="MemoryLevel"/>
+            <ColumnDefinition Width="auto" SharedSizeGroup="JLPTLevel" />
+            <ColumnDefinition Width="auto" SharedSizeGroup="Common" />
+            <ColumnDefinition Width="auto" SharedSizeGroup="Focus" />
+            <ColumnDefinition Width="auto" SharedSizeGroup="Delete" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition Height="12" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="8" />
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Column="0">
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="{Binding Hint}"/>
-                <TextBlock Text="{Binding ItemQuestion}" FontSize="32"></TextBlock>
+                <TextBlock Text="{Binding Hint}" FontSize="16" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding ItemQuestion}" FontSize="40"></TextBlock>
+            </StackPanel>
+        </StackPanel>
+        
+        <TextBlock Text="{Binding ItemAnswer}" TextWrapping="Wrap" Grid.Column="1" FontSize="16"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0"></TextBlock>
+
+        <TextBlock Text="{Binding MemorizationLevel}"
+                   Grid.Column="4"/>
+        <TextBlock Text="{Binding JLPTLevel}"
+                   Grid.Column="5"/>
+
+        <CheckBox Grid.Column="6"
+                  HorizontalAlignment="Center" VerticalAlignment="Center"
+            IsChecked="{Binding IsCommonWord}" IsEnabled="False" />
+        <CheckBox Grid.Column="7"
+                  VerticalAlignment="Center"  HorizontalAlignment="Center"
+                  IsChecked="{Binding IsUserWantsToFocusOn}" 
+                          Command="{Binding DataContext.ListItemChanged, RelativeSource={RelativeSource AncestorType=ListView}}"
+                          CommandParameter="{Binding ItemQuestion}"/>
+                <!--Command="{Binding DataContext.SaveData, RelativeSource={RelativeSource AncestorType=ListView}}"-->
+
+
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="9">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Page#:  " FontSize="8"></TextBlock>
+                    <TextBlock Text="{Binding PageNumber}" FontSize="8" Margin="0 0 8 0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock Text="Order#:  " FontSize="8"></TextBlock>
+                    <TextBlock Text="{Binding Order}" FontSize="8"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Last Time Seen:  " FontSize="8"></TextBlock>
+                <TextBlock Text="{Binding LastTimeAccessed}" FontSize="8"/>
             </StackPanel>
             
         </StackPanel>
-        <TextBlock Text="{Binding ItemAnswer}" TextWrapping="Wrap" HorizontalAlignment="Left" Grid.Column="1" FontSize="12"></TextBlock>
-
-        
-        <StackPanel Orientation="Vertical" Grid.Column="3">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Memory Level"/>
-                <TextBlock Text="{Binding MemorizationLevel}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="JLPT Level"/>
-                <TextBlock Text="{Binding JLPTLevel}"/>
-            </StackPanel>
-        </StackPanel>
-
-
-        <StackPanel Orientation="Vertical" Grid.Column="4">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Last Time Seen" FontSize="8"></TextBlock>
-                <TextBlock Text="{Binding LastTimeAccessed}" FontSize="8"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Grid.Column="2">
-                <TextBlock Text="Page Number: " FontSize="8"></TextBlock>
-                <TextBlock Text="{Binding PageNumber}" FontSize="8"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1">
-                <TextBlock Text="Order:  " FontSize="8"></TextBlock>
-                <TextBlock Text="{Binding Order}" FontSize="8"/>
-            </StackPanel>
-        </StackPanel>
         
         
-        <StackPanel Orientation="Vertical" Grid.Column="5">
-            <StackPanel Orientation="Horizontal">
-                <CheckBox IsChecked="{Binding IsCommonWord}" IsEnabled="False" VerticalAlignment="Center"></CheckBox>
-                <TextBlock Text="Common" VerticalAlignment="Center"></TextBlock>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <CheckBox IsChecked="{Binding IsUserWantsToFocusOn}" VerticalAlignment="Center" 
-                          Command="{Binding DataContext.ListItemChanged, RelativeSource={RelativeSource AncestorType=ListView}}"
-                          CommandParameter="{Binding ItemQuestion}"/>
-                          <!--Command="{Binding DataContext.SaveData, RelativeSource={RelativeSource AncestorType=ListView}}"-->
-                          
-                <TextBlock Text="Focus"/>
-                
-            </StackPanel>
-        </StackPanel>
+        
         
 
     </Grid>
