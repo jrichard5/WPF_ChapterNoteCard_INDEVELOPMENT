@@ -33,8 +33,14 @@ namespace WpfNotecardUI
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<KanjiDbContext>();
+                db.Database.EnsureCreated();
+            }
 
-            NavigationStore store = _serviceProvider.GetService<NavigationStore>();
+
+                NavigationStore store = _serviceProvider.GetService<NavigationStore>();
             if(store == null)
             {
                 throw new Exception();

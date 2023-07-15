@@ -25,6 +25,12 @@ namespace DataLayer.Repositories
             return await _dbContext.Chapters.FirstAsync(chapter => chapter.TopicName == topicName);
         }
 
+        public async Task<int> GetCountByCategoryName(string categoryName)
+        {
+            var count = await _dbContext.Chapters.Where(cnc => cnc.Category.CategoryName == categoryName).CountAsync();
+            return count;
+        }
+
         public async Task<int> GetLastItemByTopicName(string topicName)
         {
             var lastItem = await _dbContext.Chapters.Where(c => c.TopicName == topicName)
