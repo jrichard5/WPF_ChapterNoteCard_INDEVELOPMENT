@@ -1,4 +1,5 @@
-﻿using DataLayer.Entities;
+﻿using CsvHelper.Configuration.Attributes;
+using DataLayer.Entities;
 using DataLayer.IRepos;
 using Microsoft.EntityFrameworkCore;
 
@@ -63,6 +64,64 @@ namespace DataLayer.Repositories
                 .ToListAsync();
 
             return wordswithChapter;
+        }
+
+        public async Task<Dictionary<string, bool[]>> GetCharacterExistFromList(IList<string> listOfStrings)
+        {
+            var dictionary = new Dictionary<string, bool[] >();
+
+            //Get all characters and search database for ones that don't exist
+            var charInsideList = new List<string>();
+            foreach (var str in listOfStrings)
+            {
+                var result = str.ToArray().Select(c => c.ToString());
+                charInsideList.AddRange(result);
+            }
+            
+            foreach (var str in listOfStrings)
+            {
+                var existPosition = new bool[str.Length];
+                await ForEachCharInString(str, existPosition, charInsideList);
+                await CheckForHiraganaInHint(str, existPosition);
+                dictionary.Add(str, existPosition);
+            }
+            return dictionary;
+        }
+
+        private async Task CheckForHiraganaInHint(string str, bool[] existPosition)
+        {
+            var hint = await _dbContext.JapaneseWordNoteCards.Where(jnc => jnc.ItemQuestion == str).Select(jnc => jnc.SentenceNoteCard.Hint).FirstOrDefaultAsync();
+            for(int i = 0; i <str.Length; i++)
+            {
+                if (hint.Contains(str[i]))
+                {
+                    existPosition[i] = true;
+                }
+            }
+        }
+
+        private async Task ForEachCharInString(string str, bool[] existPosition, IList<string> charInsideList)
+        {
+            var doesExistList =  await _dbContext.ExtraKanjiInfos.Where(knc => charInsideList.Contains(knc.TopicName)).Select(knc => knc.TopicName).ToListAsync();
+            foreach (var single in str)
+            {
+                var result = doesExistList.Contains(single.ToString());
+                if (result)
+                {
+                    var foundIndexes = new List<int>();
+                    for (int i = 0; i < str.Length; i++)
+                    {
+                        if (str[i] == single) { foundIndexes.Add(i); }
+                    }
+
+
+                    foreach (var foundIndex in foundIndexes)
+                    {
+                        existPosition[foundIndex] = true;
+                    }
+                }
+
+            }
         }
     }
 }

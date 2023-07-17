@@ -14,5 +14,7 @@ namespace DataLayer.IRepos
         Task<int> CountFromOneChapter (string topicName);
 
         Task<List<JapaneseWordNoteCard>> GetPerPageFromOneCategory (string topicName, int page, int numberPerPage);
+
+        Task<Dictionary<string, bool[]>> GetCharacterExistFromList (IList<string> listOfStrings);
     }
 }

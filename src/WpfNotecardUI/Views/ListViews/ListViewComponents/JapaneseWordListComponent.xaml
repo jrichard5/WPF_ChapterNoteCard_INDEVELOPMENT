@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfNotecardUI.Views.ListViews.ListViewComponents"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" >
     <Grid>
         <Grid.ColumnDefinitions>
@@ -28,30 +29,65 @@
                          FontSize="16" HorizontalAlignment="Center"
                          Background="Transparent"
                          BorderThickness="0"
-                         />
+                         >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding DataContext.ListItemChanged, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                           CommandParameter="{Binding ItemQuestion}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
                 <TextBox Text="{Binding ItemQuestion}" FontSize="40"
                          IsReadOnly="True"
                          Background="Transparent"
                          BorderThickness="0"></TextBox>
             </StackPanel>
         </StackPanel>
-        
+
         <TextBox Text="{Binding ItemAnswer}" TextWrapping="Wrap" Grid.Column="1" FontSize="16"
                    HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0"
                  Background="Transparent"
-                 BorderThickness="0"></TextBox>
+                 Grid.RowSpan="2"
+                 BorderThickness="0">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding DataContext.ListItemChanged, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                           CommandParameter="{Binding ItemQuestion}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
 
         <TextBox Text="{Binding MemorizationLevel}"
                    Grid.Column="4"
-                 Background="Transparent" BorderThickness="0"/>
+                 Background="Transparent" BorderThickness="0"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding DataContext.ListItemChanged, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                           CommandParameter="{Binding ItemQuestion}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
         <TextBox Text="{Binding JLPTLevel}"
                    Grid.Column="5"
                  BorderThickness="0"
-                 Background="Transparent"/>
+                 Background="Transparent"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding DataContext.ListItemChanged, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                           CommandParameter="{Binding ItemQuestion}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
 
         <CheckBox Grid.Column="6"
                   HorizontalAlignment="Center" VerticalAlignment="Center"
-            IsChecked="{Binding IsCommonWord}" IsEnabled="False" />
+                  IsChecked="{Binding IsCommonWord}"
+                  Command="{Binding DataContext.ListItemChanged, RelativeSource={RelativeSource AncestorType=ListView}}"
+                  CommandParameter="{Binding ItemQuestion}"/>
         <CheckBox Grid.Column="7"
                   VerticalAlignment="Center"  HorizontalAlignment="Center"
                   IsChecked="{Binding IsUserWantsToFocusOn}" 
@@ -59,32 +95,55 @@
                           CommandParameter="{Binding ItemQuestion}"/>
                 <!--Command="{Binding DataContext.SaveData, RelativeSource={RelativeSource AncestorType=ListView}}"-->
 
-
-        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="9">
-            <StackPanel Orientation="Horizontal">
+        <ItemsControl Grid.Column="0" Grid.Row="1"
+                      ItemsSource="{Binding CharExistList}"
+                      HorizontalAlignment="Center">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:CharExistItemComponent></local:CharExistItemComponent>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        
+        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="9" HorizontalAlignment="Right">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Page#:  " FontSize="8"></TextBlock>
                     <TextBox Text="{Binding PageNumber}" FontSize="8" Margin="0 0 8 0"
                              Background="Transparent"
-                             BorderThickness="0"/>
+                             BorderThickness="0">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="TextChanged">
+                                <i:InvokeCommandAction Command="{Binding DataContext.ListItemChanged, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                           CommandParameter="{Binding ItemQuestion}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock Text="Order#:  " FontSize="8"></TextBlock>
                     <TextBox Text="{Binding Order}" FontSize="8"
                                Background="Transparent"
-                               BorderThickness="0"/>
+                               BorderThickness="0">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="TextChanged">
+                                <i:InvokeCommandAction Command="{Binding DataContext.ListItemChanged, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                           CommandParameter="{Binding ItemQuestion}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
                 </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Last Time Seen:  " FontSize="8"></TextBlock>
                 <TextBlock Text="{Binding LastTimeAccessed}" FontSize="8"/>
             </StackPanel>
-            
-        </StackPanel>
-        
-        
-        
-        
 
+        </StackPanel>
     </Grid>
 </UserControl>
