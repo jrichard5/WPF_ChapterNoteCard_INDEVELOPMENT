@@ -21,24 +21,39 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Column="0">
-            <TextBlock Text="{Binding TopicName}" FontSize="32"></TextBlock>
+            <TextBox Text="{Binding TopicName}" FontSize="32"
+                     IsReadOnly="True"
+                     Background="Transparent"
+                     BorderThickness="0"></TextBox>
             
         </StackPanel>
-        <TextBlock  Grid.Column="1" Text="{Binding TopicDefinition}" Padding="20 10 0 0" TextWrapping="Wrap"/>
+        <TextBox  Grid.Column="1" Text="{Binding TopicDefinition}" Padding="20 10 0 0" TextWrapping="Wrap"
+                  BorderThickness="0"
+                  Background="Transparent"/>
         <StackPanel Orientation="Vertical" Grid.Column="2" Margin="10 0">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Kun: "/>
-                <TextBlock Text="{Binding KunReadings}"/>
+                <TextBox Text="{Binding KunReadings}"
+                         Background="Transparent"
+                         BorderThickness="0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="On: "/>
-                <TextBlock Text="{Binding OnReadings}"/>
+                <TextBox Text="{Binding OnReadings}"
+                         Background="Transparent"
+                         BorderThickness="0"/>
             </StackPanel>
         </StackPanel>
 
-        <TextBlock Text="{Binding GradeLevel}"  Grid.Column="6" HorizontalAlignment="Center"/>
-        <TextBlock Text="{Binding NewspaperRank}" Grid.Column="4" HorizontalAlignment="Center"/>
-        <TextBlock Text="{Binding JLPTLevel}" Grid.Column="5" HorizontalAlignment="Center"/>
+        <TextBox Text="{Binding GradeLevel}"  Grid.Column="6" HorizontalAlignment="Center"
+                 Background="Transparent"
+                 BorderThickness="0"/>
+        <TextBox Text="{Binding NewspaperRank}" Grid.Column="4" HorizontalAlignment="Center"
+                 Background="Transparent"
+                 BorderThickness="0"/>
+        <TextBox Text="{Binding JLPTLevel}" Grid.Column="5" HorizontalAlignment="Center"
+                 Background="Transparent"
+                 BorderThickness="0"/>
 
         <CheckBox Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center"
             IsChecked="{Binding IsSelectedForDeletion}" >

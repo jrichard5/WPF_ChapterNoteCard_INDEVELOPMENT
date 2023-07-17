@@ -24,18 +24,30 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Column="0">
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="{Binding Hint}" FontSize="16" HorizontalAlignment="Center"/>
-                <TextBlock Text="{Binding ItemQuestion}" FontSize="40"></TextBlock>
+                <TextBox Text="{Binding Hint}" 
+                         FontSize="16" HorizontalAlignment="Center"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         />
+                <TextBox Text="{Binding ItemQuestion}" FontSize="40"
+                         IsReadOnly="True"
+                         Background="Transparent"
+                         BorderThickness="0"></TextBox>
             </StackPanel>
         </StackPanel>
         
-        <TextBlock Text="{Binding ItemAnswer}" TextWrapping="Wrap" Grid.Column="1" FontSize="16"
-                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0"></TextBlock>
+        <TextBox Text="{Binding ItemAnswer}" TextWrapping="Wrap" Grid.Column="1" FontSize="16"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0"
+                 Background="Transparent"
+                 BorderThickness="0"></TextBox>
 
-        <TextBlock Text="{Binding MemorizationLevel}"
-                   Grid.Column="4"/>
-        <TextBlock Text="{Binding JLPTLevel}"
-                   Grid.Column="5"/>
+        <TextBox Text="{Binding MemorizationLevel}"
+                   Grid.Column="4"
+                 Background="Transparent" BorderThickness="0"/>
+        <TextBox Text="{Binding JLPTLevel}"
+                   Grid.Column="5"
+                 BorderThickness="0"
+                 Background="Transparent"/>
 
         <CheckBox Grid.Column="6"
                   HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -52,11 +64,15 @@
             <StackPanel Orientation="Horizontal">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Page#:  " FontSize="8"></TextBlock>
-                    <TextBlock Text="{Binding PageNumber}" FontSize="8" Margin="0 0 8 0"/>
+                    <TextBox Text="{Binding PageNumber}" FontSize="8" Margin="0 0 8 0"
+                             Background="Transparent"
+                             BorderThickness="0"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock Text="Order#:  " FontSize="8"></TextBlock>
-                    <TextBlock Text="{Binding Order}" FontSize="8"/>
+                    <TextBox Text="{Binding Order}" FontSize="8"
+                               Background="Transparent"
+                               BorderThickness="0"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
