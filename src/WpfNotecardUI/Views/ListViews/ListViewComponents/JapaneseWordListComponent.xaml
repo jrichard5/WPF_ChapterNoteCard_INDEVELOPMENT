@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfNotecardUI.Views.ListViews.ListViewComponents"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             mc:Ignorable="d" >
+             mc:Ignorable="d"
+             DataContextChanged="UserControl_DataContextChanged">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" SharedSizeGroup="TopicName"/>
@@ -37,10 +38,15 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </TextBox>
-                <TextBox Text="{Binding ItemQuestion}" FontSize="40"
+                <RichTextBox x:Name="richTextBox" FontSize="32"
+                         Grid.Column="1" Grid.Row="1" IsReadOnly="True"
+                         Background="Transparent" BorderThickness="0">
+                </RichTextBox>
+                <!--<TextBox Text="{Binding ItemQuestion}"  x:Name="iqBox"
+                             FontSize="40"
                          IsReadOnly="True"
                          Background="Transparent"
-                         BorderThickness="0"></TextBox>
+                         BorderThickness="0"></TextBox>-->
             </StackPanel>
         </StackPanel>
 
@@ -95,7 +101,7 @@
                           CommandParameter="{Binding ItemQuestion}"/>
                 <!--Command="{Binding DataContext.SaveData, RelativeSource={RelativeSource AncestorType=ListView}}"-->
 
-        <ItemsControl Grid.Column="0" Grid.Row="1"
+        <!--<ItemsControl Grid.Column="0" Grid.Row="1"
                       ItemsSource="{Binding CharExistList}"
                       HorizontalAlignment="Center">
             <ItemsControl.ItemsPanel>
@@ -108,8 +114,10 @@
                     <local:CharExistItemComponent></local:CharExistItemComponent>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        </ItemsControl>-->
+
         
+
         <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="9" HorizontalAlignment="Right">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal">
