@@ -145,3 +145,14 @@ Didn't know how to call canexecute to change a button.  Ended up making the ICom
 Been seeing alot of reflection topics when searching about mvvm.  https://stackoverflow.com/questions/840261/passing-arguments-to-c-sharp-generic-new-of-templated-type  2010 post using constructorInfo (is that reflection)
 
 How to prevent scrollbar from messing up width of IsSharedSizeScope https://stackoverflow.com/questions/61810862/sharing-column-widths-between-multiple-grids
+
+
+
+## Comepletely random notes
+
+https://stackoverflow.com/questions/232535/how-do-i-use-reflection-to-call-a-generic-method
+```
+MethodInfo method = typeof(Sample).GetMethod(nameof(Sample.GenericMethod));
+MethodInfo generic = method.MakeGenericMethod(myType);
+generic.Invoke(this, null);
+``` 

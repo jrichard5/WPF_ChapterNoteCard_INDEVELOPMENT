@@ -14,6 +14,7 @@ namespace WpfNotecardUI.Models
         public string Hint { get; set; }
         public int MemorizationLevel { get; set; }
         public bool IsUserWantsToFocusOn { get; set; }
+        public bool IsSelectedForDeletion { get; set; }
         public DateTime LastTimeAccessed { get; set; }
 
         public SentenceNoteCardModel(SentenceNoteCard noteCard)

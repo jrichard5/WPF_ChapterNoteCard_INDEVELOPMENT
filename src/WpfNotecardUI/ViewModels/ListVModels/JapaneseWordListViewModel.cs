@@ -122,6 +122,24 @@ namespace WpfNotecardUI.ViewModels.ListVModels
             IsLoading = false;
         }
 
+        public override void DeleteSelectedFunction()
+        {
+            var pkList = new List<SentenceNoteCard>();
+            var itemsSelected = CurrentList.Where(item => item.IsSelectedForDeletion == true).ToList();
+            foreach(var item in itemsSelected)
+            {
+                pkList.Add(ModelToEntityMapper.ToSentenceNoteCardPrimaryKey(item));
+            }
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var scopedServiceProvider = scope.ServiceProvider;
+                var genericRepo = scopedServiceProvider.GetRequiredService<IGenericRepo<SentenceNoteCard>>();
+                genericRepo.DeleteByList(pkList);
+            }
+            Debug.WriteLine("hi");
+            GetDataForList();
+        }
+
         ~JapaneseWordListViewModel()
         {
             Debug.WriteLine("disposed of japanesewordModel");

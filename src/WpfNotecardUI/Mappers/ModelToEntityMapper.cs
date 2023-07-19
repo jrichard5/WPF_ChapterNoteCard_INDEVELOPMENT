@@ -14,5 +14,10 @@ namespace WpfNotecardUI.Mappers
         {
             return new ChapterNoteCard{ TopicName = model.TopicName };
         }
+
+        public static SentenceNoteCard ToSentenceNoteCardPrimaryKey(JapaneseWordListItemModel model)
+        {
+            return new SentenceNoteCard { ItemQuestion = model.ItemQuestion };
+        }
     }
 }

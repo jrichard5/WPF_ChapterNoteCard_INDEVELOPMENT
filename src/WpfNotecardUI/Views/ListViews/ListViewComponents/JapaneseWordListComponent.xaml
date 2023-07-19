@@ -116,7 +116,20 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>-->
 
-        
+
+        <CheckBox Grid.Column="8" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"
+            IsChecked="{Binding IsSelectedForDeletion}" >
+            <CheckBox.Style>
+                <Style TargetType="CheckBox">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding DataContext.IsDeleteToggled, RelativeSource={RelativeSource AncestorType=ListView}}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </CheckBox.Style>
+        </CheckBox>
+
 
         <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="9" HorizontalAlignment="Right">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">

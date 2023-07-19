@@ -48,6 +48,7 @@ namespace WpfNotecardUI.ViewModels.ListVModels
                 genericRepo.DeleteByList(pkList);
             }
                 Debug.WriteLine("hi");
+            GetDataForList();
         }
 
         public override void ExecuteShowDialog()
