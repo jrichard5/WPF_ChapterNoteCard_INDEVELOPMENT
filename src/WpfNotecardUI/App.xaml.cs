@@ -10,6 +10,7 @@ using System.Windows.Input;
 using WpfNotecardUI.Stores;
 using WpfNotecardUI.ViewModels;
 using DataLayer;
+using Microsoft.EntityFrameworkCore;
 
 namespace WpfNotecardUI
 {
@@ -36,7 +37,8 @@ namespace WpfNotecardUI
             using (var scope = _serviceProvider.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<KanjiDbContext>();
-                db.Database.EnsureCreated();
+                db.Database.Migrate();
+                //db.Database.EnsureCreated();
             }
 
 

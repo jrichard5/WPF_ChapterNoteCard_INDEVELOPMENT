@@ -115,7 +115,7 @@ namespace WpfNotecardUI.ViewModels.DialogViewModels
                 var genericRepo = scopeServiceProvider.GetRequiredService<IJapaneseWordNoteCardRepo>();
                 try
                 {
-                    await genericRepo.AddAsync(notecard);
+                    await genericRepo.AddAndAddBridgeTableInfo(notecard);
                 }
                 catch (DbUpdateException ex)
                 {

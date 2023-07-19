@@ -123,6 +123,35 @@ namespace DataLayer.Repositories
 
             }
         }
+
+        public async Task AddAndAddBridgeTableInfo(JapaneseWordNoteCard card)
+        {
+            //Takes the word and return kanji that are inside the word
+            var kanjis = await _dbContext.ExtraKanjiInfos.Where(knc => card.ItemQuestion.Contains(knc.TopicName))
+                //The card already has a parent attached to it, so remove that one.
+                .Where(knc => knc.ChapterNoteCard.TopicName != card.SentenceNoteCard.ChapterSentences.First().ChapterNoteCardTopicName)
+            .Select(knc => knc.TopicName)
+            .ToListAsync();
+
+            List<ChapterNoteCardSentenceNoteCard> extraKanjiToAdd = new List<ChapterNoteCardSentenceNoteCard>();
+            foreach (var kanji in kanjis)
+            {
+                extraKanjiToAdd.Add(new ChapterNoteCardSentenceNoteCard
+                {
+                    ChapterNoteCardTopicName = kanji,
+                    SentenceNoteCardItemQuestion = card.ItemQuestion,
+                    ExtraJishoInfo = new ExtraJishoInfoOnBridge
+                    {
+                        Order = 0,
+                        PageNumber = 0,
+                    }
+                }) ;
+            }
+            card.SentenceNoteCard.ChapterSentences.AddRange(extraKanjiToAdd);
+
+            var result = _dbContext.JapaneseWordNoteCards.Add(card);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }
 

@@ -7,6 +7,8 @@ namespace DataLayer.IRepos
     {
         Task AddAsync(List<JapaneseWordNoteCard> cards);
 
+        Task AddAndAddBridgeTableInfo(JapaneseWordNoteCard card);
+
         Task<List<JapaneseWordNoteCard>> GetAllFromOneCategory(string topicName);
 
         Task BulkUpdate(List<JapaneseWordNoteCard> cards);

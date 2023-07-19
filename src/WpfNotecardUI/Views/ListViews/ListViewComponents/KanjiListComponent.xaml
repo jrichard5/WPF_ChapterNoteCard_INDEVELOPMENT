@@ -98,7 +98,7 @@
             </i:Interaction.Triggers>
         </TextBox>
 
-        <CheckBox Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center"
+        <CheckBox Grid.Column="7" VerticalAlignment="Center" HorizontalAlignment="Center"
             IsChecked="{Binding IsSelectedForDeletion}" >
             <CheckBox.Style>
                 <Style TargetType="CheckBox">

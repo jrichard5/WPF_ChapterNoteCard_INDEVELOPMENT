@@ -73,7 +73,8 @@ namespace DataLayer
                     new ChapterNoteCard { TopicName = "毎", TopicDefinition = "every", GradeLevel = 2, CategoryId = 1, LastTimeAccess = DateTime.Now }
                 );
             modelBuilder.Entity<KanjiNoteCard>().HasData(
-                new KanjiNoteCard { TopicName = "日", JLPTLevel = 5, NewspaperRank = 1 }
+                new KanjiNoteCard { TopicName = "日", JLPTLevel = 5, NewspaperRank = 1 },
+                new KanjiNoteCard { TopicName = "毎", JLPTLevel = 5, NewspaperRank = 436}
                 );
             modelBuilder.Entity<KanjiReading>().HasData(
                 new KanjiReading { KanjiNoteCardTopicName = "日", TypeOfReading = "kun", Reading = "ひ" },
