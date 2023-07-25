@@ -19,5 +19,17 @@ namespace WpfNotecardUI.Mappers
         {
             return new SentenceNoteCard { ItemQuestion = model.ItemQuestion };
         }
+
+        public static ChapterNoteCard FromChapterItemToChapterNoteCard(ChapterItemModel model, int categoryId) 
+        {
+            return new ChapterNoteCard
+            {
+                TopicName = model.TopicName,
+                TopicDefinition = model.TopicDefinition,
+                GradeLevel = model.GradeLevel ?? 0,
+                LastTimeAccess = model.LastTimeAccess ?? DateTime.MinValue,
+                CategoryId = categoryId
+            };
+        }
     }
 }

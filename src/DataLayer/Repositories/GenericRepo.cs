@@ -49,5 +49,14 @@ namespace DataLayer.Repositories
             var entities = await this._dbContext.Set<T>().ToListAsync();
             return entities;
         }
+
+        public async Task BulkUpdateGeneric(List<T> entities)
+        {
+            foreach (var entity in entities)
+            {
+                this._dbContext.Set<T>().Update(entity);
+            }
+            await this._dbContext.SaveChangesAsync();
+        }
     }
 }

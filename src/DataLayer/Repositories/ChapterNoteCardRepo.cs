@@ -15,6 +15,12 @@ namespace DataLayer.Repositories
             //_chapters = context.Chapters;
         }
 
+        public async Task<int> CountFromOneCategory(int categoryId)
+        {
+            var count = await _dbContext.Chapters.Where(cnc => cnc.CategoryId == categoryId).CountAsync();
+            return count;
+        }
+
         public async Task<List<ChapterNoteCard>> GetAllChaptersWithinACategory(int categoryId)
         {
             return await _dbContext.Chapters.Where(chap => chap.CategoryId == categoryId).ToListAsync();
@@ -43,6 +49,14 @@ namespace DataLayer.Repositories
             }
             Console.WriteLine();
             return (int)lastItem;
+        }
+
+        public async Task<List<ChapterNoteCard>> GetPerPageFromOneCategory(int categoryId, int page, int numberPerPage)
+        {
+            var chaptersForThisPage = await _dbContext.Chapters.Where(cnc => cnc.CategoryId == categoryId)
+                .Skip((page - 1) * numberPerPage).Take(numberPerPage)
+                .ToListAsync();
+            return chaptersForThisPage;
         }
     }
 }
