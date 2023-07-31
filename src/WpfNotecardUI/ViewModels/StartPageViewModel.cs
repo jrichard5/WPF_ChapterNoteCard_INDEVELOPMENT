@@ -32,7 +32,7 @@ namespace WpfNotecardUI.ViewModels
         public ICommand GoToSettings { get; }
         public void SwitchToSettings()
         {
-            _navigationStore.CurrentViewModel = new SettingsViewModel();
+            _navigationStore.CurrentViewModel = new SettingsViewModel(_navigationStore, _serviceProvider);
         }
         public ICommand GoToRandomCommand { get; }
 

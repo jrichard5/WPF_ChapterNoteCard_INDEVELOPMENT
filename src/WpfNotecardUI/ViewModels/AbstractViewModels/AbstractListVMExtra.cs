@@ -36,7 +36,7 @@ namespace WpfNotecardUI.ViewModels.AbstractViewModels
 
         #region Pages
         protected int pageNumber = 1;
-        protected int NUMBER_PER_PAGE = 10;
+        protected int NUMBER_PER_PAGE = Properties.Settings.Default.NumberPerPage;
         protected bool _isPageLoading;
         public bool IsPageLoading
         {
