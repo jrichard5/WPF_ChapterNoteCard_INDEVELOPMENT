@@ -10,6 +10,7 @@ using System.Windows.Input;
 using WpfNotecardUI.Stores;
 using WpfNotecardUI.ViewModels;
 using DataLayer;
+using Microsoft.EntityFrameworkCore;
 
 namespace WpfNotecardUI
 {
@@ -33,8 +34,15 @@ namespace WpfNotecardUI
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<KanjiDbContext>();
+                db.Database.Migrate();
+                //db.Database.EnsureCreated();
+            }
 
-            NavigationStore store = _serviceProvider.GetService<NavigationStore>();
+
+                NavigationStore store = _serviceProvider.GetService<NavigationStore>();
             if(store == null)
             {
                 throw new Exception();

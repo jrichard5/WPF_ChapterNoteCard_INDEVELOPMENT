@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfNotecardUI.Models.DataObjects;
 
 namespace WpfNotecardUI.Models
 {
@@ -14,6 +15,8 @@ namespace WpfNotecardUI.Models
         public int? PageNumber { get; set; }
         public int? Order { get; set; }
         public int ExtraJishoPrimaryId { get; set; }
+        public bool IsSelectedForDeletion { get; set; }
+        public List<CharacterExist> CharExistList {get; set;} 
 
         public JapaneseWordListItemModel(JapaneseWordNoteCard jnoteCard) : base(jnoteCard.SentenceNoteCard)
         {
@@ -26,7 +29,7 @@ namespace WpfNotecardUI.Models
                 Order = bridgeTable.ExtraJishoInfo?.Order;
                 ExtraJishoPrimaryId = bridgeTable.ExtraJishoInfo.Id;
             }
-
+            CharExistList = new List<CharacterExist>();
         }
 
     }

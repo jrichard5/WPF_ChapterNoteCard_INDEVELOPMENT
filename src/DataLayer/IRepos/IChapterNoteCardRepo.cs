@@ -8,5 +8,9 @@ namespace DataLayer.IRepos
         Task<ChapterNoteCard> GetChapterNoteCardByTopicName(string topicName);
         Task<int> GetLastItemByTopicName(string topicName);
         Task<List<ChapterNoteCard>> GetAllChaptersWithinACategory(int categoryId);
+        Task<int> GetCountByCategoryName(string categoryName);
+
+        Task<List<ChapterNoteCard>> GetPerPageFromOneCategory(int categoryId, int page, int numberPerPage);
+        Task<int> CountFromOneCategory(int categoryId);
     }
 }

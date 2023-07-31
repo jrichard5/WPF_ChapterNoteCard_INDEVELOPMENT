@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -20,16 +21,17 @@ using WpfNotecardUI.Views.Dialogs;
 
 namespace WpfNotecardUI.ViewModels.ListVModels
 {
-    public class KanjiListViewModel : AbstractListVModel<KanjiListItemModel>
+    public class KanjiListViewModel : AbstractListVMExtra<KanjiListItemModel>
     {
-        IDialogService _dialogService;
-        public ICommand GoToAddKanjiDialog { get; }
+        private readonly int _categoryId;
 
-        public KanjiListViewModel(NavigationStore navigationStore, IServiceProvider serviceProvider)
+        public KanjiListViewModel(int categoryId, NavigationStore navigationStore, IServiceProvider serviceProvider)
             : base(navigationStore, serviceProvider)
         {
+            _categoryId = categoryId;
             GetDataForList();
-            GoToAddKanjiDialog = new RelayCommand(ExecuteShowDialog);
+            GetCountFunction();
+            
             //_dialogService = new DialogServices<KanjiWordDialog, AddKanjiWordViewModel>("Japanese Vocab", _serviceProvider);
         }
 
@@ -49,9 +51,10 @@ namespace WpfNotecardUI.ViewModels.ListVModels
                 genericRepo.DeleteByList(pkList);
             }
                 Debug.WriteLine("hi");
+            GetDataForList();
         }
 
-        public void ExecuteShowDialog()
+        public override void ExecuteShowDialog()
         {
             AddKanjiWordViewModel kanjiVM = new AddKanjiWordViewModel("Japanese Vocab", _serviceProvider);
 
@@ -84,10 +87,57 @@ namespace WpfNotecardUI.ViewModels.ListVModels
             IsLoading = false;
         }
 
+        public override async void SaveDataFunction(KanjiListItemModel? hi)
+        {
+            if (CurrentList == null) return;
+            List<KanjiListItemModel> changedItems = CurrentList.Where(item => ItemQuestionsThatHaveChanged.Contains(item.TopicName)).ToList();
+            List<KanjiNoteCard> backtoDb = new List<KanjiNoteCard>();
+            foreach (var item in changedItems)
+            {
+                backtoDb.Add(new KanjiNoteCard()
+                {
+                    TopicName = item.TopicName,
+                    JLPTLevel = item.JLPTLevel ?? -1,
+                    NewspaperRank = item.NewspaperRank ?? -1,
+                    KanjiReadings = ModelToEntityMapper.GetKanjiReadingsFromItem(item.TopicName, item.KunReadings, item.OnReadings),
+                    ChapterNoteCard = new ChapterNoteCard()
+                    {
+                        CategoryId = _categoryId,
+                        GradeLevel = item.GradeLevel ?? -1,
+                        LastTimeAccess = item.LastTimeAccess ?? DateTime.Now,
+                        TopicDefinition = item.TopicDefinition,
+                        TopicName = item.TopicName
+                    }
+                }) ;
+            }
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var scopedServiceProvider = scope.ServiceProvider;
+                var kanjiRepo = scopedServiceProvider.GetRequiredService<IKanjiNoteCardRepo>();
+                await kanjiRepo.BulkUpdate(backtoDb);
+            }
+            ItemQuestionsThatHaveChanged.Clear();
+            SaveData.NotifyCanExecuteChanged();
+        }
+
         public void SwitchToJapaneseWordView(KanjiListItemModel item)
         {
             _serviceProvider.GetService<CategoryChildrenStore>().ChildrenStack.Push(_navigationStore.CurrentViewModel);
             _navigationStore.CurrentViewModel = new JapaneseWordListViewModel(item, _navigationStore, _serviceProvider);
+        }
+
+        protected override async void GetCountFunction()
+        {
+            IsPageLoading = true;
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var scopedServiceProvider = scope.ServiceProvider;
+                var genericRepo = scopedServiceProvider.GetRequiredService<IChapterNoteCardRepo>();
+                MaxPageCount = await genericRepo.GetCountByCategoryName("Japanese Vocab");
+
+            }
+            LastPageNumber = GetCountHelperFunction((int)MaxPageCount);
+            IsPageLoading = false;
         }
     }
 }

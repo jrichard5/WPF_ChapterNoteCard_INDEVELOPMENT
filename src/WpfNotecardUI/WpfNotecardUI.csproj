@@ -8,8 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\ControlTemplates\**" />
+    <EmbeddedResource Remove="Views\ControlTemplates\**" />
+    <None Remove="Views\ControlTemplates\**" />
+    <Page Remove="Views\ControlTemplates\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,10 +30,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataLayer\DataLayer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\ControlTemplates\" />
   </ItemGroup>
 
 </Project>

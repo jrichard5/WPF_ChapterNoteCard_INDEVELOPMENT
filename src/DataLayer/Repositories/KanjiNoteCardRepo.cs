@@ -50,5 +50,27 @@ namespace DataLayer.Repositories
                 .AsSplitQuery()
                 .ToListAsync();
         }
+
+        public async Task BulkUpdate(List<KanjiNoteCard> items)
+        {
+            
+
+            
+            foreach (var item in items)
+            {
+                //var kanjiEntity = _dbContext.ExtraKanjiInfos.Include(knc => knc.KanjiReadings).FirstOrDefault(knc => knc.TopicName == item.TopicName);
+                //if (kanjiEntity != null)
+                //{
+                //    _dbContext.KanjiReadings.RemoveRange(kanjiEntity.KanjiReadings);
+                //}
+                foreach (var kr in _dbContext.KanjiReadings.Where(kr => kr.KanjiNoteCardTopicName == item.TopicName))
+                {
+                    _dbContext.Remove(kr);
+                }
+                _dbContext.KanjiReadings.AddRange(item.KanjiReadings);
+                _dbContext.ExtraKanjiInfos.Update(item);
+            }
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

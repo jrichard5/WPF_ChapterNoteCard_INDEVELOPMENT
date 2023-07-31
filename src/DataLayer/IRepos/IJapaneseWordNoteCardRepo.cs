@@ -7,6 +7,8 @@ namespace DataLayer.IRepos
     {
         Task AddAsync(List<JapaneseWordNoteCard> cards);
 
+        Task AddAndAddBridgeTableInfo(JapaneseWordNoteCard card);
+
         Task<List<JapaneseWordNoteCard>> GetAllFromOneCategory(string topicName);
 
         Task BulkUpdate(List<JapaneseWordNoteCard> cards);
@@ -14,5 +16,7 @@ namespace DataLayer.IRepos
         Task<int> CountFromOneChapter (string topicName);
 
         Task<List<JapaneseWordNoteCard>> GetPerPageFromOneCategory (string topicName, int page, int numberPerPage);
+
+        Task<Dictionary<string, bool[]>> GetCharacterExistFromList (IList<string> listOfStrings);
     }
 }

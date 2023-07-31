@@ -39,6 +39,10 @@ namespace WpfNotecardUI.Services.RealServices
             {
                 AddJapanWordViewModel ajwvm => new JapanWordDialog(),
                 AddKanjiWordViewModel ak => new KanjiWordDialog(),
+                AddCategoryViewModel ac => new CategoryDialog(),
+                AddSentenceViewModel aSent => new SentenceDialog(),
+                AddChapterViewModel achap => new ChapterDialog(),
+                
                 _ => throw new NotImplementedException()
             };
 

@@ -6,5 +6,6 @@ namespace DataLayer.IRepos
     public interface ISentenceNoteCardRepo : IGenericRepo<SentenceNoteCard>
     {
         Task<List<SentenceNoteCard>> GetAllWithAChapter(string topicName);
+        Task<int> CountFromOneChapter(string topicName);
     }
 }

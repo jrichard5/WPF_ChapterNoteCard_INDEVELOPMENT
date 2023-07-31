@@ -10,10 +10,10 @@ namespace WpfNotecardUI.Models
 {
     public class ChapterItemModel
     {
-        [DisplayName("Topic Name (renamed in the model)")]
+        [DisplayName("Topic Name (renamed in the model)"), ReadOnly(true)]
         public string TopicName { get; set; }
         public string TopicDefinition { get; set; }
-        [ReadOnly(true)]
+        
         public int? GradeLevel { get; set; }
         [ReadOnly(true)]
         public DateTime? LastTimeAccess { get; set; }

@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfNotecardUI.Models;
 using WpfNotecardUI.ViewModels;
 
 namespace WpfNotecardUI.Views
@@ -32,7 +33,7 @@ namespace WpfNotecardUI.Views
             var item = (sender as ListView)?.SelectedItem;
             if (item != null) 
             {
-                (this.DataContext as CategoryListViewModel).SwitchToChapterView((Category)item);
+                (this.DataContext as CategoryListViewModel).SwitchToChapterView((CategoryModel)item);
             }
 
             

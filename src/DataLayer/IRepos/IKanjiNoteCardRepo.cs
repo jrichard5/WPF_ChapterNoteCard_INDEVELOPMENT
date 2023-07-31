@@ -10,5 +10,7 @@ namespace DataLayer.IRepos
 
         public Task AddAndSearchWords(KanjiNoteCard item);
         public Task<List<KanjiNoteCard>> GetAllWithAllInfo();
+
+        public Task BulkUpdate(List<KanjiNoteCard> cards);
     }
 }

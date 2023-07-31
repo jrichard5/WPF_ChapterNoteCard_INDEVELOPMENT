@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WpfNotecardUI.Views.ListViews"
+             xmlns:local="clr-namespace:WpfNotecardUI.Views.ListViews" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -12,12 +12,14 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
@@ -30,9 +32,47 @@
                 Content="Previous" Margin="10 0"
                 Command="{Binding GoToPreviousCommand}">
         </Button>
+
+        <Button Grid.Column="1" Grid.Row="3" Margin="10 0"
+                Content="Save"
+                Command="{Binding SaveData}">
+        </Button>
+        <Button Grid.Column="4" Grid.Row="1"
+                Content="Add new word"
+                Command="{Binding AddCommand}">
+
+        </Button>
+
+        <Button Grid.Column="2" Grid.Row="3"
+                Content="Edit Toggle" Margin="10 0"
+                Click="Button_Click">
+        </Button>
+
+        <TextBlock Grid.Column="3" Grid.Row="3"
+               Name="EditToggle">
+        </TextBlock>
+
+
         <DataGrid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"
+                  Name="DataList"
                   ItemsSource="{Binding CurrentList}" 
-                  Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Stretch">
+                  Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Stretch"
+                  SelectionMode="Single"
+                  PreviewTextInput="DataList_PreviewTextInput"
+                  IsReadOnly="True">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="BeginningEdit">
+                    <i:InvokeCommandAction Command="{Binding ListItemChanged}"
+                                           CommandParameter="{Binding SelectedItem.ItemQuestion, ElementName=DataList}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete" Command="{Binding DeleteCommand}" 
+                              CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItem}"
+                              />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
             <DataGrid.Style>
                 <Style TargetType="DataGrid">
                     <Style.Triggers>
