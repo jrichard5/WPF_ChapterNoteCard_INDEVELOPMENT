@@ -117,7 +117,7 @@ namespace WpfNotecardUI.ViewModels
             _serviceProvider.GetService<CategoryChildrenStore>().ChildrenStack.Push(_navigationStore.CurrentViewModel);
             if (category.CategoryName == "Japanese Vocab")
             {
-                _navigationStore.CurrentViewModel = new KanjiListViewModel(_navigationStore, _serviceProvider);
+                _navigationStore.CurrentViewModel = new KanjiListViewModel(category.Id, _navigationStore, _serviceProvider);
             }
             else
             {

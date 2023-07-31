@@ -1,11 +1,15 @@
-﻿using DataLayer.Entities;
+﻿using CommunityToolkit.Mvvm.Input;
+using DataLayer.Entities;
 using DataLayer.IRepos;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Input;
 using WpfNotecardUI.Mappers;
 using WpfNotecardUI.Models;
 using WpfNotecardUI.Services.RealServices;
@@ -18,13 +22,14 @@ namespace WpfNotecardUI.ViewModels.ListVModels
     public class GenericChapterListViewModel : AbstractListVMExtra<ChapterItemModel>
     {
         private readonly int _categoryId;
+        public ICommand DeleteCommand { get; }
 
         public GenericChapterListViewModel(int categoryId, NavigationStore navigationStore, IServiceProvider serviceProvider)
             : base(navigationStore, serviceProvider)
         {
+            DeleteCommand = new RelayCommand<object>(DeleteFunction);
             _categoryId = categoryId;
             GetDataForList();
-            GetCountFunction();
         }
 
         public void SwitchToGenericSentenceView(ChapterItemModel item)
@@ -48,6 +53,7 @@ namespace WpfNotecardUI.ViewModels.ListVModels
                 }
                 OnPropertyChanged(nameof(CurrentList));
             }
+            GetCountFunction();
             IsLoading = false;
         }
 
@@ -66,25 +72,25 @@ namespace WpfNotecardUI.ViewModels.ListVModels
 
         public override async void SaveDataFunction(ChapterItemModel? hi)
         {
-            throw new NotImplementedException();
-            //if (CurrentList == null)
-            //{
-            //    return;
-            //}
-            //List<ChapterItemModel> changedItems = CurrentList.Where(item => ItemQuestionsThatHaveChanged.Contains(item.TopicName)).ToList();
-            //List<ChapterNoteCard> backToDb = new List<ChapterNoteCard>();
-            //foreach (var item in changedItems)
-            //{
-            //    backToDb.Add(ModelToEntityMapper.FromChapterItemToChapterNoteCard(item, _categoryId));
-            //}
-            //using (var scope = _serviceProvider.CreateScope())
-            //{
-            //    var scopedServiceProvider = scope.ServiceProvider;
-            //    var genericRepo = scopedServiceProvider.GetRequiredService<IGenericRepo<ChapterNoteCard>>();
-            //    await genericRepo.BulkUpdateGeneric(backToDb);
-            //}
-            //ItemQuestionsThatHaveChanged.Clear();
-            //SaveData.NotifyCanExecuteChanged();
+            if (CurrentList == null)
+            {
+                return;
+            }
+            var list = ItemQuestionsThatHaveChanged;
+            List<ChapterItemModel> changedItems = CurrentList.Where(item => ItemQuestionsThatHaveChanged.Contains(item.TopicName)).ToList();
+            List<ChapterNoteCard> backToDb = new List<ChapterNoteCard>();
+            foreach (var item in changedItems)
+            {
+                backToDb.Add(ModelToEntityMapper.FromChapterItemToChapterNoteCard(item, _categoryId));
+            }
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var scopedServiceProvider = scope.ServiceProvider;
+                var genericRepo = scopedServiceProvider.GetRequiredService<IGenericRepo<ChapterNoteCard>>();
+                await genericRepo.BulkUpdateGeneric(backToDb);
+            }
+            ItemQuestionsThatHaveChanged.Clear();
+            SaveData.NotifyCanExecuteChanged();
         }
 
         public override void ExecuteShowDialog()
@@ -95,6 +101,30 @@ namespace WpfNotecardUI.ViewModels.ListVModels
             {
                 GetDataForList();
             });
+        }
+
+        public void DeleteFunction(object? item)
+        {
+            var selectedNotecard = item as ChapterItemModel;
+            if (selectedNotecard == null) 
+            {
+                return;
+            }
+            //https://stackoverflow.com/questions/43547647/how-to-make-right-click-button-context-menu-in-wpf
+            Debug.WriteLine("hi");
+            
+            var topicName = selectedNotecard.TopicName;
+            var pkForDelete = new ChapterNoteCard()
+            {
+                TopicName = topicName,
+            };
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var scopedServiceProvider = scope.ServiceProvider;
+                var genericRepo = scopedServiceProvider.GetRequiredService<IGenericRepo<ChapterNoteCard>>();
+                genericRepo.DeleteWithAttach(pkForDelete);
+            }
+            GetDataForList();
         }
     }
 }

@@ -43,7 +43,8 @@
                 <TextBlock Text="Kun: "/>
                 <TextBox Text="{Binding KunReadings}"
                          Background="Transparent"
-                         BorderThickness="0">
+                         BorderThickness="0"
+                         MinWidth="40">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="TextChanged">
                             <i:InvokeCommandAction Command="{Binding DataContext.ListItemChanged, RelativeSource={RelativeSource AncestorType=ListView}}"
@@ -56,7 +57,8 @@
                 <TextBlock Text="On: "/>
                 <TextBox Text="{Binding OnReadings}"
                          Background="Transparent"
-                         BorderThickness="0">
+                         BorderThickness="0"
+                         MinWidth="40">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="TextChanged">
                             <i:InvokeCommandAction Command="{Binding DataContext.ListItemChanged, RelativeSource={RelativeSource AncestorType=ListView}}"

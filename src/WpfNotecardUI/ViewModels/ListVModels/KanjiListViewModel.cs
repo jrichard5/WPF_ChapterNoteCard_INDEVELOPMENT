@@ -23,9 +23,12 @@ namespace WpfNotecardUI.ViewModels.ListVModels
 {
     public class KanjiListViewModel : AbstractListVMExtra<KanjiListItemModel>
     {
-        public KanjiListViewModel(NavigationStore navigationStore, IServiceProvider serviceProvider)
+        private readonly int _categoryId;
+
+        public KanjiListViewModel(int categoryId, NavigationStore navigationStore, IServiceProvider serviceProvider)
             : base(navigationStore, serviceProvider)
         {
+            _categoryId = categoryId;
             GetDataForList();
             GetCountFunction();
             
@@ -84,9 +87,37 @@ namespace WpfNotecardUI.ViewModels.ListVModels
             IsLoading = false;
         }
 
-        public override void SaveDataFunction(KanjiListItemModel? hi)
+        public override async void SaveDataFunction(KanjiListItemModel? hi)
         {
-            throw new NotImplementedException();
+            if (CurrentList == null) return;
+            List<KanjiListItemModel> changedItems = CurrentList.Where(item => ItemQuestionsThatHaveChanged.Contains(item.TopicName)).ToList();
+            List<KanjiNoteCard> backtoDb = new List<KanjiNoteCard>();
+            foreach (var item in changedItems)
+            {
+                backtoDb.Add(new KanjiNoteCard()
+                {
+                    TopicName = item.TopicName,
+                    JLPTLevel = item.JLPTLevel ?? -1,
+                    NewspaperRank = item.NewspaperRank ?? -1,
+                    KanjiReadings = ModelToEntityMapper.GetKanjiReadingsFromItem(item.TopicName, item.KunReadings, item.OnReadings),
+                    ChapterNoteCard = new ChapterNoteCard()
+                    {
+                        CategoryId = _categoryId,
+                        GradeLevel = item.GradeLevel ?? -1,
+                        LastTimeAccess = item.LastTimeAccess ?? DateTime.Now,
+                        TopicDefinition = item.TopicDefinition,
+                        TopicName = item.TopicName
+                    }
+                }) ;
+            }
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var scopedServiceProvider = scope.ServiceProvider;
+                var kanjiRepo = scopedServiceProvider.GetRequiredService<IKanjiNoteCardRepo>();
+                await kanjiRepo.BulkUpdate(backtoDb);
+            }
+            ItemQuestionsThatHaveChanged.Clear();
+            SaveData.NotifyCanExecuteChanged();
         }
 
         public void SwitchToJapaneseWordView(KanjiListItemModel item)
