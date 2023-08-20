@@ -36,6 +36,9 @@
             <DataTemplate DataType="{x:Type lvms:GenericSentenceListViewModel}">
                 <listViews:GenericSentenceListView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:ChapterSelectionViewModel}">
+                <views:ChapterSelectionView/>
+            </DataTemplate>
         </Grid.Resources>
         <ContentControl Content="{Binding CurrentViewModel}"></ContentControl>
     </Grid>

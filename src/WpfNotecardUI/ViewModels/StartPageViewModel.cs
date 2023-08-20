@@ -26,6 +26,7 @@ namespace WpfNotecardUI.ViewModels
             GoToRandomCommand = new RelayCommand(SwitchToRandom);
             GoToBrowseAllCommand = new RelayCommand(SwitchToBrowse);
             GoToSettings = new RelayCommand(SwitchToSettings);
+            GoToSelectionPage = new RelayCommand(SwitchToSelection);
             _serviceProvider = serviceProvider;
         }
 
@@ -49,6 +50,12 @@ namespace WpfNotecardUI.ViewModels
         {
             _navigationStore.CurrentViewModel = new CategoryListViewModel(_navigationStore, _serviceProvider);
             //_navigationStore.CurrentViewModel = CategoryListViewModel.CreateCategoryListView(_navigationStore, _serviceProvider);
+        }
+
+        public ICommand GoToSelectionPage { get; }
+        public void SwitchToSelection()
+        {
+            _navigationStore.CurrentViewModel = new ChapterSelectionViewModel(_navigationStore, _serviceProvider);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using DataLayer.Entities;
 using DataLayer.IRepos;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace DataLayer.Repositories
 {
@@ -57,6 +58,14 @@ namespace DataLayer.Repositories
                 .Skip((page - 1) * numberPerPage).Take(numberPerPage)
                 .ToListAsync();
             return chaptersForThisPage;
+        }
+
+        public async Task<List<IGrouping<Category, ChapterNoteCard>>> GroupByCategory()
+        {
+            var whatIsThis = await _dbContext.Chapters.GroupBy(c => c.Category)
+                .AsSplitQuery()
+                .ToListAsync();
+            return whatIsThis;
         }
     }
 }

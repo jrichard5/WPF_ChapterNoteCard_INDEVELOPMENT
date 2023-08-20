@@ -12,5 +12,7 @@ namespace DataLayer.IRepos
 
         Task<List<ChapterNoteCard>> GetPerPageFromOneCategory(int categoryId, int page, int numberPerPage);
         Task<int> CountFromOneCategory(int categoryId);
+
+        Task<List<IGrouping<Category, ChapterNoteCard>>> GroupByCategory();
     }
 }
