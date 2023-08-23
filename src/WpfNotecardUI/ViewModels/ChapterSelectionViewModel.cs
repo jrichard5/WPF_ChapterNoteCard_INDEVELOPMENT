@@ -8,7 +8,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WpfNotecardUI.Models.TreeNodes;
@@ -24,18 +26,64 @@ namespace WpfNotecardUI.ViewModels
 
         public ICommand GoToStartComand { get; }
         public ICommand CategoryCheck { get; }
+        public ICommand ChapterCheck { get; }
         public ChapterSelectionViewModel(NavigationStore navigationStore, IServiceProvider serviceProvider)
         {
             _navigationStore = navigationStore;
             _serviceProvider = serviceProvider;
-            CategoryCheck = new RelayCommand<string>(CategoryCheckFunction);
+            CategoryCheck = new RelayCommand<int>(CategoryCheckFunction);
+            ChapterCheck = new RelayCommand<string>(ChapterCheckFunction);
             GoToStartComand = new RelayCommand(SwitchToStart);
             TreeModel = new ObservableCollection<CategoryTreeModel>();
             GetData();
         }
 
-        public void CategoryCheckFunction(string? categoryName)
+        public void ChapterCheckFunction(string? chapterName)
         {
+            //Should only be one because chapter Name is the primary key
+            var category = TreeModel.First(c => c.Children.Any(c => c.ChapterName == chapterName));
+            var chapter = category.Children.First(c => c.ChapterName == chapterName);
+
+            if(chapter is null)
+            {
+                throw new ArgumentException();
+            }
+            if (chapter.IsFocused)
+            {
+                chapter.IsFocused = false;
+                category.IsFocused = false;
+            }
+            else
+            {
+                chapter.IsFocused = true;
+            }
+            Properties.Settings.Default.ChaptersJSON = JsonSerializer.Serialize(TreeModel);
+            Properties.Settings.Default.Save();
+        }
+
+        public void CategoryCheckFunction(int categoryId)
+        {
+            var results = TreeModel.First(node => node.CategoryId == categoryId);
+            if (results.IsFocused)
+            {
+                foreach (var child in results.Children)
+                {
+                    child.IsFocused = false;
+                }
+                results.IsFocused = false;
+            }
+            else
+            {
+                foreach (var child in results.Children)
+                {
+                    child.IsFocused = true;
+                }
+                results.IsFocused = true;
+                
+            }
+            OnPropertyChanged(nameof(TreeModel));
+            Properties.Settings.Default.ChaptersJSON = JsonSerializer.Serialize(TreeModel);
+            Properties.Settings.Default.Save();
 
         }
 
@@ -70,7 +118,50 @@ namespace WpfNotecardUI.ViewModels
                 };
                 TreeModel.Add(cateTreeNode);
             }
+            CheckSavedData();
             Debug.Write(TreeModel);
+        }
+
+
+        private void CheckSavedData()
+        {
+            string saveJSON = Properties.Settings.Default.ChaptersJSON.ToString();
+            ObservableCollection<CategoryTreeModel> oldTree = null;
+            try
+            {
+                 oldTree = JsonSerializer.Deserialize<ObservableCollection<CategoryTreeModel>>(saveJSON);
+            }
+            catch (JsonException ex)
+            {
+                Debug.WriteLine(ex.Message);
+                
+            }
+
+            if (oldTree is null)
+            {
+                return;
+            }
+            foreach (var category in oldTree)
+            {
+                if (category.IsFocused)
+                {
+                    CategoryCheckFunction(category.CategoryId);
+                }
+                else
+                {
+                    foreach(var child in category.Children)
+                    {
+                        if (child.IsFocused)
+                        {
+                            if(!(TreeModel.Any(c=>c.Children.Any(c=>c.ChapterName == child.ChapterName))))
+                            {
+                                continue;
+                            }
+                            ChapterCheckFunction(child.ChapterName);
+                        }
+                    }
+                }
+            }
         }
     }
 }

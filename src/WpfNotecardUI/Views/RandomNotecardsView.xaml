@@ -19,9 +19,57 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" Text="Hello I'm the Browse/Category view (not page)"></TextBlock>
         <Button Grid.Column="1" Grid.Row="1" Content="Start view" Command="{Binding GoToStartViewModel}"></Button>
+        <Grid Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Button Grid.Column="0" Grid.Row="0"
+                    Content="Previous Card(not work)">
+            </Button>
+            <Label Grid.Column="1" Grid.Row="0"
+                   Name="space"></Label>
+            <StackPanel Grid.Column="0" Grid.Row="1"
+                        Grid.ColumnSpan="3"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        MaxWidth="{Binding ElementName=space, Path=ActualWidth}">
+                <TextBlock Text="Hint"
+                           FontSize="32"
+                           HorizontalAlignment="Center">
+                </TextBlock>
+                <TextBlock Text="Definition"
+                           FontSize="48">
+                </TextBlock>
+            </StackPanel>
+            <Button Grid.Column="2" Grid.Row="1"
+                    MaxHeight="100"
+                    Content="Next Card">
+                
+            </Button>
+            <StackPanel Grid.Column="2" Grid.Row="2">
+                <TextBlock Text="1st Chapter">
+                    
+                </TextBlock>
+                <TextBlock Text="2nd Chapter">
+                    
+                </TextBlock>
+                <TextBlock Text="3rd chapter">
+                    
+                </TextBlock>
+                
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

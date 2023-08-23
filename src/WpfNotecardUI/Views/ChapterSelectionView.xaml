@@ -35,14 +35,20 @@
         
         <TreeView Grid.Column="1" Grid.Row="2"
                   Grid.ColumnSpan="3"
+                  
                   ItemsSource="{Binding TreeModel}">
-
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsExpanded" Value="True"></Setter>
+                </Style>
+            </TreeView.ItemContainerStyle>
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type tn:CategoryTreeModel}"
                                           ItemsSource="{Binding Children}">
                     <StackPanel Orientation="Horizontal">
-                        <CheckBox Command="{Binding DataContext.CategoryCheck, RelativeSource={RelativeSource AncestorType=TreeView}}"
-                                  CommandParameter="{Binding CategoryName}">
+                        <CheckBox IsChecked="{Binding IsFocused, Mode=OneWay}"
+                                  Command="{Binding DataContext.CategoryCheck, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                                  CommandParameter="{Binding CategoryId}">
                             
                         </CheckBox>
                         <TextBlock Text="{Binding CategoryName}"/>
@@ -50,7 +56,11 @@
                 </HierarchicalDataTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type tn:ChapterTreeModel}">
                     <StackPanel Orientation="Horizontal">
-                        <CheckBox></CheckBox>
+                        <CheckBox IsChecked="{Binding IsFocused, Mode=OneWay}"
+                                  Command="{Binding DataContext.ChapterCheck, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                                  CommandParameter="{Binding ChapterName}">
+                            
+                        </CheckBox>
                         <TextBlock Text="{Binding ChapterName}"></TextBlock>
                     </StackPanel>
                 </HierarchicalDataTemplate>
