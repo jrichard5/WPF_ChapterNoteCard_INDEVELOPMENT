@@ -217,7 +217,7 @@ namespace WpfNotecardUI.ViewModels
 
             if (DisplayedNotecard.IsFront && DisplayedNotecard.IsChapter)
             {
-                
+
                 //Must be above DisplayedNotecard.Question because of the way I change font in view.
                 DisplayedNotecard.CharExistList = null;
                 NextButtonContent = "Next";
@@ -230,7 +230,7 @@ namespace WpfNotecardUI.ViewModels
             }
             else if (!DisplayedNotecard.IsFront && DisplayedNotecard.IsChapter)
             {
-                
+
                 var currentSentence = _currentChapterDeck.Sentences[DisplayedNotecard.CurrentIndex];
 
                 NextButtonContent = "Flip";
@@ -250,7 +250,7 @@ namespace WpfNotecardUI.ViewModels
             }
             else if (DisplayedNotecard.IsFront && !DisplayedNotecard.IsChapter)
             {
-                
+
                 NextButtonContent = "Next";
                 //Must be above DisplayedNotecard.Question because of the way I change font in view.
                 DisplayedNotecard.CharExistList = null;
