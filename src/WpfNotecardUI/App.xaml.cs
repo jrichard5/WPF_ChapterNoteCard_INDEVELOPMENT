@@ -42,8 +42,8 @@ namespace WpfNotecardUI
             }
 
 
-                NavigationStore store = _serviceProvider.GetService<NavigationStore>();
-            if(store == null)
+            NavigationStore store = _serviceProvider.GetService<NavigationStore>();
+            if (store == null)
             {
                 throw new Exception();
             }

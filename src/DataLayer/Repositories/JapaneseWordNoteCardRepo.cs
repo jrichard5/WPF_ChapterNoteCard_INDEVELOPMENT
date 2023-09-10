@@ -42,7 +42,7 @@ namespace DataLayer.Repositories
                 //_dbContext.Sentences.Attach(entity.SentenceNoteCard);
                 //_dbContext.ChapterSentences.Attach(entity.SentenceNoteCard.ChapterSentences.First());
                 //_dbContext.ExtraJishoInfos.Attach(entity.SentenceNoteCard.ChapterSentences.First().ExtraJishoInfo);
-                 this._dbContext.JapaneseWordNoteCards.Update(entity);
+                this._dbContext.JapaneseWordNoteCards.Update(entity);
             }
             await this._dbContext.SaveChangesAsync();
         }
@@ -60,7 +60,7 @@ namespace DataLayer.Repositories
                 .Include(j => j.SentenceNoteCard.ChapterSentences)
                 .ThenInclude(cs => cs.ExtraJishoInfo)
                 .AsSplitQuery()
-                .Skip((page-1) * numberPerPage).Take(numberPerPage)
+                .Skip((page - 1) * numberPerPage).Take(numberPerPage)
                 .ToListAsync();
 
             return wordswithChapter;
@@ -68,7 +68,7 @@ namespace DataLayer.Repositories
 
         public async Task<Dictionary<string, bool[]>> GetCharacterExistFromList(IList<string> listOfStrings)
         {
-            var dictionary = new Dictionary<string, bool[] >();
+            var dictionary = new Dictionary<string, bool[]>();
 
             //Get all characters and search database for ones that don't exist
             var charInsideList = new List<string>();
@@ -77,7 +77,7 @@ namespace DataLayer.Repositories
                 var result = str.ToArray().Select(c => c.ToString());
                 charInsideList.AddRange(result);
             }
-            
+
             foreach (var str in listOfStrings)
             {
                 var existPosition = new bool[str.Length];
@@ -91,7 +91,7 @@ namespace DataLayer.Repositories
         private async Task CheckForHiraganaInHint(string str, bool[] existPosition)
         {
             var hint = await _dbContext.JapaneseWordNoteCards.Where(jnc => jnc.ItemQuestion == str).Select(jnc => jnc.SentenceNoteCard.Hint).FirstOrDefaultAsync();
-            for(int i = 0; i <str.Length; i++)
+            for (int i = 0; i < str.Length; i++)
             {
                 if (hint.Contains(str[i]))
                 {
@@ -102,7 +102,7 @@ namespace DataLayer.Repositories
 
         private async Task ForEachCharInString(string str, bool[] existPosition, IList<string> charInsideList)
         {
-            var doesExistList =  await _dbContext.ExtraKanjiInfos.Where(knc => charInsideList.Contains(knc.TopicName)).Select(knc => knc.TopicName).ToListAsync();
+            var doesExistList = await _dbContext.ExtraKanjiInfos.Where(knc => charInsideList.Contains(knc.TopicName)).Select(knc => knc.TopicName).ToListAsync();
             foreach (var single in str)
             {
                 var result = doesExistList.Contains(single.ToString());
@@ -145,7 +145,7 @@ namespace DataLayer.Repositories
                         Order = 0,
                         PageNumber = 0,
                     }
-                }) ;
+                });
             }
             card.SentenceNoteCard.ChapterSentences.AddRange(extraKanjiToAdd);
 

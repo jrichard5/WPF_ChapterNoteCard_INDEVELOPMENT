@@ -12,7 +12,7 @@ namespace WpfNotecardUI.ValidationRules
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if(!(value is string stringToTest))
+            if (!(value is string stringToTest))
             {
                 return new ValidationResult(false, "Must be string");
             }
@@ -20,7 +20,7 @@ namespace WpfNotecardUI.ValidationRules
             {
                 return new ValidationResult(false, "Must be filled in");
             }
-            if (stringToTest.Length > 52) 
+            if (stringToTest.Length > 52)
             {
                 return new ValidationResult(false, "Cannot be more than 52 characters");
             }

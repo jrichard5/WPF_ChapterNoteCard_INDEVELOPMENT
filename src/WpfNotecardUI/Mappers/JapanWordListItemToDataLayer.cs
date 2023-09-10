@@ -42,7 +42,7 @@ namespace WpfNotecardUI.Mappers
             japaneseWordNoteCard.SentenceNoteCard = sentNoteCard;
             japaneseWordNoteCard.IsCommonWord = model.IsCommonWord;
             japaneseWordNoteCard.JLPTLevel = model.JLPTLevel;
-            
+
             return japaneseWordNoteCard;
         }
     }

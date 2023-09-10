@@ -29,7 +29,7 @@ namespace DataLayer.Repositories
 
         public async Task<List<ChapterNoteCard>> GetAllThatHasFocus()
         {
-            return await _dbContext.Chapters.Where(c =>  c.Sentences != null ?  c.Sentences.Any(s => s.IsUserWantsToFocusOn) : false).ToListAsync();
+            return await _dbContext.Chapters.Where(c => c.Sentences != null ? c.Sentences.Any(s => s.IsUserWantsToFocusOn) : false).ToListAsync();
         }
 
         public async Task<ChapterNoteCard> GetChapterNoteCardByTopicName(string topicName)

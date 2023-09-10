@@ -58,7 +58,7 @@ namespace WpfNotecardUI.ViewModels
 
         public void SaveSettingsFunction()
         {
-            if(!Int32.TryParse(NumbersPerPage, out int result))
+            if (!Int32.TryParse(NumbersPerPage, out int result))
             {
                 throw new ArgumentException();
             }

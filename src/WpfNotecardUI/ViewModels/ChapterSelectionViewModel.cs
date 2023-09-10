@@ -44,7 +44,7 @@ namespace WpfNotecardUI.ViewModels
             var category = TreeModel.First(c => c.Children.Any(c => c.ChapterName == chapterName));
             var chapter = category.Children.First(c => c.ChapterName == chapterName);
 
-            if(chapter is null)
+            if (chapter is null)
             {
                 throw new ArgumentException();
             }
@@ -79,7 +79,7 @@ namespace WpfNotecardUI.ViewModels
                     child.IsFocused = true;
                 }
                 results.IsFocused = true;
-                
+
             }
             OnPropertyChanged(nameof(TreeModel));
             Properties.Settings.Default.ChaptersJSON = JsonSerializer.Serialize(TreeModel);
@@ -129,12 +129,12 @@ namespace WpfNotecardUI.ViewModels
             ObservableCollection<CategoryTreeModel> oldTree = null;
             try
             {
-                 oldTree = JsonSerializer.Deserialize<ObservableCollection<CategoryTreeModel>>(saveJSON);
+                oldTree = JsonSerializer.Deserialize<ObservableCollection<CategoryTreeModel>>(saveJSON);
             }
             catch (JsonException ex)
             {
                 Debug.WriteLine(ex.Message);
-                
+
             }
 
             if (oldTree is null)
@@ -149,11 +149,11 @@ namespace WpfNotecardUI.ViewModels
                 }
                 else
                 {
-                    foreach(var child in category.Children)
+                    foreach (var child in category.Children)
                     {
                         if (child.IsFocused)
                         {
-                            if(!(TreeModel.Any(c=>c.Children.Any(c=>c.ChapterName == child.ChapterName))))
+                            if (!(TreeModel.Any(c => c.Children.Any(c => c.ChapterName == child.ChapterName))))
                             {
                                 continue;
                             }

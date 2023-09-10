@@ -20,7 +20,7 @@ namespace DataLayer.Repositories
             return result.Entity;
         }
 
-        
+
 
         public async Task DeleteAsync(T entity)
         {

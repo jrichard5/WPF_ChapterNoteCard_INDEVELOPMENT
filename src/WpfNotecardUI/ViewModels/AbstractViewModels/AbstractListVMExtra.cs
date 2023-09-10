@@ -14,7 +14,7 @@ namespace WpfNotecardUI.ViewModels.AbstractViewModels
 {
     public abstract class AbstractListVMExtra<T> : AbstractListVModel<T>
     {
-        public AbstractListVMExtra(NavigationStore navigationStore, IServiceProvider serviceProvider) :  base(navigationStore, serviceProvider)
+        public AbstractListVMExtra(NavigationStore navigationStore, IServiceProvider serviceProvider) : base(navigationStore, serviceProvider)
         {
             #region PageConstructor
             PreviousPageCommand = new RelayCommand(PreviousPageFunction, CanPreviousPage);

@@ -12,7 +12,7 @@ namespace WpfNotecardUI.Mappers
     {
         public static ChapterNoteCard ToChapterNoteCardPrimaryKey(KanjiListItemModel model)
         {
-            return new ChapterNoteCard{ TopicName = model.TopicName };
+            return new ChapterNoteCard { TopicName = model.TopicName };
         }
 
         public static SentenceNoteCard ToSentenceNoteCardPrimaryKey(JapaneseWordListItemModel model)
@@ -20,7 +20,7 @@ namespace WpfNotecardUI.Mappers
             return new SentenceNoteCard { ItemQuestion = model.ItemQuestion };
         }
 
-        public static ChapterNoteCard FromChapterItemToChapterNoteCard(ChapterItemModel model, int categoryId) 
+        public static ChapterNoteCard FromChapterItemToChapterNoteCard(ChapterItemModel model, int categoryId)
         {
             return new ChapterNoteCard
             {
@@ -41,10 +41,10 @@ namespace WpfNotecardUI.Mappers
                 foreach (var item in readings)
                 {
                     if (string.IsNullOrEmpty(item)) continue;
-                    kanjiReadings.Add(new KanjiReading { Reading = item, TypeOfReading = "kun", KanjiNoteCardTopicName= topicName });
+                    kanjiReadings.Add(new KanjiReading { Reading = item, TypeOfReading = "kun", KanjiNoteCardTopicName = topicName });
                 }
             }
-            
+
 
             if (on != null)
             {
@@ -55,7 +55,7 @@ namespace WpfNotecardUI.Mappers
                     kanjiReadings.Add(new KanjiReading { Reading = item, TypeOfReading = "on", KanjiNoteCardTopicName = topicName });
                 }
             }
-            
+
             return kanjiReadings;
         }
     }

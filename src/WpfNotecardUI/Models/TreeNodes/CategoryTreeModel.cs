@@ -15,16 +15,17 @@ namespace WpfNotecardUI.Models.TreeNodes
         public ObservableCollection<ChapterTreeModel> Children { get; set; }
 
         private bool isFocused;
-        public bool IsFocused {
+        public bool IsFocused
+        {
             get { return isFocused; }
             set
             {
                 isFocused = value;
                 OnPropertyChanged(nameof(IsFocused));
-            } 
+            }
         }
 
-        public CategoryTreeModel() 
+        public CategoryTreeModel()
         {
             Children = new ObservableCollection<ChapterTreeModel>();
         }

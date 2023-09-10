@@ -15,8 +15,8 @@ using WpfNotecardUI.Views.Dialogs;
 
 namespace WpfNotecardUI.Services.RealServices
 {
-    public class DialogServices<TViewModel> : IDialogService 
-        where TViewModel: AbstractClosableValidationViewModel
+    public class DialogServices<TViewModel> : IDialogService
+        where TViewModel : AbstractClosableValidationViewModel
     {
 
         TViewModel viewModel;
@@ -28,7 +28,7 @@ namespace WpfNotecardUI.Services.RealServices
         {
             viewModel = newViewModel;
             SimpleViewModelFactory();
-            
+
         }
 
 
@@ -42,7 +42,7 @@ namespace WpfNotecardUI.Services.RealServices
                 AddCategoryViewModel ac => new CategoryDialog(),
                 AddSentenceViewModel aSent => new SentenceDialog(),
                 AddChapterViewModel achap => new ChapterDialog(),
-                
+
                 _ => throw new NotImplementedException()
             };
 

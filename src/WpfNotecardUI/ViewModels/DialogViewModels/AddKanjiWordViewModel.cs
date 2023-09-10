@@ -127,7 +127,7 @@ namespace WpfNotecardUI.ViewModels.DialogViewModels
             AddKanjiCommand = new RelayCommand(AddKanjiFunction, CanAdd);
             HelpNotify += NotifyCanAddChange;
             //Register the ValidationRules
-            ValidationRules.Add(nameof(TopicName), new List<ValidationRule>{ new OneCharacterValdiationRule() });
+            ValidationRules.Add(nameof(TopicName), new List<ValidationRule> { new OneCharacterValdiationRule() });
             ValidationRules.Add(nameof(TopicDefinition), new List<ValidationRule> { new MaxCharacterValidationRule() });
             ValidationRules.Add(nameof(GradeLevel), new List<ValidationRule> { new IntValidationRule(0, 32) });
             ValidationRules.Add(nameof(NewsPaperRank), new List<ValidationRule> { new IntValidationRule(0, 100000) });
@@ -166,7 +166,7 @@ namespace WpfNotecardUI.ViewModels.DialogViewModels
         }
         public bool CanAdd()
         {
-            if(TopicName == string.Empty
+            if (TopicName == string.Empty
                 || TopicDefinition == string.Empty
                 || GradeLevel == null)
             {

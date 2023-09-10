@@ -13,10 +13,10 @@ namespace DataLayer.IRepos
 
         Task BulkUpdate(List<JapaneseWordNoteCard> cards);
 
-        Task<int> CountFromOneChapter (string topicName);
+        Task<int> CountFromOneChapter(string topicName);
 
-        Task<List<JapaneseWordNoteCard>> GetPerPageFromOneCategory (string topicName, int page, int numberPerPage);
+        Task<List<JapaneseWordNoteCard>> GetPerPageFromOneCategory(string topicName, int page, int numberPerPage);
 
-        Task<Dictionary<string, bool[]>> GetCharacterExistFromList (IList<string> listOfStrings);
+        Task<Dictionary<string, bool[]>> GetCharacterExistFromList(IList<string> listOfStrings);
     }
 }

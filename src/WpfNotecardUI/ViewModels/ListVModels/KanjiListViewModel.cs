@@ -31,7 +31,7 @@ namespace WpfNotecardUI.ViewModels.ListVModels
             _categoryId = categoryId;
             GetDataForList();
             GetCountFunction();
-            
+
             //_dialogService = new DialogServices<KanjiWordDialog, AddKanjiWordViewModel>("Japanese Vocab", _serviceProvider);
         }
 
@@ -50,7 +50,7 @@ namespace WpfNotecardUI.ViewModels.ListVModels
                 var genericRepo = scopedServiceProvider.GetRequiredService<IGenericRepo<ChapterNoteCard>>();
                 genericRepo.DeleteByList(pkList);
             }
-                Debug.WriteLine("hi");
+            Debug.WriteLine("hi");
             GetDataForList();
         }
 
@@ -78,7 +78,7 @@ namespace WpfNotecardUI.ViewModels.ListVModels
                 var scopedServiceProvider = scope.ServiceProvider;
                 var kanjiRepo = scopedServiceProvider.GetRequiredService<IKanjiNoteCardRepo>();
                 var kanjiList = await kanjiRepo.GetAllWithAllInfo();
-                foreach(var kanji in kanjiList)
+                foreach (var kanji in kanjiList)
                 {
                     CurrentList.Add(new KanjiListItemModel(kanji));
                 }
@@ -108,7 +108,7 @@ namespace WpfNotecardUI.ViewModels.ListVModels
                         TopicDefinition = item.TopicDefinition,
                         TopicName = item.TopicName
                     }
-                }) ;
+                });
             }
             using (var scope = _serviceProvider.CreateScope())
             {

@@ -106,11 +106,11 @@ namespace WpfNotecardUI.ViewModels.ListVModels
                     itemAnswerList.Add(word.ItemQuestion);
                 }
                 var dictionary = await japanRepo.GetCharacterExistFromList(itemAnswerList);
-                foreach(var key in dictionary)
+                foreach (var key in dictionary)
                 {
                     //I wished I put the CharacterExist class in the data layer.  Feels super wrong to do for loop on string and still call the boolean with string's index
                     var currentlistItem = CurrentList.Where(item => item.ItemQuestion == key.Key).First();
-                    for(var i = 0; i < key.Key.Length; i++)
+                    for (var i = 0; i < key.Key.Length; i++)
                     {
                         // if string is 3 characters long.  Max index would be 2.  2 > 3-1 is still good.  2>4-1 should be array out of bounds.
                         //if (i > key.Value.Length - 1) { break; }
@@ -126,7 +126,7 @@ namespace WpfNotecardUI.ViewModels.ListVModels
         {
             var pkList = new List<SentenceNoteCard>();
             var itemsSelected = CurrentList.Where(item => item.IsSelectedForDeletion == true).ToList();
-            foreach(var item in itemsSelected)
+            foreach (var item in itemsSelected)
             {
                 pkList.Add(ModelToEntityMapper.ToSentenceNoteCardPrimaryKey(item));
             }

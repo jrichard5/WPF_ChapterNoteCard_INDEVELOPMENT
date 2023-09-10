@@ -25,15 +25,15 @@ namespace WpfNotecardUI.ValidationRules
             {
                 return new ValidationResult(false, "Please enter in a string");
             }
-            if(!Int32.TryParse(stringToTest, out int number))
+            if (!Int32.TryParse(stringToTest, out int number))
             {
                 return new ValidationResult(false, "Please enter in a number");
             }
-            if(number < _min)
+            if (number < _min)
             {
                 return new ValidationResult(false, $"Must be greater than {_min}");
             }
-            if(number > _max)
+            if (number > _max)
             {
                 return new ValidationResult(false, $"Must be less than {_min}");
             }

@@ -31,12 +31,12 @@ namespace WpfNotecardUI.Views
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var item = (sender as ListView)?.SelectedItem;
-            if (item != null) 
+            if (item != null)
             {
                 (this.DataContext as CategoryListViewModel).SwitchToChapterView((CategoryModel)item);
             }
 
-            
+
         }
     }
 }

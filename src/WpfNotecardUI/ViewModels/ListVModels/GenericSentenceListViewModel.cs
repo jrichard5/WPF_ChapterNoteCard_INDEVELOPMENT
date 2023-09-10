@@ -33,7 +33,7 @@ namespace WpfNotecardUI.ViewModels.ListVModels
         public void DeleteFunction(object? item)
         {
             var selectedNotecard = item as SentenceNoteCardModel;
-            if (selectedNotecard == null) 
+            if (selectedNotecard == null)
             {
                 return;
             }
@@ -41,7 +41,7 @@ namespace WpfNotecardUI.ViewModels.ListVModels
             {
                 ItemQuestion = selectedNotecard.ItemQuestion
             };
-            using (var scope = _serviceProvider.CreateScope()) 
+            using (var scope = _serviceProvider.CreateScope())
             {
                 var scopedSP = scope.ServiceProvider;
                 var genericRepo = scopedSP.GetRequiredService<IGenericRepo<SentenceNoteCard>>();
@@ -86,9 +86,9 @@ namespace WpfNotecardUI.ViewModels.ListVModels
             {
                 return;
             }
-            List <SentenceNoteCardModel> changedItems = CurrentList.Where(item => ItemQuestionsThatHaveChanged.Contains(item.ItemQuestion)).ToList();
+            List<SentenceNoteCardModel> changedItems = CurrentList.Where(item => ItemQuestionsThatHaveChanged.Contains(item.ItemQuestion)).ToList();
             List<SentenceNoteCard> backToDb = new List<SentenceNoteCard>();
-            foreach(var item in changedItems)
+            foreach (var item in changedItems)
             {
                 backToDb.Add(new SentenceNoteCard
                 {
@@ -121,14 +121,14 @@ namespace WpfNotecardUI.ViewModels.ListVModels
         protected override async void GetCountFunction()
         {
             IsPageLoading = true;
-            using(var scope = _serviceProvider.CreateScope())
+            using (var scope = _serviceProvider.CreateScope())
             {
                 var scopedServiceProvider = scope.ServiceProvider;
                 var sentRepo = scopedServiceProvider.GetRequiredService<ISentenceNoteCardRepo>();
                 MaxPageCount = await sentRepo.CountFromOneChapter(_topicName);
             }
             LastPageNumber = GetCountHelperFunction((int)MaxPageCount);
-            IsPageLoading=false;
+            IsPageLoading = false;
         }
     }
 }

@@ -82,7 +82,7 @@ namespace WpfNotecardUI.ViewModels.DialogViewModels
         {
             _topicName = parentName;
             _serviceProvider = serviceProvider;
-            
+
             AddCommand = new RelayCommand(AddSentenceFunction, CanAdd);
             HelpNotify += NotifyCanAddChange;
             ValidationRules.Add(nameof(ItemQuestion), new List<ValidationRule> { new MaxCharacterValidationRule() });
@@ -134,9 +134,9 @@ namespace WpfNotecardUI.ViewModels.DialogViewModels
 
         public bool CanAdd()
         {
-            if(_itemQuestion == string.Empty
+            if (_itemQuestion == string.Empty
                 || _itemAnswer == string.Empty
-                || _memorizationLevel == string.Empty) 
+                || _memorizationLevel == string.Empty)
             {
                 return false;
             }

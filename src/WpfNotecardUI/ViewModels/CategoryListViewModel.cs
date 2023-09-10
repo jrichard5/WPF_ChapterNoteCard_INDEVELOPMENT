@@ -72,11 +72,11 @@ namespace WpfNotecardUI.ViewModels
         {
             var pkList = new List<Category>();
             var itemsSelected = DbCategories.Where(item => item.IsSelectedForDeletion == true).ToList();
-            foreach(var item in itemsSelected) 
+            foreach (var item in itemsSelected)
             {
                 pkList.Add(new Category { Id = item.Id });
             }
-            using (var scope = _serviceProvider.CreateScope()) 
+            using (var scope = _serviceProvider.CreateScope())
             {
                 var scopedServiceProvider = scope.ServiceProvider;
                 var genericRepo = scopedServiceProvider.GetRequiredService<IGenericRepo<Category>>();
@@ -100,7 +100,7 @@ namespace WpfNotecardUI.ViewModels
             _dialogService.ShowDialog(result =>
             {
                 LoadCategories();
-                
+
             });
         }
 
@@ -123,7 +123,7 @@ namespace WpfNotecardUI.ViewModels
             {
                 _navigationStore.CurrentViewModel = new GenericChapterListViewModel(category.Id, _navigationStore, _serviceProvider);
             }
-            
+
 
         }
 
@@ -138,7 +138,7 @@ namespace WpfNotecardUI.ViewModels
                 var categoryRepo = scopedServiceProvider.GetRequiredService<ICategoryRepo>();
                 //var fromDb = categoryRepo.GetAll().ContinueWith(task => DbCategories.AddRange(task.Result));
                 var fromDb = await categoryRepo.GetAll();
-                foreach(var entry in fromDb)
+                foreach (var entry in fromDb)
                 {
                     DbCategories.Add(new CategoryModel(entry));
                     //DbCategories.AddRange(fromDb);

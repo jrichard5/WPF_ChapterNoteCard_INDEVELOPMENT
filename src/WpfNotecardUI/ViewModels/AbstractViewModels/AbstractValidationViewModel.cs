@@ -32,11 +32,11 @@ namespace WpfNotecardUI.ViewModels.AbstractViewModels
 
         public IEnumerable GetErrors(string? propertyName)
         {
-            if( propertyName == null)
+            if (propertyName == null)
             {
                 throw new ArgumentNullException(nameof(propertyName));
             }
-            if(this.Errors.TryGetValue(propertyName, out var errors))
+            if (this.Errors.TryGetValue(propertyName, out var errors))
             {
                 return errors;
             }
@@ -74,9 +74,9 @@ namespace WpfNotecardUI.ViewModels.AbstractViewModels
             {
                 return;
             }
-            if(!Errors.TryGetValue(propertyName, out var errors))
+            if (!Errors.TryGetValue(propertyName, out var errors))
             {
-               errors = new List<object>();
+                errors = new List<object>();
                 Errors.Add(propertyName, errors);
             }
             foreach (var error in errorMessages)

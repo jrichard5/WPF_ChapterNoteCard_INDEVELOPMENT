@@ -37,8 +37,8 @@ namespace WpfNotecardUI.ViewModels
         public ObservableCollection<string> NextChapters
         {
             get { return _nextChapters; }
-            set 
-            { 
+            set
+            {
                 _nextChapters = value;
                 OnPropertyChanged(nameof(NextChapters));
             }
@@ -54,7 +54,7 @@ namespace WpfNotecardUI.ViewModels
         public ICommand GoToStartViewModel { get; }
         public ICommand NextCommand { get; }
 
-        public RelayCommand PreviousCommand { get; } 
+        public RelayCommand PreviousCommand { get; }
 
         private readonly IServiceProvider _serviceProvider;
 
@@ -126,9 +126,9 @@ namespace WpfNotecardUI.ViewModels
         private string _nextButtonContent = "Flip";
         public string NextButtonContent
         {
-            get { return _nextButtonContent; } 
-            set 
-            { 
+            get { return _nextButtonContent; }
+            set
+            {
                 _nextButtonContent = value;
                 OnPropertyChanged(nameof(NextButtonContent));
             }
@@ -146,7 +146,7 @@ namespace WpfNotecardUI.ViewModels
         private void AddToPastArray(CurrentNotecard cardToPlac)
         {
             int firstEmptyIndex = MAX_PAST_NOTECARDS - 1;
-            for(int i = 0; i <oldNotecards.Length; i++) 
+            for (int i = 0; i < oldNotecards.Length; i++)
             {
                 //if (String.IsNullOrEmpty(OldNotecards[i].Question))
                 if (oldNotecards[i] == null)
@@ -156,13 +156,13 @@ namespace WpfNotecardUI.ViewModels
                 }
             }
 
-            if (firstEmptyIndex-1 >=0 &&  oldNotecards[firstEmptyIndex -1] is not null)
+            if (firstEmptyIndex - 1 >= 0 && oldNotecards[firstEmptyIndex - 1] is not null)
             {
                 Debug.WriteLine(cardToPlac.Question + oldNotecards[firstEmptyIndex - 1].Question);
             }
-            
 
-            if(!(firstEmptyIndex == 0))
+
+            if (!(firstEmptyIndex == 0))
             {
                 for (int i = firstEmptyIndex; i > 0; i--)
                 {
@@ -222,9 +222,9 @@ namespace WpfNotecardUI.ViewModels
                 DisplayedNotecard.Question = _currentChapterDeck.CurrentChapter.TopicDefinition;
                 DisplayedNotecard.Hint = "";
                 HasHint = false;
-                
+
             }
-            else if (!DisplayedNotecard.IsFront && DisplayedNotecard.IsChapter) 
+            else if (!DisplayedNotecard.IsFront && DisplayedNotecard.IsChapter)
             {
                 AddToPastArray(DisplayedNotecard);
                 var currentSentence = _currentChapterDeck.Sentences[DisplayedNotecard.CurrentIndex];
@@ -241,9 +241,9 @@ namespace WpfNotecardUI.ViewModels
                 DisplayedNotecard.Hint = currentSentence.SentenceNoteCard.Hint;
                 HasHint = !string.IsNullOrEmpty(DisplayedNotecard.Hint);
 
-                
+
             }
-            else if (DisplayedNotecard.IsFront && !DisplayedNotecard.IsChapter) 
+            else if (DisplayedNotecard.IsFront && !DisplayedNotecard.IsChapter)
             {
                 AddToPastArray(DisplayedNotecard);
                 NextButtonContent = "Next";
@@ -253,9 +253,9 @@ namespace WpfNotecardUI.ViewModels
                 DisplayedNotecard.Question = _currentChapterDeck.Sentences[DisplayedNotecard.CurrentIndex].SentenceNoteCard.ItemAnswer;
                 DisplayedNotecard.Hint = "";
                 HasHint = false;
-                
+
             }
-            else if(!DisplayedNotecard.IsFront && !DisplayedNotecard.IsChapter)
+            else if (!DisplayedNotecard.IsFront && !DisplayedNotecard.IsChapter)
             {
                 AddToPastArray(DisplayedNotecard);
                 NextButtonContent = "Flip";
@@ -264,7 +264,7 @@ namespace WpfNotecardUI.ViewModels
                 UpdateTimeOnSentenceNoteCard(_currentChapterDeck.Sentences[DisplayedNotecard.CurrentIndex].SentenceNoteCard);
 
                 DisplayedNotecard.CurrentIndex++;
-                
+
                 if (DisplayedNotecard.CurrentIndex < _currentChapterDeck.Sentences.Count)
                 {
                     var currentSentence = _currentChapterDeck.Sentences[DisplayedNotecard.CurrentIndex];
@@ -277,7 +277,7 @@ namespace WpfNotecardUI.ViewModels
                     DisplayedNotecard.Hint = currentSentence.SentenceNoteCard.Hint;
                     HasHint = !string.IsNullOrEmpty(DisplayedNotecard.Hint);
 
-                    
+
                 }
                 else
                 {
@@ -289,7 +289,7 @@ namespace WpfNotecardUI.ViewModels
                     _currentChapterDeck = await decksQueued.Dequeue();
                     DisplayedNotecard.Question = _currentChapterDeck.CurrentChapter.TopicName;
                     DisplayedNotecard.Hint = "";
-                    
+
 
                     //Queue next task
                     if (!(chaptersQueued.Count > 0))
@@ -297,7 +297,7 @@ namespace WpfNotecardUI.ViewModels
                         RandomizeChaptersAndQueue();
                     }
                     var nextChapter = chaptersQueued.Dequeue();
-                    for(var i = 0; i <  NextChapters.Count -1; i++)
+                    for (var i = 0; i < NextChapters.Count - 1; i++)
                     {
                         NextChapters[i] = NextChapters[i + 1];
                     }
@@ -305,7 +305,7 @@ namespace WpfNotecardUI.ViewModels
                     decksQueued.Enqueue(CreateChapterDeck(nextChapter));
                 }
 
-                
+
             }
         }
 
@@ -363,7 +363,7 @@ namespace WpfNotecardUI.ViewModels
                         var chapters = await genericRepo.GetAll();
                         chaptersSelected = chapters.Select(c => c.TopicName).ToList();
                     }
-                } 
+                }
             }
 
             if (chaptersSelected.Count == 0)
@@ -384,7 +384,7 @@ namespace WpfNotecardUI.ViewModels
 
             var chapterToSearch = chaptersQueued.Dequeue();
             NextChapters.Add(chapterToSearch);
-            
+
             _currentChapterDeck = await CreateChapterDeck(chapterToSearch);
             DisplayedNotecard = new CurrentNotecard();
             DisplayedNotecard.Hint = "New Chapter!!!";
@@ -444,7 +444,7 @@ namespace WpfNotecardUI.ViewModels
             ChapterDeck chapterDeck = new ChapterDeck();
             chapterDeck.Sentences = new List<SentenceForDeck>();
 
-            using(var scope = _serviceProvider.CreateScope())
+            using (var scope = _serviceProvider.CreateScope())
             {
                 var scopeServiceProvider = scope.ServiceProvider;
                 var chapRepo = scope.ServiceProvider.GetRequiredService<IChapterNoteCardRepo>();
@@ -472,7 +472,7 @@ namespace WpfNotecardUI.ViewModels
                         sentForDeck.SentenceNoteCard = sent;
                         sentForDeck.CharExistList = charExistList[sent.ItemQuestion];
                         chapterDeck.Sentences.Add(sentForDeck);
-                        
+
                     }
                 }
                 else
@@ -481,10 +481,10 @@ namespace WpfNotecardUI.ViewModels
                     {
                         var sentForDeck = new SentenceForDeck();
                         sentForDeck.SentenceNoteCard = sent;
-                        chapterDeck.Sentences.Add(sentForDeck) ;
+                        chapterDeck.Sentences.Add(sentForDeck);
                     }
                 }
-                
+
             }
             return chapterDeck;
         }

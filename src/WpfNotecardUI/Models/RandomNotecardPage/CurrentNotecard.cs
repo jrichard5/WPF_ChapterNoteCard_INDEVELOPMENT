@@ -24,22 +24,22 @@ namespace WpfNotecardUI.Models.RandomNotecardPage
         public string Hint
         {
             get { return _hint; }
-            set 
+            set
             {
-                _hint = value; 
+                _hint = value;
                 OnPropertyChanged(nameof(Hint));
             }
         }
 
         private string _question;
         public string Question
-        { 
-            get { return _question; } 
-            set 
-            { 
-                _question = value; 
+        {
+            get { return _question; }
+            set
+            {
+                _question = value;
                 OnPropertyChanged(nameof(Question));
-            } 
+            }
         }
 
         public bool[]? CharExistList { get; set; }

@@ -10,6 +10,6 @@ namespace WpfNotecardUI.AttachedBehaviors
     {
         //https://stackoverflow.com/questions/4497825/wpf-mvvm-how-to-handle-double-click-on-treeviewitems-in-the-viewmodel
 
-          
+
     }
 }

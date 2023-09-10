@@ -42,7 +42,7 @@ namespace WpfNotecardUI.Views.ListViews.ListViewComponents
             RichTextBox box = richTextBox;
 
             //Dictoinary may not preseve order
-            for(var i = 0; i< itemQuestion.Length; i++)
+            for (var i = 0; i < itemQuestion.Length; i++)
             {
                 if (itemQuestion[i].ToString() != charExistList[i].Character)
                 {
@@ -54,9 +54,9 @@ namespace WpfNotecardUI.Views.ListViews.ListViewComponents
             Paragraph para = new Paragraph();
             foreach (var singleCharacter in charExistList)
             {
-                
+
                 Run run = new Run(singleCharacter.Character.ToString());
-                if(!singleCharacter.IsExist)
+                if (!singleCharacter.IsExist)
                 {
                     run.Foreground = Brushes.Red;
                 }
@@ -79,7 +79,7 @@ namespace WpfNotecardUI.Views.ListViews.ListViewComponents
             string testString = new TextRange(box.Document.ContentStart, box.Document.ContentEnd).Text.ToString();
             if (!string.IsNullOrEmpty(testString))
             {
-                var formattedText = new FormattedText(testString, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, 
+                var formattedText = new FormattedText(testString, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
                     new Typeface(box.FontFamily, box.FontStyle, box.FontWeight, box.FontStretch),
                     box.FontSize,
                     Brushes.Black,

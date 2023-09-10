@@ -18,7 +18,7 @@ namespace DataLayer.Repositories
                 .Select(jnc => jnc.ItemQuestion)
                 .ToListAsync();
 
-            List<ChapterNoteCardSentenceNoteCard> addWords = new List<ChapterNoteCardSentenceNoteCard> ();
+            List<ChapterNoteCardSentenceNoteCard> addWords = new List<ChapterNoteCardSentenceNoteCard>();
             foreach (var word in words)
             {
                 addWords.Add(new ChapterNoteCardSentenceNoteCard { ChapterNoteCardTopicName = item.ChapterNoteCard.TopicName, SentenceNoteCardItemQuestion = word });
@@ -53,9 +53,9 @@ namespace DataLayer.Repositories
 
         public async Task BulkUpdate(List<KanjiNoteCard> items)
         {
-            
 
-            
+
+
             foreach (var item in items)
             {
                 //var kanjiEntity = _dbContext.ExtraKanjiInfos.Include(knc => knc.KanjiReadings).FirstOrDefault(knc => knc.TopicName == item.TopicName);

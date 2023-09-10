@@ -58,7 +58,7 @@ namespace WpfNotecardUI.Views.ListViews
                 EditToggle.Text = "Edit Toggle Engaged";
                 DataList.IsReadOnly = false;
             }
-                
+
         }
 
         private void DataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)

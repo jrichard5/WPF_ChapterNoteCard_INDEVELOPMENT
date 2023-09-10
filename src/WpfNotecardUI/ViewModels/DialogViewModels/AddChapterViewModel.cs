@@ -17,14 +17,14 @@ namespace WpfNotecardUI.ViewModels.DialogViewModels
 {
     public class AddChapterViewModel : AbstractClosableValidationViewModel
     {
-        
+
         private readonly IServiceProvider _serviceProvider;
         private string _parentName;
         public string ParentName { get { return _parentName; } }
         public DateTime LastTimeAccessed { get; set; } = DateTime.Now;
         private string topicName = string.Empty;
-        public string TopicName 
-        { 
+        public string TopicName
+        {
             get { return topicName; }
             set
             {
@@ -37,7 +37,7 @@ namespace WpfNotecardUI.ViewModels.DialogViewModels
         private string topicDefinition = string.Empty;
         public string TopicDefinition
         {
-            get { return this.topicDefinition;}
+            get { return this.topicDefinition; }
             set
             {
                 IsPropertyValid(value);
@@ -72,14 +72,14 @@ namespace WpfNotecardUI.ViewModels.DialogViewModels
             ValidationRules.Add(nameof(GradeLevel), new List<ValidationRule> { new IntValidationRule(0, 32) });
         }
 
-        private void NotifyCanAddChange() 
+        private void NotifyCanAddChange()
         {
             AddCommand.NotifyCanExecuteChanged();
         }
 
         private async void AddChapterFunction()
         {
-            if(!Int32.TryParse(_parentName, out int parentId))
+            if (!Int32.TryParse(_parentName, out int parentId))
             {
                 throw new Exception();
             }

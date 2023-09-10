@@ -35,7 +35,7 @@ namespace WpfNotecardUI.ViewModels.AbstractViewModels
         public bool IsDeleteToggled
         {
             get { return isDeleteToggled; }
-            set 
+            set
             {
                 isDeleteToggled = value;
                 OnPropertyChanged(nameof(IsDeleteToggled));

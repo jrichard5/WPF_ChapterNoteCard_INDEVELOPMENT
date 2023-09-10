@@ -106,13 +106,13 @@ namespace WpfNotecardUI.ViewModels.ListVModels
         public void DeleteFunction(object? item)
         {
             var selectedNotecard = item as ChapterItemModel;
-            if (selectedNotecard == null) 
+            if (selectedNotecard == null)
             {
                 return;
             }
             //https://stackoverflow.com/questions/43547647/how-to-make-right-click-button-context-menu-in-wpf
             Debug.WriteLine("hi");
-            
+
             var topicName = selectedNotecard.TopicName;
             var pkForDelete = new ChapterNoteCard()
             {

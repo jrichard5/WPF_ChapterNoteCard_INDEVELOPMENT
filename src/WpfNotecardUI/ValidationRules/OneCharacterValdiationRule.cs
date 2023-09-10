@@ -12,12 +12,12 @@ namespace WpfNotecardUI.ValidationRules
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if(!(value is string topicName))
+            if (!(value is string topicName))
             {
                 return new ValidationResult(false, "Programmer needs this to be a string");
             }
 
-            if(topicName.Count() !=1)
+            if (topicName.Count() != 1)
             {
                 return new ValidationResult(false, "Must be only one character long");
             }

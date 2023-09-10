@@ -33,7 +33,7 @@ namespace WpfNotecardUI.Views
             var currentSentence = vm.DisplayedNotecard;
             RichTextBox box = richTextBox;
 
-            
+
         }
 
         //Needed to add NotifyOnTargetUpdated to true   <TextBlock Text="{Binding DisplayedNotecard.Question, NotifyOnTargetUpdated=True}"
@@ -41,7 +41,7 @@ namespace WpfNotecardUI.Views
         private void TextBoxQuestion_TargetUpdated(object sender, DataTransferEventArgs e)
         {
             var vm = (RandomNoteCardViewModel)this.DataContext;
-            if (vm is null) 
+            if (vm is null)
             {
                 return;
             }
@@ -79,5 +79,5 @@ namespace WpfNotecardUI.Views
 
     }
 
-    
+
 }

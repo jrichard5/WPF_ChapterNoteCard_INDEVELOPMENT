@@ -17,7 +17,7 @@ namespace WpfNotecardUI.Mappers
             KanjiNoteCard newNotecard = new KanjiNoteCard();
             newNotecard.ChapterNoteCard = new ChapterNoteCard();
 
-            using(var context = new KanjiDbContext())
+            using (var context = new KanjiDbContext())
             {
                 ICategoryRepo cateRepo = new CategoryRepo(context);
                 var cate = await cateRepo.GetFirstCategoryByName(parentName);
@@ -44,7 +44,7 @@ namespace WpfNotecardUI.Mappers
             string[] readings = allReading.Split(' ', ',');
             foreach (string reading in readings)
             {
-                if(string.IsNullOrEmpty(reading)) continue;
+                if (string.IsNullOrEmpty(reading)) continue;
                 newList.Add(new KanjiReading { Reading = reading, TypeOfReading = typeOfReading });
             }
             return newList;

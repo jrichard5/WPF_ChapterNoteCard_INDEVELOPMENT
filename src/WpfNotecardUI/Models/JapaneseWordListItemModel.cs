@@ -16,7 +16,7 @@ namespace WpfNotecardUI.Models
         public int? Order { get; set; }
         public int ExtraJishoPrimaryId { get; set; }
         public bool IsSelectedForDeletion { get; set; }
-        public List<CharacterExist> CharExistList {get; set;} 
+        public List<CharacterExist> CharExistList { get; set; }
 
         public JapaneseWordListItemModel(JapaneseWordNoteCard jnoteCard) : base(jnoteCard.SentenceNoteCard)
         {

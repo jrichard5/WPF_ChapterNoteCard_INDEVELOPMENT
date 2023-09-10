@@ -27,7 +27,8 @@ namespace WpfNotecardUI.ViewModels.DialogViewModels
 
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
-        public string ItemQuestion {
+        public string ItemQuestion
+        {
             get { return _itemQuestion; }
             set
             {
@@ -42,9 +43,9 @@ namespace WpfNotecardUI.ViewModels.DialogViewModels
         public string ItemAnswer { get; set; } = string.Empty;
         public string Hint { get; set; } = string.Empty;
         private int _memorizationLevel = 0;
-        public int MemorizationLevel 
-        { 
-            get {  return _memorizationLevel; }
+        public int MemorizationLevel
+        {
+            get { return _memorizationLevel; }
             set
             {
                 _memorizationLevel = value;
@@ -57,17 +58,17 @@ namespace WpfNotecardUI.ViewModels.DialogViewModels
                 {
                     AddError(nameof(MemorizationLevel), $"Must be less than 100000");
                 }
-            } 
+            }
         }
         public DateTime LastTimeAccessed { get; set; } = DateTime.Now;
         private int _jlptLevel = 1;
 
-        public int JlptLevel 
+        public int JlptLevel
         {
             get { return _jlptLevel; }
-            set 
-            { 
-                _jlptLevel = value; 
+            set
+            {
+                _jlptLevel = value;
                 ClearErrors(nameof(JlptLevel));
                 if (_jlptLevel < 0 || _jlptLevel > 6)
                 {
@@ -79,11 +80,11 @@ namespace WpfNotecardUI.ViewModels.DialogViewModels
         public bool IsCommonWord { get; set; } = false;
         public int PageNumber { get; set; } = 0;
         public int Order { get; set; } = 0;
-        
+
 
 
         public RelayCommand AddCommand { get; }
-        
+
 
         public AddJapanWordViewModel(string topicName, IServiceProvider serviceProvider)
         {
@@ -119,8 +120,8 @@ namespace WpfNotecardUI.ViewModels.DialogViewModels
                 }
                 catch (DbUpdateException ex)
                 {
-                    if (ex.InnerException is not null) 
-                    { 
+                    if (ex.InnerException is not null)
+                    {
                         MessageBox.Show(ex.InnerException.Message);
                     }
                 }
@@ -141,7 +142,7 @@ namespace WpfNotecardUI.ViewModels.DialogViewModels
             ItemAnswer = string.Empty;
             OnPropertyChanged(nameof(ItemAnswer));
             Hint = string.Empty;
-            OnPropertyChanged(nameof (Hint));
+            OnPropertyChanged(nameof(Hint));
             MemorizationLevel = 0;
             OnPropertyChanged(nameof(MemorizationLevel));
             LastTimeAccessed = DateTime.Now;
@@ -156,7 +157,7 @@ namespace WpfNotecardUI.ViewModels.DialogViewModels
             OnPropertyChanged(nameof(PageNumber));
             Order = 0;
             OnPropertyChanged(nameof(Order));
-            
+
 
         }
         private JapaneseWordNoteCard NewNotecard()
