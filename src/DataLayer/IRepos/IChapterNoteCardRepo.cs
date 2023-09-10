@@ -14,5 +14,7 @@ namespace DataLayer.IRepos
         Task<int> CountFromOneCategory(int categoryId);
 
         Task<List<IGrouping<Category, ChapterNoteCard>>> GroupByCategory();
+
+        Task<List<ChapterNoteCard>> GetAllThatHasFocus();
     }
 }

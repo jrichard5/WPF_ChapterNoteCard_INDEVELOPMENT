@@ -9,5 +9,6 @@
         public Task<List<T>> GetAll();
         public Task DeleteWithAttach(T entity);
         public Task BulkUpdateGeneric(List<T> entities);
+        public Task UpdateGeneric(T entity);
     }
 }

@@ -65,5 +65,11 @@ namespace DataLayer.Repositories
             }
             await this._dbContext.SaveChangesAsync();
         }
+
+        public async Task UpdateGeneric(T entity)
+        {
+            this._dbContext.Set<T>().Update(entity);
+            await this._dbContext.SaveChangesAsync();
+        }
     }
 }

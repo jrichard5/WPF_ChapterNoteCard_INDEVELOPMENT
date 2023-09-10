@@ -4,8 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfNotecardUI.Views"
+             xmlns:converter="clr-namespace:WpfNotecardUI.Views.Converter"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converter:StringToFontSizeConverter x:Key="hi" />
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
@@ -36,7 +41,8 @@
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <Button Grid.Column="0" Grid.Row="0"
-                    Content="Previous Card(not work)">
+                    Content="Previous Card"
+                    Command="{Binding PreviousCommand}">
             </Button>
             <Label Grid.Column="1" Grid.Row="0"
                    Name="space"></Label>
@@ -45,27 +51,48 @@
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
                         MaxWidth="{Binding ElementName=space, Path=ActualWidth}">
-                <TextBlock Text="Hint"
+                <TextBlock Text="{Binding DisplayedNotecard.Hint}"
                            FontSize="32"
                            HorizontalAlignment="Center">
                 </TextBlock>
-                <TextBlock Text="Definition"
-                           FontSize="48">
+                <RichTextBox x:Name="richTextBox"
+                             IsReadOnly="True"
+                             Background="Transparent" BorderThickness="3">
+                    <RichTextBox.Style>
+                        <Style TargetType="RichTextBox">
+                            <Setter Property="FontSize" Value="{Binding DisplayedNotecard.Question,
+                                Converter={StaticResource hi}}"></Setter>
+                        </Style>
+                    </RichTextBox.Style>
+                </RichTextBox>
+                <TextBlock Text="{Binding DisplayedNotecard.Question, NotifyOnTargetUpdated=True}"
+                           TextWrapping="Wrap"
+                           x:Name="TextBoxQuestion"
+                           TargetUpdated="TextBoxQuestion_TargetUpdated"
+                             HorizontalAlignment="Center">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontSize" Value="{Binding DisplayedNotecard.Question,
+                                Converter={StaticResource hi}}"></Setter>
+                        </Style>
+                    </TextBlock.Style>
                 </TextBlock>
             </StackPanel>
             <Button Grid.Column="2" Grid.Row="1"
                     MaxHeight="100"
-                    Content="Next Card">
+                    Width="75"
+                    Content="{Binding NextButtonContent}"
+                    Command="{Binding NextCommand}">
                 
             </Button>
             <StackPanel Grid.Column="2" Grid.Row="2">
-                <TextBlock Text="1st Chapter">
+                <TextBlock Text="{Binding NextChapters[0]}">
                     
                 </TextBlock>
-                <TextBlock Text="2nd Chapter">
+                <TextBlock Text="{Binding NextChapters[1]}">
                     
                 </TextBlock>
-                <TextBlock Text="3rd chapter">
+                <TextBlock Text="{Binding NextChapters[2]}">
                     
                 </TextBlock>
                 
