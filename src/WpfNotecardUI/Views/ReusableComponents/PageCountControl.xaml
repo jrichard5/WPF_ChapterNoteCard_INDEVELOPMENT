@@ -13,19 +13,23 @@
                 Command="{Binding PreviousPageCommand}">
 
         </Button>
-        <TextBlock Text="{Binding PageNumber}"/>
-        <TextBlock Text="/" />
-        <TextBlock Text="{Binding LastPageNumber}">
-            <TextBlock.Style>
-                <Style TargetType="TextBlock">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsPageLoading}" Value="True">
-                            <Setter Property="Visibility" Value="Collapsed" ></Setter>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBlock.Style>
-        </TextBlock>
+        <StackPanel Orientation="Horizontal" Margin="4 16 4 0">
+            <TextBlock Text="{Binding PageNumber}"/>
+            <TextBlock Text="/" />
+            <TextBlock Text="{Binding LastPageNumber}">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsPageLoading}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed" ></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </StackPanel>
+        
+            
         <Button
                 Content="Next"
                 Command="{Binding NextPageCommand}">

@@ -1,0 +1,6 @@
+In addition to its features for language learning, Decks of Randomness Notecards can also be used to create and organize generic notecards. This makes it a versatile tool for students, professionals, and anyone else who wants to learn and remember information more effectively.
+Decks of Randomness Notecards is an app created to group notecards by a specific topic, but still be able to share a notecard between different groups.  The first problem that it was designed to solve is as a learning tool for japanese.  Words can have multiple chinese characters called kanji (notecards are grouped by kanji). So, the app needed to add "xz" to both the "x" group and "z" group.  Then, it randomizes by group, so that notecards stay grouped by kanji to help you make connections bewteen each word and how it relates to kanji.  Finally, it randomizes by the word, so you are not just remembering the order.
+
+Why limit this app to just japanese?  Sometimes when reading a textbook there is a fact in chapter 2, and a related fact in chapter 8.  You might not realize the connection between these facts since they are so far apart.  So, Decks of Randomness Notecards also includes the ability to make generic notecards that you can group by specific topics.
+
+This app also has an interface to create notecards.
