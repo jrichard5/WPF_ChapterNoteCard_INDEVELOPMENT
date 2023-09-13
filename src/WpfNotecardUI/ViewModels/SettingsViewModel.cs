@@ -40,6 +40,16 @@ namespace WpfNotecardUI.ViewModels
                 OnPropertyChanged(nameof(OnOnlyFocus));
             }
         }
+        private bool _onlyChaptersSelected = Properties.Settings.Default.OnlyChaptersSelected;
+        public bool OnOnlyChaptersSelected
+        {
+            get { return _onlyChaptersSelected; }
+            set
+            {
+                _onlyChaptersSelected = value;
+                OnPropertyChanged(nameof(OnOnlyChaptersSelected));
+            }
+        }
         public RelayCommand SaveCommand { get; }
         public ICommand GoToStartCommand { get; }
         public SettingsViewModel(NavigationStore navigationStore, IServiceProvider serviceProvider)
@@ -64,6 +74,7 @@ namespace WpfNotecardUI.ViewModels
             }
             Properties.Settings.Default.NumberPerPage = result;
             Properties.Settings.Default.OnlyUseOnFocus = OnOnlyFocus;
+            Properties.Settings.Default.OnlyChaptersSelected = OnOnlyChaptersSelected;
 
             Properties.Settings.Default.Save();
 

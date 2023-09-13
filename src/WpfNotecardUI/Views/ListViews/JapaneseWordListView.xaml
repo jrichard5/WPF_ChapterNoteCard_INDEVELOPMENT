@@ -25,7 +25,6 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="1" Text="Hello, I'm Kanji"></TextBlock>
         <Button Grid.Column="1" Grid.Row="1" 
                 Content="ToMainPage" Margin="10 0"
                 Command="{Binding GoToStartCommand}">
@@ -109,7 +108,8 @@
             
         <ListView ItemsSource="{Binding CurrentList}" Name="listView"
                   HorizontalContentAlignment="Stretch" 
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  Background="Transparent">
             <ListView.Style>
                 <Style TargetType="ListView">
                     <Style.Triggers>

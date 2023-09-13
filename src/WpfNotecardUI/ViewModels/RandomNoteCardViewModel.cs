@@ -25,7 +25,7 @@ namespace WpfNotecardUI.ViewModels
         private static int MAX_PAST_NOTECARDS = 20;
 
         private bool _onlyFoucsOn = Properties.Settings.Default.OnlyUseOnFocus;
-        private bool _chapterSelection = false;
+        private bool _chapterSelection = Properties.Settings.Default.OnlyChaptersSelected;
         private List<string> chaptersSelected;
         private Queue<string> chaptersQueued;
         private Queue<Task<ChapterDeck>> decksQueued;
@@ -157,11 +157,6 @@ namespace WpfNotecardUI.ViewModels
                 }
             }
 
-            if (firstEmptyIndex - 1 >= 0 && oldNotecards[firstEmptyIndex - 1] is not null)
-            {
-                Debug.WriteLine(cardToPlac.Question + oldNotecards[firstEmptyIndex - 1].Question);
-            }
-
 
             if (!(firstEmptyIndex == 0))
             {
@@ -187,7 +182,7 @@ namespace WpfNotecardUI.ViewModels
 
         }
 
-        public async void NextFunction()
+        public void NextFunction()
         {
             if (IsPastNotecard)
             {
@@ -230,22 +225,28 @@ namespace WpfNotecardUI.ViewModels
             }
             else if (!DisplayedNotecard.IsFront && DisplayedNotecard.IsChapter)
             {
-
-                var currentSentence = _currentChapterDeck.Sentences[DisplayedNotecard.CurrentIndex];
-
-                NextButtonContent = "Flip";
-                //Must be above DisplayedNotecard.Question because of the way I change font in view.
-                if (_currentChapterDeck.CurrentChapter.CategoryId == _japaneseVocabCategoryId)
+                if (_currentChapterDeck.Sentences.Count == 0)
                 {
-                    DisplayedNotecard.CharExistList = currentSentence.CharExistList;
+                    GetNewChapterFromQueue();
+                    AddToPastArray(DisplayedNotecard);
                 }
-                DisplayedNotecard.IsFront = true;
-                DisplayedNotecard.IsChapter = false;
-                DisplayedNotecard.Question = currentSentence.SentenceNoteCard.ItemQuestion;
-                DisplayedNotecard.Hint = currentSentence.SentenceNoteCard.Hint;
-                HasHint = !string.IsNullOrEmpty(DisplayedNotecard.Hint);
-                AddToPastArray(DisplayedNotecard);
+                else
+                {
+                    var currentSentence = _currentChapterDeck.Sentences[DisplayedNotecard.CurrentIndex];
 
+                    NextButtonContent = "Flip";
+                    //Must be above DisplayedNotecard.Question because of the way I change font in view.
+                    if (_currentChapterDeck.CurrentChapter.CategoryId == _japaneseVocabCategoryId)
+                    {
+                        DisplayedNotecard.CharExistList = currentSentence.CharExistList;
+                    }
+                    DisplayedNotecard.IsFront = true;
+                    DisplayedNotecard.IsChapter = false;
+                    DisplayedNotecard.Question = currentSentence.SentenceNoteCard.ItemQuestion;
+                    DisplayedNotecard.Hint = currentSentence.SentenceNoteCard.Hint;
+                    HasHint = !string.IsNullOrEmpty(DisplayedNotecard.Hint);
+                    AddToPastArray(DisplayedNotecard);
+                }
 
             }
             else if (DisplayedNotecard.IsFront && !DisplayedNotecard.IsChapter)
@@ -287,32 +288,38 @@ namespace WpfNotecardUI.ViewModels
                 else
                 {
                     //Must be above DisplayedNotecard.Question because of the way I change font in view.
-                    DisplayedNotecard.CharExistList = null;
-                    DisplayedNotecard.IsChapter = true;
-                    DisplayedNotecard.CurrentIndex = 0;
-
-                    _currentChapterDeck = await decksQueued.Dequeue();
-                    DisplayedNotecard.Question = _currentChapterDeck.CurrentChapter.TopicName;
-                    DisplayedNotecard.Hint = "";
-
-
-                    //Queue next task
-                    if (!(chaptersQueued.Count > 0))
-                    {
-                        RandomizeChaptersAndQueue();
-                    }
-                    var nextChapter = chaptersQueued.Dequeue();
-                    for (var i = 0; i < NextChapters.Count - 1; i++)
-                    {
-                        NextChapters[i] = NextChapters[i + 1];
-                    }
-                    NextChapters[4] = nextChapter;
-                    decksQueued.Enqueue(CreateChapterDeck(nextChapter));
+                    GetNewChapterFromQueue();
                 }
                 AddToPastArray(DisplayedNotecard);
 
 
             }
+        }
+
+        private async void GetNewChapterFromQueue()
+        {
+            DisplayedNotecard.CharExistList = null;
+            DisplayedNotecard.IsChapter = true;
+            DisplayedNotecard.CurrentIndex = 0;
+            DisplayedNotecard.IsFront = true;
+
+            _currentChapterDeck = await decksQueued.Dequeue();
+            DisplayedNotecard.Question = _currentChapterDeck.CurrentChapter.TopicName;
+            DisplayedNotecard.Hint = "New Chapter";
+
+
+            //Queue next task
+            if (!(chaptersQueued.Count > 0))
+            {
+                RandomizeChaptersAndQueue();
+            }
+            var nextChapter = chaptersQueued.Dequeue();
+            for (var i = 0; i < NextChapters.Count - 1; i++)
+            {
+                NextChapters[i] = NextChapters[i + 1];
+            }
+            NextChapters[4] = nextChapter;
+            decksQueued.Enqueue(CreateChapterDeck(nextChapter));
         }
 
         #endregion
@@ -344,9 +351,10 @@ namespace WpfNotecardUI.ViewModels
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var scopeServiceProvider = scope.ServiceProvider;
-                    var chapterRepo = scopeServiceProvider.GetRequiredService<ChapterNoteCardRepo>();
+                    var chapterRepo = scopeServiceProvider.GetRequiredService<IChapterNoteCardRepo>();
                     var chapters = await chapterRepo.GetAllThatHasFocus();
                     chaptersWithFocus = chapters.Select(c => c.TopicName).ToList();
+                    chaptersSelected = chaptersWithFocus;
                 }
                 if (_chapterSelection)
                 {
@@ -459,6 +467,7 @@ namespace WpfNotecardUI.ViewModels
 
                 var sentRepo = scope.ServiceProvider.GetRequiredService<ISentenceNoteCardRepo>();
                 var sentences = await sentRepo.GetAllWithAChapter(chapterName);
+                sentences = sentences.Where(s => s.IsUserWantsToFocusOn).ToList();
 
 
                 var random = new Random();

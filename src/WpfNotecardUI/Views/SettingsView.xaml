@@ -11,11 +11,13 @@
         <Style TargetType="TextBox">
             <Setter Property="Margin" Value="0 0 0 16">
             </Setter>
+            
         </Style>
         <Style TargetType="Label">
             <Setter Property="Margin" Value="0 0 0 16">
 
             </Setter>
+            <Setter Property="Foreground" Value="White"/>
         </Style>
         <Style TargetType="CheckBox">
             <Setter Property="Margin" Value="-3 0 0 16">
@@ -60,7 +62,7 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" Text="Hello I'm the Settings Page"></TextBlock>
+
         <Button Grid.Column="1" Grid.Row="1" Content="Start Page"
                 Command="{Binding GoToStartCommand}"></Button>
 
@@ -94,6 +96,21 @@
                       HorizontalAlignment="Left"
                       VerticalAlignment="Center"
                       IsChecked="{Binding OnOnlyFocus, Mode=TwoWay}">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="2" ScaleY="2"/>
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label Grid.Row="2" Grid.Column="0"
+                   Content="Only Chapters Selected:  "
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Center"
+                   FontSize="20">
+            </Label>
+            <CheckBox Grid.Row="2" Grid.Column="1"
+          HorizontalAlignment="Left"
+          VerticalAlignment="Center"
+          IsChecked="{Binding OnOnlyChaptersSelected, Mode=TwoWay}">
                 <CheckBox.LayoutTransform>
                     <ScaleTransform ScaleX="2" ScaleY="2"/>
                 </CheckBox.LayoutTransform>

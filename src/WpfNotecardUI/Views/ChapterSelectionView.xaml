@@ -8,7 +8,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <Grid>
+
+        <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="auto"/>
@@ -20,7 +21,7 @@
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
@@ -40,6 +41,8 @@
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
                     <Setter Property="IsExpanded" Value="True"></Setter>
+                    <Setter Property="Focusable" Value="False"/>
+                    <Setter Property="Foreground" Value="White"/>
                 </Style>
             </TreeView.ItemContainerStyle>
             <TreeView.Resources>
@@ -48,7 +51,8 @@
                     <StackPanel Orientation="Horizontal">
                         <CheckBox IsChecked="{Binding IsFocused, Mode=OneWay}"
                                   Command="{Binding DataContext.CategoryCheck, RelativeSource={RelativeSource AncestorType=TreeView}}"
-                                  CommandParameter="{Binding CategoryId}">
+                                  CommandParameter="{Binding CategoryId}"
+                                  VerticalAlignment="Center">
                             
                         </CheckBox>
                         <TextBlock Text="{Binding CategoryName}"/>
@@ -58,7 +62,8 @@
                     <StackPanel Orientation="Horizontal">
                         <CheckBox IsChecked="{Binding IsFocused, Mode=OneWay}"
                                   Command="{Binding DataContext.ChapterCheck, RelativeSource={RelativeSource AncestorType=TreeView}}"
-                                  CommandParameter="{Binding ChapterName}">
+                                  CommandParameter="{Binding ChapterName}"
+                                  VerticalAlignment="Center">
                             
                         </CheckBox>
                         <TextBlock Text="{Binding ChapterName}"></TextBlock>

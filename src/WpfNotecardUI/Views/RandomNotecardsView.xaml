@@ -27,7 +27,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" Text="Hello I'm the Browse/Category view (not page)"></TextBlock>
+
         <Button Grid.Column="1" Grid.Row="1" Content="Start view" Command="{Binding GoToStartViewModel}"></Button>
         <Grid Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="5">
             <Grid.ColumnDefinitions>
@@ -57,7 +57,8 @@
                 </TextBlock>
                 <RichTextBox x:Name="richTextBox"
                              IsReadOnly="True"
-                             Background="Transparent" BorderThickness="3">
+                             Foreground="White"
+                             Background="Transparent" BorderThickness="0">
                     <RichTextBox.Style>
                         <Style TargetType="RichTextBox">
                             <Setter Property="FontSize" Value="{Binding DisplayedNotecard.Question,

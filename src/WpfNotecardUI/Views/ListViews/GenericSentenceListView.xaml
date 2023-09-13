@@ -23,7 +23,6 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="1" Text="Hello, I'm Generic Chapters"></TextBlock>
         <Button Grid.Column="1" Grid.Row="1" 
                 Content="ToMainPage" Margin="10 0"
                 Command="{Binding GoToStartCommand}">
@@ -38,7 +37,7 @@
                 Command="{Binding SaveData}">
         </Button>
         <Button Grid.Column="4" Grid.Row="1"
-                Content="Add new word"
+                Content="Add new sentence"
                 Command="{Binding AddCommand}">
 
         </Button>
@@ -59,7 +58,29 @@
                   Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Stretch"
                   SelectionMode="Single"
                   PreviewTextInput="DataList_PreviewTextInput"
-                  IsReadOnly="True">
+                  HeadersVisibility="Column"
+                  IsReadOnly="True"
+                  Background="#222222">
+            <DataGrid.Resources>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="SeparatorVisibility" Value="Visible"/>
+                    <Setter Property="SeparatorBrush" Value="Green"/>
+
+                </Style>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background" Value="#222222"/>
+                    <Setter Property="Foreground" Value="Blue" />
+                </Style>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Foreground" Value="White" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="DarkGreen" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Resources>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="BeginningEdit">
                     <i:InvokeCommandAction Command="{Binding ListItemChanged}"

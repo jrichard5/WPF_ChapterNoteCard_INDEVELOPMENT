@@ -22,14 +22,13 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="1" Text="Hello, I'm Category"></TextBlock>
         <Button Grid.Column="1" Grid.Row="1" Content="ToMainPage"
                 Command="{Binding GoToStartComand}">
             
         </Button>
 
         <Button Grid.Column="3" Grid.Row="1"
-                Content="Add new word"
+                Content="Add new category"
                 Command="{Binding AddCommand}">
 
         </Button>
@@ -56,7 +55,8 @@
         <ListView Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"
                   ItemsSource="{Binding DbCategories}" 
                   Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Center"
-                  MouseDoubleClick="ListView_MouseDoubleClick">
+                  MouseDoubleClick="ListView_MouseDoubleClick"
+                  Background="Transparent" Foreground="White">
             <ListView.ItemContainerStyle>
                 <Style>
                     <Setter Property="Canvas.Background" Value="Transparent">
