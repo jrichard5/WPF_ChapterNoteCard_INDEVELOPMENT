@@ -1,0 +1,164 @@
+# ChapterNoteCard
+
+### Everyone says use MVVM , so going to do that.
+
+### I really need to do the Migrate method in startup to setup database if it is not already there
+This is using a database from my web scrapper app, but that doesn't have the migration either.
+
+First step - Get Navigation
+
+
+Markdown cheatsheet
+https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
+
+
+https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-format
+dotnet format ./solution.sln
+
+## Resources
+Using SingletonSean as a guide to do navigation with MVVM (https://www.youtube.com/watch?v=fZxZswmC_BY)
+Another good guide for people staring out with Wpf.  
+* https://stackoverflow.com/questions/7262137/what-is-datacontext-for
+* https://rachel53461.wordpress.com/2012/07/14/what-is-this-datacontext-you-speak-of/
+
+
+
+## Problems that break MVVM?
+* My Chapter views code-behind uses 
+  * var item = (sender as ListView)?.SelectedItem;
+            if (item != null){
+                (this.DataContext as KanjiListViewModel).SwitchToJapaneseWordView((KanjiListItemModel)item);}
+* To add new items, I use a dialog
+  * AddJapanWordViewModel vm = new AddJapanWordViewModel();
+            JapanWordDialog dialog = new JapanWordDialog
+            {DataContext = vm};
+            dialog.ShowDialog();
+* Note how both know about a view model inside the code-behind.
+
+
+## Problems
+* Loading data in constructor.  Function was async, but UI was still freezing.  
+  * https://www.youtube.com/watch?v=0SCKUine6tY&list=PLA8ZIAm2I03jSfo18F7Y65XusYzDusYu5&index=4 Create a factory method.  Ok it did work.  It does freeze the first time, but the second time it does instantly change.  I really hope I didn't keep changing it for no reason this whole time.........
+  * He did say "probably because loading symbols".  Which map identifiers in source code to identifiers in compile app for debugging
+
+#### HUGE PROBLEM
+* I'm passing the service provider around, doesn't sound like I'm suppose to do that.  https://stackoverflow.com/questions/2539895/dependency-injection-how-to-pass-the-injection-container-around
+  * Service Locator pattern? is what im doing? its bad.
+  * https://www.youtube.com/watch?v=3EzHn9ir5M8
+    * He just gets the required service for MainViewModel?  Does the service provider recursively add in dependencies all the way down to other view models? I'll test this in a simplier app later.
+    * Tested it in simple app, does seem recursive.  However, I do not know how to create a new view model based on a Command using DI.  Feels like DI makes dependency asap
+    * so if page 1 makes page 2 which makes page 3, and I put them all in the constructor (for injection), it would resolve all the way down to 3 even though I just want to create page 1 atm
+    * Does not support method injection out the box, so much confused.
+  * I am going to use the service locator pattern.  But if I were to redo this app, I would make a navigation service so I could use dependency Injection properly.
+    * (video showing WPF, MVVM, Navigation, and DI : https://www.youtube.com/watch?v=wFzmBZpjuAo )
+
+  * Learned about TPT (table per type config) to use inheritance with ef core. Kinda of want to try that in a later project
+
+
+## TODOs:
+* If word already exists, but not in the chapter, need to add it to the chapter.
+
+
+Find better ways to make extensible
+  1. Any time I need to pass something down from app to view models, I'm making a new parameter
+  2. All viewModels have a Navigate to Start page command
+    * Could make a navi command, but it feels like the app.xaml.cs file gets bloated (singletonSean does this, but I wanted to try without it).
+    * Could make a layout (singletonSean)
+
+Made a learning aid for this navigation part (see jpeg in folder Learning aids)
+
+
+## steps I wanted to document (Learning aid would be better for review)
+Steps I think I need to note down for navigation
+1. Make views with buttons that will be used for navigation (they do nothing atm).
+2. Make a ViewModelBase 
+    * Implements INotifyPropertyChanged (I wonder if community toolkit == Observableobject Annotation.)
+        * ObservableObject has the following main features:  It provides a base implementation for INotifyPropertyChanged (https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/observableobject)
+    * Make a MainViewModel
+        * Property for a viewModel.  Constructor sets it to first view Model
+    * In the app.xaml.cs file.  Make an protected override void OnStartup(s.e.args e). Make a new window with {datacontext = new mainviewmodel};  MainWindow.show()
+    * Remove StartupUri from app.xaml (because above line initializes it).
+    * So now to change the main view.
+        1. MainWindows.xaml -> change the view in the grid.
+        2. MainViewModel -> change the currentviewModel to new view model.
+    * On StartPageViewModel
+        * made an ICommand variable.  And a function.  ICommand variable = new RelayComamnd(function)
+    * On StartPageView
+        * Added Command="{Binding IcommandVarible}" to button
+3. Need to Make single source of truth (the NavigationStore)
+    * Make the class
+    * add it to the app.xaml.cs
+    * give navigation store to mainviewmodel
+    * in App, pass in navi store to mainviewmodel
+4. Make Grid.Resource data templte on mainwindow
+
+
+### Steps taken to get double click
+Options
+1. ~~Use code behind?~~
+2. ~~Use Attached Command Behaviors?~~
+3. ~~Interaction triggers? (interactivity library)~~
+4. ~~Style EventSetter Event and give handler?~~
+5. ~~Dependency Properties? https://www.youtube.com/watch?v=Cx6YE86XzYE~~
+  * ~~in the main window, bind command to code-behind dependency property.~~
+6. ~~<Grid.InputBindings><MouseBinding MouseAction="LeftDoubleClick"   Command="{Binding Something}"></MouseBinding> </Grid.InputBindings>~~
+
+### Got These to work for double click
+7.  See if I can update number in code-behind and use that to trigger a command
+  * (branch: DifferentWaysToClickAList002)
+8. Items Control.  Iterates over view models.  use input binding in the view model (this is number 6, but instead of having it bound to multiple models, it is bound to multiple view models)
+  * Branch:  This will be 004DoubleClickWithItemControl
+  * had trouble clicking blank space to trigger command.  https://stackoverflow.com/questions/402736/wpf-how-to-write-a-trigger-for-mouse-over-of-grid
+  * Con: I have to pass navigation Store and Service Provider to every Item Control Object
+9.  Event Trigger to call command when specific event.  https://stackoverflow.com/questions/64996809/is-there-any-way-easier-to-bind-to-a-click-event-in-a-view-model
+  * Branch:  DifferentWaysToClickAList003
+  * xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
+  * Get Nuget Package "Microsoft.xaml.Behaviors.wpf"
+
+I've decided to be lazy and use code behind to call the viewmodel from datacontext.  I've heard this may break the MVVM model.  Attached Behavior seems to be the close second though https://stackoverflow.com/questions/4497825/wpf-mvvm-how-to-handle-double-click-on-treeviewitems-in-the-viewmodel 
+
+
+### Random Notes
+Give XAML element a x:Name to use in code behind
+
+When trying to Bind Double Mouse Click to a mousehandler delegate, I get 
+
+InnerException {"Unable to cast object of type 'System.Reflection.RuntimeEventInfo' to type 'System.Reflection.MethodInfo'."}	 System.Exception {System.InvalidCastException}
+
+
+With Command classes (not relay command which is what I'm doing)
+  1. Logic in CanExecute to determine if true or false
+  2. Command has view model.  Subscribe to Property Changed. calls method
+
+
+This is because the first column, with nothing in it, is not hit-testable; whereas, the button within the second column is hit-testable and so the event is triggered
+
+If you want the Grid's IsMouseOver property to detect when the mouse is anywhere over the Grid itself all you have to do is set the Background property of the Grid to something that is not Null
+
+
+So if i just use triggers it works,  but if i have a background for border it doesn't work (permanently on the background attribute)
+ * Ok the grid is inside the border.  I made the grid background trasparent.  So, can change background of parent, but have child be transparent to be "hit-testable"
+
+Binding a list item  (model in mvvm) to a command on the view model.
+ * https://stackoverflow.com/questions/51845335/how-to-bind-command-when-button-inside-of-listbox-item
+  * Button Command="{Binding DataContext.CommandName, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"
+
+ Google'd "wpf how to pass entire object as a  command parameter" : Answer CommandParameter = {Binding} (from https://stackoverflow.com/questions/3857213/can-you-bind-a-whole-object-to-a-commandparameter-in-xaml)
+
+
+Didn't know how to call canexecute to change a button.  Ended up making the ICommand a RelayCommand and using its "NotifyCanExecuteChanged()".  Not sure if that is the correct way to call CanExecute
+
+Been seeing alot of reflection topics when searching about mvvm.  https://stackoverflow.com/questions/840261/passing-arguments-to-c-sharp-generic-new-of-templated-type  2010 post using constructorInfo (is that reflection)
+
+How to prevent scrollbar from messing up width of IsSharedSizeScope https://stackoverflow.com/questions/61810862/sharing-column-widths-between-multiple-grids
+
+
+
+## Comepletely random notes
+
+https://stackoverflow.com/questions/232535/how-do-i-use-reflection-to-call-a-generic-method
+```
+MethodInfo method = typeof(Sample).GetMethod(nameof(Sample.GenericMethod));
+MethodInfo generic = method.MakeGenericMethod(myType);
+generic.Invoke(this, null);
+``` 
