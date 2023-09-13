@@ -182,7 +182,7 @@ namespace WpfNotecardUI.ViewModels
 
         }
 
-        public void NextFunction()
+        public async void NextFunction()
         {
             if (IsPastNotecard)
             {
@@ -227,7 +227,7 @@ namespace WpfNotecardUI.ViewModels
             {
                 if (_currentChapterDeck.Sentences.Count == 0)
                 {
-                    GetNewChapterFromQueue();
+                    await GetNewChapterFromQueue();
                     AddToPastArray(DisplayedNotecard);
                 }
                 else
@@ -288,7 +288,7 @@ namespace WpfNotecardUI.ViewModels
                 else
                 {
                     //Must be above DisplayedNotecard.Question because of the way I change font in view.
-                    GetNewChapterFromQueue();
+                    await GetNewChapterFromQueue();
                 }
                 AddToPastArray(DisplayedNotecard);
 
@@ -296,7 +296,7 @@ namespace WpfNotecardUI.ViewModels
             }
         }
 
-        private async void GetNewChapterFromQueue()
+        private async Task GetNewChapterFromQueue()
         {
             DisplayedNotecard.CharExistList = null;
             DisplayedNotecard.IsChapter = true;
@@ -467,8 +467,10 @@ namespace WpfNotecardUI.ViewModels
 
                 var sentRepo = scope.ServiceProvider.GetRequiredService<ISentenceNoteCardRepo>();
                 var sentences = await sentRepo.GetAllWithAChapter(chapterName);
-                sentences = sentences.Where(s => s.IsUserWantsToFocusOn).ToList();
-
+                if (_onlyFoucsOn == true)
+                {
+                    sentences = sentences.Where(s => s.IsUserWantsToFocusOn).ToList();
+                }
 
                 var random = new Random();
                 for (int i = 0; i < sentences.Count - 1; i++)
